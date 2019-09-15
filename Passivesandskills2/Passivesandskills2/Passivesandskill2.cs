@@ -8,9 +8,9 @@ namespace Passivesandskills2
 		name = "Passivesandskills2",
 		description = "Que pasará si dejamos que los jugadores tengan poderes...",
 		id = "albertinchu.gamemode.Passivesandskills2",
-		version = "2.0.0",
-		SmodMajor = 3,
-		SmodMinor = 0,
+		version = "3.5.0",
+		SmodMajor = 4,
+		SmodMinor = 3,
 		SmodRevision = 0
 		)]
 public class Passivesandskills2 : Plugin
