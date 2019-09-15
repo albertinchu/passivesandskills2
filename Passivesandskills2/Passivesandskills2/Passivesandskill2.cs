@@ -23,7 +23,7 @@ public class Passivesandskills2 : Plugin
 
 	public override void OnEnable()
 	{
-		Info("Dboys Ladrones - activado.");
+		this.Info("PassivesAndSkills - Activado para mas información usa .passivesandskills.");
 	}
 
 	public override void Register()
