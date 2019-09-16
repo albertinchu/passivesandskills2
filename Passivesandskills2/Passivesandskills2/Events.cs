@@ -26,7 +26,7 @@ namespace Passivesandskills2
         static Dictionary<string, Vector> Scp173pos = new Dictionary<string, Vector>();
         static Dictionary<string, bool> Classdh = new Dictionary<string, bool>();
         static Dictionary<string, bool> Scientisth = new Dictionary<string, bool>();
-        static Dictionary<string, int> Guardias = new Dictionary<string, int>();
+       
         static Dictionary<string, int> Scp106 = new Dictionary<string, int>();
         static Dictionary<string, int> Zombie = new Dictionary<string, int>();
         static Dictionary<string, bool> NTFli = new Dictionary<string, bool>();
@@ -70,10 +70,7 @@ namespace Passivesandskills2
                 ev.Player.SendConsoleMessage("[Mutar]: Cada 6 Zombies curados el zombie número 6 tiene un 35 % de mutar en otro SCP a los 3 minutos, No puede mutar en SCP-096 o en SCP-079, La mutación es totalmente aleatoria ", "red");
                 ev.Player.PersonalBroadcast(10, "Tu pasiva es [Manipulador de cuerpos]: Curas de forma instantanea a clasesd/scientists [Mutar]: Cada 6 zombies uno tiene posibilidades de mutar (mas info en la consola)  .", false);
             }
-            if (ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY)
-            {
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Carroñero]: Recives un botiquin por cada NTF que asesines [Luchador de doble filo]: La vida que te falte la inflinges como daño adicional entre 2.", false);
-            }
+            
             if (ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT)
             {
                 if (!NTFli.ContainsKey(ev.Player.SteamId))
@@ -107,31 +104,14 @@ namespace Passivesandskills2
                 Llorona = true;
                 ev.Player.PersonalBroadcast(10, "Tu pasiva es [Gritos de guerra]: Matar a jugadores cura a todo tu equipo ,Habilidad [Recordatorio mortal]: revives perdiendo vida de forma progresiva.", false);
             }
-            if ((ev.Player.TeamRole.Role == Role.FACILITY_GUARD) && (!Guardias.ContainsKey(ev.Player.SteamId)))
-            {
-                Guardias.Add(ev.Player.SteamId, 0);
-                ev.Player.SendConsoleMessage("[Cazadores]: Ganancia de XP = 1 por atacar un SCP, 3 por atacar a un chaos, 20 por eliminar un chaos o zombie , 60 por eliminar un SCP. Nivel: 2 Ganas 500 de todas las municiones y vida, Nivel 3 Ganas Veneno el las balas que causa 3 de daño adicional, Nivel: 4 Ganas 1 granada y cada vez que la lanzas la vuelves a obtener y obtienes mas vida, Nivel 5 nueva pasiva [Mismo destino]: te llevas a tu asesino con tigo ");
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cazadores]: subes de nivel por atacar scps y chaos, recompensas por nivel en la consola.", false);
-            }
-            if (ev.Player.TeamRole.Role == Role.SCP_939_53)
-            {
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es[Fauces Venenosas]: al morder a alguien le inyectas veneno no letal. [Veneno Letal]: cuando estas a poca vida este veneno es mas letal de forma que puede incluso matar ", false);
-            }
-            if (ev.Player.TeamRole.Role == Role.SCP_939_89)
-            {
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Espinas]: dañas a tus atacantes con 2 de daño por bala. [Mejora de Acero]:inflinges hasta 5 de daño por bala como espinas, este efecto no se aplica a daño por granada o electricidad.", true);
-            }
+            
+           
             if ((ev.Player.TeamRole.Role == Role.NTF_SCIENTIST))
             {
                 contadorNTF += 1;
                 ev.Player.PersonalBroadcast(10, "Tu pasiva es [Conocimientos SCP Avanzados] robas 3 de vida y inflinges mas daño a los Scps 1% de su vida maxima. [Medicina]: los meditkits son el doble de efectivos sobre ti.", false);
             }
-            if ((ev.Player.TeamRole.Role == Role.SCIENTIST && (!Scientisth.ContainsKey(ev.Player.SteamId))))
-            {
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Conocimientos SCP]: robas 1 de vida y inflinges mas daño a los Scps 0.5% de su vida maxima, tu habilidad es [el cafe mañanero]: te hace invulnerable drurante 5 segundos y te cura .", false);
-                Timing.Run(Coffe(ev.Player));
-                Scientisth.Add(ev.Player.SteamId, true);
-            }
+            
             if ((ev.Role == Role.CLASSD) && (!Classdh.ContainsKey(ev.Player.SteamId)))
             {
                 Classdh.Add(ev.Player.SteamId, true);
@@ -276,52 +256,9 @@ namespace Passivesandskills2
             player.GiveItem(ItemType.FLASHLIGHT);
             Classdh[player.SteamId] = true;
         }
-        public static IEnumerable<float> ScientistTimer(Player player)
-        {
-            player.SetGodmode(true);
-            yield return 5f;
-            player.SetGodmode(false);
-            yield return 55f;
-            player.GiveItem(ItemType.CUP);
-            Scientisth[player.SteamId] = true;
-
-        }
-        public static IEnumerable<float> Veneno(Player player)
-        {
-            int cantidad = 0;
-            while (cantidad != 4)
-            {
-                yield return 2f;
-                player.AddHealth(-4);
-                cantidad += 1;
-            }
-            if (cantidad == 4) { cantidad = 0; }
-
-        }
-        public static IEnumerable<float> Venenomortal(Player player)
-        {
-            int cantidadd = 0;
-            while (cantidadd != 3)
-            {
-                yield return 3f;
-                if (player.GetHealth() <= 8) { player.Kill(DamageType.DECONT); }
-                player.AddHealth(-8);
-                cantidadd += 1;
-            }
-            if (cantidadd == 3) { cantidadd = 0; }
-        }
-        public static IEnumerable<float> Venenoguardias(Player player)
-        {
-            int cantidad = 0;
-            while (cantidad != 4)
-            {
-                yield return 2f;
-                player.AddHealth(-3);
-                cantidad += 1;
-            }
-            if (cantidad == 4) { cantidad = 0; }
-
-        }
+       
+        
+       
         public static IEnumerable<float> Secondboom()
         {
             yield return 5f;
@@ -410,11 +347,7 @@ namespace Passivesandskills2
             {
                 ev.Damage /= 2;
             }
-            //chaos - chaos//
-            if (ev.Attacker.TeamRole.Role == Role.CHAOS_INSURGENCY)
-            {
-                ev.Damage += ((120 - ev.Attacker.GetHealth()) / 2);
-            }
+            
             //comandante//
             if (ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER)
             {
@@ -425,151 +358,24 @@ namespace Passivesandskills2
             {
                 Scp106[ev.Attacker.SteamId] += 1;
                 if (Scp106[ev.Attacker.SteamId] == 5)
-                { ev.Player.Kill(DamageType.SCP_106);
+                {
+                    ev.Player.Kill(DamageType.SCP_106);
                     Scp106[ev.Attacker.SteamId] = 0;
                 }
             }
             //Guardias//
-            if ((ev.Attacker.TeamRole.Role == Role.FACILITY_GUARD) && ((ev.Player.TeamRole.Team == Team.SCP) || (ev.Player.TeamRole.Team == Team.CHAOS_INSURGENCY)))
-            {
-                Guardias[ev.Attacker.SteamId] += 1;
-                if (Guardias[ev.Attacker.SteamId] == 50)
-                {
-                    ev.Attacker.PersonalBroadcast(3, "<color=#FF05FF> Nivel 2 </color>", false);
-                    ev.Attacker.SetHealth(150, DamageType.CONTAIN);
-                    ev.Attacker.SetAmmo(AmmoType.DROPPED_5, 500);
-                    ev.Attacker.SetAmmo(AmmoType.DROPPED_7, 500);
-                    ev.Attacker.SetAmmo(AmmoType.DROPPED_9, 500);
-                }
-                if (Guardias[ev.Attacker.SteamId] == 150)
-                {
-                    ev.Attacker.PersonalBroadcast(3, "<color=#FF0500> Nivel 3 </color>", false);
-                }
-                if (Guardias[ev.Attacker.SteamId] >= 150) { Timing.Run(Venenoguardias(ev.Player)); }
-                if (Guardias[ev.Attacker.SteamId] == 300)
-                {
-                    ev.Attacker.PersonalBroadcast(3, "<color=#C50000> Nivel 4 </color>", false);
-                    ev.Attacker.GiveItem(ItemType.FRAG_GRENADE);
-                    ev.Attacker.SetHealth(300);
-                }
-                if (Guardias[ev.Attacker.SteamId] == 550)
-                {
-                    ev.Attacker.PersonalBroadcast(3, "<color=#C50000> Nivel 5 </color>", false);
-                }
-            }
+            
 
 
 
-            //Class D - Dboyssssss//
-            if (ev.Attacker.TeamRole.Role == Role.CLASSD)
-            {
-                if (ev.Player.GetGhostMode() == true) { ev.Player.SetGhostMode(false); }
-                if (ev.Player.GetAmmo(AmmoType.DROPPED_5) >= 3)
-                {
-                    ev.Attacker.SetAmmo(AmmoType.DROPPED_5, ev.Attacker.GetAmmo(AmmoType.DROPPED_5) + 3);
-                    ev.Player.SetAmmo(AmmoType.DROPPED_5, ev.Player.GetAmmo(AmmoType.DROPPED_5) - 3);
-                }
-                if (ev.Player.GetAmmo(AmmoType.DROPPED_7) >= 3)
-                {
-                    ev.Attacker.SetAmmo(AmmoType.DROPPED_7, ev.Attacker.GetAmmo(AmmoType.DROPPED_7) + 3);
-                    ev.Player.SetAmmo(AmmoType.DROPPED_7, ev.Player.GetAmmo(AmmoType.DROPPED_7) - 3);
-                }
-                if (ev.Player.GetAmmo(AmmoType.DROPPED_9) >= 3)
-                {
-                    ev.Attacker.SetAmmo(AmmoType.DROPPED_9, ev.Attacker.GetAmmo(AmmoType.DROPPED_9) + 3);
-                    ev.Player.SetAmmo(AmmoType.DROPPED_9, ev.Player.GetAmmo(AmmoType.DROPPED_9) - 3);
-                }
 
-                if ((ev.Attacker.GetHealth() <= 40) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA))
-                {
-                    ev.Attacker.SetHealth(ev.Attacker.GetHealth() + Convert.ToInt32(ev.Damage));
-                    if (ev.Attacker.GetHealth() <= 20)
-                    {
-                        ev.Attacker.SetHealth(ev.Attacker.GetHealth() + Convert.ToInt32(ev.Damage));
-                    }
-                }
-            }
-            //Scientists - Vayne early game//
-            if ((ev.Attacker.TeamRole.Role == Role.SCIENTIST) && (ev.Player.TeamRole.Team == Team.SCP))
-            {
-                if (ev.Attacker.GetHealth() <= 125)
-                {
-                    ev.Attacker.AddHealth(1);
-                }
-                if (ev.Player.TeamRole.Role == Role.SCP_173) { ev.Damage = ev.Damage + 18; }
-                if (ev.Player.TeamRole.Role == Role.SCP_049) { ev.Damage = ev.Damage + 9; }
-                if (ev.Player.TeamRole.Role == Role.SCP_049_2) { ev.Damage = ev.Damage + 25; }
-                if (ev.Player.TeamRole.Role == Role.SCP_096) { ev.Damage = ev.Damage + 10; }
-                if (ev.Player.TeamRole.Role == Role.SCP_106) { ev.Damage = ev.Damage + 3; }
-                if (ev.Player.TeamRole.Role == Role.SCP_939_53) { ev.Damage = ev.Damage + 13; }
-                if (ev.Player.TeamRole.Role == Role.SCP_939_89) { ev.Damage = ev.Damage + 13; }
-            }
-            //NTF Scientist - Vayne Late game//
-            if ((ev.Attacker.TeamRole.Role == Role.SCIENTIST) && (ev.Player.TeamRole.Team == Team.SCP))
-            {
-                if (ev.Attacker.GetHealth() <= 150)
-                {
-                    ev.Attacker.AddHealth(3);
-                }
-                if (ev.Player.TeamRole.Role == Role.SCP_173) { ev.Damage = ev.Damage + 36; }
-                if (ev.Player.TeamRole.Role == Role.SCP_049) { ev.Damage = ev.Damage + 18; }
-                if (ev.Player.TeamRole.Role == Role.SCP_049_2) { ev.Damage = ev.Damage + 50; }
-                if (ev.Player.TeamRole.Role == Role.SCP_096) { ev.Damage = ev.Damage + 20; }
-                if (ev.Player.TeamRole.Role == Role.SCP_106) { ev.Damage = ev.Damage + 6; }
-                if (ev.Player.TeamRole.Role == Role.SCP_939_53) { ev.Damage = ev.Damage + 26; }
-                if (ev.Player.TeamRole.Role == Role.SCP_939_89) { ev.Damage = ev.Damage + 26; }
-            }
-            //SCP 939-89 / Ramus //
-            if ((ev.Player.TeamRole.Role == Role.SCP_939_89) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FRAG))
-            {
-                if (ev.Attacker.GetHealth() > 2) { ev.Attacker.AddHealth(-2); } else { ev.Attacker.Kill(DamageType.WALL); }
-                if (ev.Player.GetHealth() <= 500)
-                {
-                    ev.Damage /= 2;
-                    if (ev.Attacker.GetHealth() > 5) { ev.Attacker.AddHealth(-3); } else { ev.Attacker.Kill(DamageType.WALL); }
 
-                }
-
-            }
-            //SCP 939-53 / Teemo//
-            if (ev.Attacker.TeamRole.Role == Role.SCP_939_53)
-            {
-                Timing.Run(Veneno(ev.Player));
-                if (ev.Attacker.GetHealth() <= 800)
-                {
-                    Timing.Run(Venenomortal(ev.Player));
-                }
-            }
         }
 
         public void OnPlayerDropItem(PlayerDropItemEvent ev)
         {
-            //Class D - Dboysss//
-            if ((ev.Player.TeamRole.Role == Role.CLASSD) && (Classdh[ev.Player.SteamId] == true) && (ev.Item.ItemType == ItemType.FLASHLIGHT))
-            {
-                ev.ChangeTo = ItemType.NULL;
-                if (ev.Player.GetHealth() >= 35)
-                {
-                    Classdh[ev.Player.SteamId] = false;
-                    ev.Player.AddHealth(-35);
-                    Timing.Run(ClassdTimer(ev.Player));
-                }
-                else
-                {
-                    ev.Player.Kill();
-                }
-
-            }
-            //Scientistsssssss//
-            if ((ev.Player.TeamRole.Role == Role.SCIENTIST) && (Scientisth[ev.Player.SteamId]) && (ev.Item.ItemType == ItemType.CUP))
-            {
-                Scientisth[ev.Player.SteamId] = false;
-                if (ev.Player.GetHealth() <= 100)
-                {
-                    ev.Player.AddHealth(25);
-                }
-                Timing.Run(ScientistTimer(ev.Player));
-            }
+            
+            
 
         }
 
@@ -595,19 +401,12 @@ namespace Passivesandskills2
         public void OnMedkitUse(PlayerMedkitUseEvent ev)
         {
             if (ev.Player.TeamRole.Role == Role.CLASSD) { Pasiva[ev.Player.SteamId].GiveItem(ItemType.CHAOS_INSURGENCY_DEVICE); } else { Pasiva[ev.Player.SteamId].GiveItem(ItemType.FRAG_GRENADE); }
-            if (ev.Player.TeamRole.Role == Role.NTF_SCIENTIST)
-            {
-                ev.RecoverHealth *= 2;
-            }
+          
         }
 
         public void OnThrowGrenade(PlayerThrowGrenadeEvent ev)
         {
-            if ((ev.Player.TeamRole.Role == Role.FACILITY_GUARD) && (Guardias[ev.Player.SteamId] >= 300) && (ev.GrenadeType == GrenadeType.FRAG_GRENADE))
-            {
-                ev.Player.GiveItem(ItemType.FRAG_GRENADE);
-
-            }
+            
             if ((ev.Player.TeamRole.Role == Role.NTF_CADET) && (ev.GrenadeType == GrenadeType.FLASHBANG))
             {
                 ev.Player.AddHealth(20);
@@ -661,7 +460,7 @@ namespace Passivesandskills2
             Scp173pos.Clear();
             Classdh.Clear();
             Scientisth.Clear();
-            Guardias.Clear();
+            
             Scp106.Clear();
             Zombie.Clear();
             Pasiva.Clear();
@@ -758,12 +557,7 @@ namespace Passivesandskills2
 
 
             //Guardias//
-            if((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD)&&(ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY)) { Guardias[ev.Player.SteamId] += 30; }
-            if ((ev.Player.TeamRole.Role == Role.FACILITY_GUARD) && (Guardias[ev.Player.SteamId] >= 550))
-            {
-                ev.Killer.ChangeRole(Role.SPECTATOR);
-                PluginManager.Manager.Server.Map.Broadcast(4, "<color=#ABABAB" + ev.Player.Name + "</color> se llevó a <color=#C50000> " + ev.Killer.Name + " </color> con él...", false);
-            }
+          
             // Chaos //
             if ((ev.Killer.TeamRole.Role == Role.CHAOS_INSURGENCY) && (ev.Player.TeamRole.Team == Team.NINETAILFOX))
             {

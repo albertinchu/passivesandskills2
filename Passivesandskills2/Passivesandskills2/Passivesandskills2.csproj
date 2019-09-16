@@ -54,9 +54,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="chaos.cs" />
+    <Compile Include="Clasesd.cs" />
     <Compile Include="Events.cs" />
+    <Compile Include="Guards.cs" />
     <Compile Include="Passivesandskill2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scientists and Ntf Scientists.cs" />
+    <Compile Include="scp939 xx.cs" />
     <Compile Include="Timing.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
