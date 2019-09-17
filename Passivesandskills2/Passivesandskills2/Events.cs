@@ -22,39 +22,32 @@ namespace Passivesandskills2
         }
 
         //Variables importantes y diccionarios//
-        static Dictionary<string, bool> Scp173 = new Dictionary<string, bool>();
-        static Dictionary<string, Vector> Scp173pos = new Dictionary<string, Vector>();
+     
         
        
         
         
         
-        static Dictionary<string, bool> Computerr = new Dictionary<string, bool>();
+       
       
-        bool Nuket = false;
-        bool Boom = false;
-        bool Llorona = false;
-        static bool overcharge = false;
+     
         
-        static int contadorNTF = 0;
-        int level = 0;
+        
+      
+        
         Vector posicionteni;
-        string computerchan;
-        int gen = 0;
+       
+        
         Vector posmuertee;
         int conta049 = 0;
 
-        static Vector llorondead;
+     
         public void OnSetRole(PlayerSetRoleEvent ev)
         {
 
             
 
-            if ((ev.Role == Role.SCP_079) && (computerchan != ev.Player.SteamId) && (Computerr.ContainsKey(ev.Player.SteamId)))
-            {
-                computerchan = ev.Player.SteamId;
-                Computerr.Add(ev.Player.SteamId, true);
-            }
+           
             
             
             
@@ -65,75 +58,17 @@ namespace Passivesandskills2
            
            
            
-            if ((ev.Player.TeamRole.Role == Smod2.API.Role.SCP_173) && (!Scp173.ContainsKey(ev.Player.SteamId)))
-            {
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Go big or go Home]: cuando mueres te vas a lo GRANDE, tu habilidad es [Resurgir etereo]: revives al minuto con intervalos de invisibilidad. ", false);
-
-                Scp173.Add(ev.Player.SteamId, true);
-                Scp173pos.Add(ev.Player.SteamId, ev.Player.GetPosition());
-            }
-
+          
         }
  
       
    
        
-        public static IEnumerable<float> Scp173timer(Player player, Vector pos)
-        {
-
-            yield return 60f;
-
-
-            Scp173[player.SteamId] = false;
-            player.ChangeRole(Role.SCP_173);
-            yield return 0.2f;
-            player.Teleport(pos);
-
-            while (true)
-            {
-                if (player.TeamRole.Role == Role.SCP_173)
-                {
-                    player.SetGhostMode(true, false, false);
-                    yield return 3f;
-                    player.SetGhostMode(false);
-                }
-                else
-                {
-                    break;
-                }
-
-            }
-        }
-     
+        
        
         
        
-        public static IEnumerable<float> Secondboom()
-        {
-            yield return 5f;
-            PluginManager.Manager.Server.Map.DetonateWarhead();
-            yield return 2f;
-            PluginManager.Manager.Server.Map.DetonateWarhead();
-            yield return 2f;
-            PluginManager.Manager.Server.Map.DetonateWarhead();
-            yield return 2f;
-            PluginManager.Manager.Server.Map.DetonateWarhead();
-
-        }
-
-
-        public static IEnumerable<float> Computer(Player player)
-        {
-            yield return 0.5f;
-            player.ChangeRole(Role.SCP_079);
-        }
-
-
-        public static IEnumerable<float> Pcoff()
-        {
-            yield return 60f;
-            overcharge = true;
-        }
+        
 
 
 
@@ -176,21 +111,17 @@ namespace Passivesandskills2
 
         public void OnStartCountdown(WarheadStartEvent ev)
         {
-            Nuket = true;
+           
         }
 
         public void OnStopCountdown(WarheadStopEvent ev)
         {
-            Nuket = false;
+          
         }
 
         public void OnDetonate()
         {
-            if (Boom == false)
-            {
-                Timing.Run(Secondboom());
-                Boom = true;
-            }
+            
         }
 
         public void OnMedkitUse(PlayerMedkitUseEvent ev)
@@ -221,30 +152,19 @@ namespace Passivesandskills2
         public void On079LevelUp(Player079LevelUpEvent ev)
         {
             //Computerchan//
-            level = ev.Player.Scp079Data.Level;
-            if (level == 3)
-            {
-                ev.Player.Scp079Data.MaxAP = 200;
-            }
-            if ((level > 3))
-            {
-                ev.Player.Scp079Data.MaxAP = 300;
-                PluginManager.Manager.Server.Map.AnnounceCustomMessage("G G . SCP 079 LEVEL 5");
-            }
+     
         }
 
         public void OnGeneratorFinish(GeneratorFinishEvent ev)
         {
-            gen += 1;
-            if (gen == 5) { Timing.Run(Pcoff()); }
+           
 
         }
 
         public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
         {
             
-            Scp173.Clear();
-            Scp173pos.Clear();
+           
             
             
             
@@ -252,61 +172,18 @@ namespace Passivesandskills2
            
 
 
-            Nuket = false;
-            Boom = false;
-            Llorona = false;
-            overcharge = false;
-
-
-           
-
-            
-            level = 0;
-            computerchan = "0";
-            gen = 0;
-            conta049 = 0;
 
         }
 
         public void On079AddExp(Player079AddExpEvent ev)
         {
-            float Xp;
-            Xp = ev.ExpToAdd;
-            if (level > 3)
-            {
-                ev.Player.Scp079Data.APPerSecond = (ev.Player.Scp079Data.APPerSecond + (Xp / 25));
-                ev.Player.Scp079Data.MaxAP = ev.Player.Scp079Data.MaxAP + (Xp / 10);
-
-            }
+         
         }
-        static Dictionary<string, Player> Pasiva = new Dictionary<string, Player>();
+       
         public void OnPlayerDie(PlayerDeathEvent ev)
         {
             //173 //
-            if (ev.Player.TeamRole.Role == Role.SCP_173)
-            {
-                Vector posd = ev.Player.GetPosition();
-
-                if (Scp173[ev.Player.SteamId] == true)
-                {
-                    ev.SpawnRagdoll = false;
-                    ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, true);
-                    ev.Player.GiveItem(ItemType.FRAG_GRENADE);
-                    ev.Player.GiveItem(ItemType.FRAG_GRENADE);
-                    ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, true);
-                    ev.Player.GiveItem(ItemType.FRAG_GRENADE);
-                    ev.Player.GiveItem(ItemType.FRAG_GRENADE);
-                    ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, true);
-                    ev.Player.GiveItem(ItemType.FRAG_GRENADE);
-                    ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, true);
-                    Timing.Run(Scp173timer(ev.Player, posd));
-                }
-                else
-                {
-                    Scp173[ev.Player.SteamId] = true;
-                }
-            }
-            
+           
 
 
 
@@ -316,37 +193,12 @@ namespace Passivesandskills2
 
             //Guardias//
           
-            // Chaos //
-            if ((ev.Killer.TeamRole.Role == Role.CHAOS_INSURGENCY) && (ev.Player.TeamRole.Team == Team.NINETAILFOX))
-            {
-                ev.Killer.GiveItem(ItemType.MEDKIT);
-            }
+
 
             //doctor//
             
             //////////////////////////////////////////////////////ordenador/////////////////////////////////////////////////////
-            if (overcharge == false)
-            {
-                if ((Computerr.ContainsKey(ev.Killer.SteamId))) { PluginManager.Manager.Server.Map.Broadcast(1, "079 mató a un jugador", true); }
-                posicionteni = ev.Player.GetPosition();
-
-                if ((Boom == false) && (Computerr.ContainsKey(ev.Player.SteamId))) { Timing.Run(Computer(ev.Player)); }
-
-                if ((ev.Player.SteamId == ev.Killer.SteamId) && (Nuket == true) && (ev.DamageTypeVar == DamageType.TESLA) && (ev.Player.TeamRole.Role != Role.SCP_096))
-                {
-                    var nueva = ev.Player.TeamRole.Role;
-                    ev.SpawnRagdoll = false;
-                    foreach (KeyValuePair<string, Player> keyValue in Pasiva)
-                    {
-                        if ((keyValue.Value.TeamRole.Role == Role.SCP_079) && (nueva != Role.SCP_173)) { keyValue.Value.ChangeRole(nueva); }
-                        if ((keyValue.Value.TeamRole.Role == Role.SCP_079) && (nueva == Role.SCP_173))
-                        {
-                            keyValue.Value.ChangeRole(nueva); keyValue.Value.Teleport(PluginManager.Manager.Server.Map.GetSpawnPoints(Role.SCP_049).First());
-                        }
-
-                    }
-                }
-            }
+            
 
 
 

@@ -152,7 +152,14 @@ namespace Passivesandskills2
         }
         public void OnDisconnect(DisconnectEvent ev)
         {
-            throw new NotImplementedException();
+            contadorNTF = 0;
+            foreach (Player player in PluginManager.Manager.Server.GetPlayers())
+            {
+                if((player.TeamRole.Team == Team.NINETAILFOX)&&(player.TeamRole.Role != Role.FACILITY_GUARD))
+                {
+                    contadorNTF += 1;
+                }
+            }
         }
     }
 }

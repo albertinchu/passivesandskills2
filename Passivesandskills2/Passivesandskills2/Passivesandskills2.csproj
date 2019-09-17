@@ -63,8 +63,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scientists and Ntf Scientists.cs" />
     <Compile Include="scp049and0492.cs" />
+    <Compile Include="scp079.cs" />
     <Compile Include="scp096.cs" />
     <Compile Include="scp106.cs" />
+    <Compile Include="scp173.cs" />
     <Compile Include="scp939 xx.cs" />
     <Compile Include="Timing.cs" />
   </ItemGroup>
