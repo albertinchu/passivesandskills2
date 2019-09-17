@@ -9,3 +9,14 @@ C:\Users\pablo\source\repos\Passivesandskills2\Passivesandskills2\Passivesandski
 C:\Users\pablo\source\repos\Passivesandskills2\Passivesandskills2\Passivesandskills2\obj\Debug\Passivesandskills2.csproj.CopyComplete
 C:\Users\pablo\source\repos\Passivesandskills2\Passivesandskills2\Passivesandskills2\obj\Debug\Passivesandskills2.dll
 C:\Users\pablo\source\repos\Passivesandskills2\Passivesandskills2\Passivesandskills2\obj\Debug\Passivesandskills2.pdb
+C:\Users\pablo\Source\Repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\bin\Debug\Passivesandskills2.dll
+C:\Users\pablo\Source\Repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\bin\Debug\Passivesandskills2.pdb
+C:\Users\pablo\Source\Repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\bin\Debug\GamemodeManager.dll
+C:\Users\pablo\Source\Repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\bin\Debug\Smod2.dll
+C:\Users\pablo\Source\Repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\bin\Debug\UnityEngine.CoreModule.dll
+C:\Users\pablo\Source\Repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\bin\Debug\UnityEngine.dll
+C:\Users\pablo\Source\Repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\obj\Debug\Passivesandskills2.csproj.CoreCompileInputs.cache
+C:\Users\pablo\Source\Repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\obj\Debug\Passivesandskills2.csproj.CopyComplete
+C:\Users\pablo\Source\Repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\obj\Debug\Passivesandskills2.dll
+C:\Users\pablo\Source\Repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\obj\Debug\Passivesandskills2.pdb
+C:\Users\pablo\Source\Repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\obj\Debug\Passivesandskills2.csprojAssemblyReference.cache
