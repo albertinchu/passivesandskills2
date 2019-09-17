@@ -27,16 +27,16 @@ namespace Passivesandskills2
         static Dictionary<string, bool> Classdh = new Dictionary<string, bool>();
         static Dictionary<string, bool> Scientisth = new Dictionary<string, bool>();
        
-        static Dictionary<string, int> Scp106 = new Dictionary<string, int>();
+        
         static Dictionary<string, int> Zombie = new Dictionary<string, int>();
-        static Dictionary<string, bool> NTFli = new Dictionary<string, bool>();
+        
         static Dictionary<string, bool> Computerr = new Dictionary<string, bool>();
         static Dictionary<string, Player> Pasiva = new Dictionary<string, Player>();
         bool Nuket = false;
         bool Boom = false;
         bool Llorona = false;
         static bool overcharge = false;
-        int bajasllorona = 0;
+        
         static int contadorNTF = 0;
         int level = 0;
         Vector posicionteni;
@@ -49,7 +49,7 @@ namespace Passivesandskills2
         public void OnSetRole(PlayerSetRoleEvent ev)
         {
 
-            if (!Pasiva.ContainsKey(ev.Player.SteamId)) { Pasiva.Add(ev.Player.SteamId, ev.Player); }
+            
 
             if ((ev.Role == Role.SCP_079) && (computerchan != ev.Player.SteamId) && (Computerr.ContainsKey(ev.Player.SteamId)))
             {
@@ -71,53 +71,14 @@ namespace Passivesandskills2
                 ev.Player.PersonalBroadcast(10, "Tu pasiva es [Manipulador de cuerpos]: Curas de forma instantanea a clasesd/scientists [Mutar]: Cada 6 zombies uno tiene posibilidades de mutar (mas info en la consola)  .", false);
             }
             
-            if (ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT)
-            {
-                if (!NTFli.ContainsKey(ev.Player.SteamId))
-                {
-                    NTFli.Add(ev.Player.SteamId, true);
-                }
-                contadorNTF += 1;
-                ev.Player.SendConsoleMessage("[cambiar las tornas]: Cambiar las tornas es una pasiva Tactica con 20s de cooldown  la cual intercambia tu posición con la del enemigo cuando este esta a menos del 50% de vida atrapandolo durante 2 segundos en tu posición. (Esta habilidad no se aplica a SCPS pero si a Zombies y tampoco se aplica a aliados)", "blue");
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es [cambiar las tornas]: Cambias la posición del enemigo con la tuya cuando esta por debajo de 50% atrapandolo (mas info en la consola)", false);
-            }
-            if (ev.Player.TeamRole.Role == Role.NTF_CADET)
-            {
-                contadorNTF += 1;
-                ev.Player.SendConsoleMessage("[Flash rápido]: Tras lanzar una granada cegadora obtienes un escudo de 20 de salud, (este se anula si el comandante usa su granada para aplicarte 200 de salud pero se acumula si se aplicó los 200 de salud antes)", "blue");
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Tenacidad explosiva]: Recives daño reducido entre 2 de las granadas.[Flash Rápido]: (mas info en la consola)", false);
-            }
-            if ((ev.Player.TeamRole.Role == Role.NTF_COMMANDER))
-            {
-
-                contadorNTF += 1;
-                ev.Player.SendConsoleMessage("[Preocupación por los tuyos]: Tus disparos hacen como cura la mitad del daño que causarían a tus aliados y las granadas Instacuran 200 de salud (¡OJO!: No se aplica a guardias ni científicos", "blue");
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Lider del Escudrón]: Inflinges daño adicional segun el número de NTF vivos [Preocupación por los tuyos]: tus ataques curan aliados (mas info en la consola)", false);
-            }
-            if ((ev.Player.TeamRole.Role == Role.SCP_106) && (!Scp106.ContainsKey(ev.Player.SteamId)))
-            {
-                Scp106.Add(ev.Player.SteamId, 0);
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Digestión]: Te curas cuando alguien muere en tu dimensión [Golpe Crítico]: Tu quinta victima muere al instante.", false);
-            }
-            if ((ev.Player.TeamRole.Role == Role.SCP_096))
-            {
-                Llorona = true;
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Gritos de guerra]: Matar a jugadores cura a todo tu equipo ,Habilidad [Recordatorio mortal]: revives perdiendo vida de forma progresiva.", false);
-            }
+            
             
            
-            if ((ev.Player.TeamRole.Role == Role.NTF_SCIENTIST))
-            {
-                contadorNTF += 1;
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Conocimientos SCP Avanzados] robas 3 de vida y inflinges mas daño a los Scps 1% de su vida maxima. [Medicina]: los meditkits son el doble de efectivos sobre ti.", false);
-            }
+           
             
-            if ((ev.Role == Role.CLASSD) && (!Classdh.ContainsKey(ev.Player.SteamId)))
-            {
-                Classdh.Add(ev.Player.SteamId, true);
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Astucia] robas munición al disparar. [Dboy rules]: cuando estas a poca vida robas vida. Tu Habilidad es [Sigilo de doble filo]tirar tu linterna te hace invisible por 35 de salud (puedes morir si tienes menos de 36 de salud). ", false);
-                ev.Player.PersonalBroadcast(10, " [Sigilo de doble filo]: (puedes morir si tienes menos de 36 de salud). ", false);
-            }
+           
+           
+           
             if ((ev.Player.TeamRole.Role == Smod2.API.Role.SCP_173) && (!Scp173.ContainsKey(ev.Player.SteamId)))
             {
                 ev.Player.PersonalBroadcast(10, "Tu pasiva es [Go big or go Home]: cuando mueres te vas a lo GRANDE, tu habilidad es [Resurgir etereo]: revives al minuto con intervalos de invisibilidad. ", false);
@@ -127,28 +88,8 @@ namespace Passivesandskills2
             }
 
         }
-        public static IEnumerable<float> Intimidacion(Player player, Vector pos3)
-        {
-            int contadorb = 0;
-            while ((contadorb < 8))
-            {
-                contadorb += 1;
-                yield return 0.25f;
-                player.Teleport(pos3);
-            }
-
-
-        }
-        public static IEnumerable<float> Coffe(Player player)
-        {
-            yield return 5f;
-            player.GiveItem(ItemType.CUP);
-        }
-        public static IEnumerable<float> Cooldown(Player player)
-        {
-            yield return 20f;
-            NTFli[player.SteamId] = true;
-        }
+ 
+      
         public static IEnumerable<float> Zombielive(Player player)
         {
             while (player.TeamRole.Role == Role.SCP_049_2)
@@ -198,29 +139,7 @@ namespace Passivesandskills2
             }
 
         }
-        public static IEnumerable<float> LLORON(Player player, Vector pos)
-        {
-
-            yield return 1f;
-            player.ChangeRole(Role.SCP_096);
-            yield return 0.2f;
-            player.Teleport(pos);
-
-            while (true)
-            {
-                if (player.TeamRole.Role == Role.SCP_096)
-                {
-                    if (player.GetHealth() > 35) { player.AddHealth(-35); } else { player.Kill(DamageType.CONTAIN); }
-                    yield return 3f;
-
-                }
-                else
-                {
-                    break;
-                }
-
-            }
-        }
+       
         public static IEnumerable<float> Scp173timer(Player player, Vector pos)
         {
 
@@ -296,46 +215,9 @@ namespace Passivesandskills2
         public void OnPlayerHurt(PlayerHurtEvent ev)
         {
             // COMANDANTE //
-            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Team.NINETAILFOX) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN))
-            {
-                float damage = ev.Damage;
-                ev.Damage = 0;
-                if (ev.Player.GetHealth() < 150) { ev.Player.AddHealth((int)Math.Round(damage) / 2); }
-
-
-            }
-            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Team.NINETAILFOX) && (ev.DamageType == DamageType.FRAG))
-            {
-                ev.Damage = 0;
-                ev.Player.SetHealth(200, DamageType.FRAG);
-            }
+           
             // TENIENTE //
-            if (ev.Attacker.TeamRole.Role == Role.NTF_LIEUTENANT)
-            {
-                Vector posli = ev.Player.GetPosition();
-                if ((ev.Player.TeamRole.Role == Role.CLASSD) || (ev.Player.TeamRole.Role == Role.SCIENTIST))
-                {
-                    if ((ev.Player.GetHealth() <= 50) && (NTFli[ev.Attacker.SteamId] == true))
-                    {
-                        NTFli[ev.Attacker.SteamId] = false;
-                        Timing.Run(Intimidacion(ev.Player, ev.Attacker.GetPosition()));
-                        Timing.Run(Cooldown(ev.Player));
-                        ev.Attacker.Teleport(posli);
-                    }
-
-                }
-                if ((ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY))
-                {
-                    if ((ev.Player.GetHealth() <= 60) && (NTFli[ev.Attacker.SteamId] == true))
-                    {
-                        NTFli[ev.Attacker.SteamId] = false;
-                        Timing.Run(Intimidacion(ev.Player, ev.Attacker.GetPosition()));
-                        Timing.Run(Cooldown(ev.Player));
-                        ev.Attacker.Teleport(posli);
-                    }
-
-                }
-            }
+           
 
             //Zombie//
             if (ev.Attacker.TeamRole.Role == Role.SCP_049_2)
@@ -343,26 +225,12 @@ namespace Passivesandskills2
                 ev.Damage += (ev.Damage / 100) * 15 * Zombie[ev.Attacker.SteamId];
             }
             // CADETES //
-            if ((ev.Player.TeamRole.Role == Role.NTF_CADET) && (ev.DamageType == DamageType.FRAG))
-            {
-                ev.Damage /= 2;
-            }
+        
             
             //comandante//
-            if (ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER)
-            {
-                ev.Damage += (contadorNTF * 4);
-            }
+       
             //SCP 106 - El negro - shadow man//
-            if ((ev.Attacker.TeamRole.Role == Role.SCP_106))
-            {
-                Scp106[ev.Attacker.SteamId] += 1;
-                if (Scp106[ev.Attacker.SteamId] == 5)
-                {
-                    ev.Player.Kill(DamageType.SCP_106);
-                    Scp106[ev.Attacker.SteamId] = 0;
-                }
-            }
+           
             //Guardias//
             
 
@@ -407,27 +275,20 @@ namespace Passivesandskills2
         public void OnThrowGrenade(PlayerThrowGrenadeEvent ev)
         {
             
-            if ((ev.Player.TeamRole.Role == Role.NTF_CADET) && (ev.GrenadeType == GrenadeType.FLASHBANG))
-            {
-                ev.Player.AddHealth(20);
-            }
+            
         }
 
 
 
         public void OnScp096Panic(Scp096PanicEvent ev)
         {
-            ev.Player.AddHealth(25 * bajasllorona);
-            bajasllorona = 0;
+
         }
 
         public void OnPocketDimensionDie(PlayerPocketDimensionDieEvent ev)
         {
             //SCP 106 - El negro - shadow man//
-            foreach (Player player in PluginManager.Manager.Server.GetPlayers())
-            {
-                if (player.TeamRole.Role == Role.SCP_106) { player.AddHealth(20); }
-            }
+       
 
         }
 
@@ -455,13 +316,13 @@ namespace Passivesandskills2
 
         public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
         {
-            NTFli.Clear();
+            
             Scp173.Clear();
             Scp173pos.Clear();
             Classdh.Clear();
             Scientisth.Clear();
             
-            Scp106.Clear();
+            
             Zombie.Clear();
             Pasiva.Clear();
 
@@ -472,9 +333,9 @@ namespace Passivesandskills2
             overcharge = false;
 
 
-            bajasllorona = 0;
+           
 
-            contadorNTF = 0;
+            
             level = 0;
             computerchan = "0";
             gen = 0;
@@ -520,35 +381,7 @@ namespace Passivesandskills2
                     Scp173[ev.Player.SteamId] = true;
                 }
             }
-            // 096//
-            if (ev.Killer.TeamRole.Role == Role.SCP_096)
-            {
-                bajasllorona += 1;
-                foreach (KeyValuePair<string, Player> keyValuePair in Pasiva)
-                {
-                    if ((keyValuePair.Value.TeamRole.Team == Team.SCP) && (keyValuePair.Value.TeamRole.Role != Role.SCP_079))
-                    {
-                        if (keyValuePair.Value.TeamRole.Role == Role.SCP_096) { keyValuePair.Value.AddHealth(20); }
-                        if (keyValuePair.Value.TeamRole.Role == Role.SCP_049) { keyValuePair.Value.AddHealth(20); }
-                        if (keyValuePair.Value.TeamRole.Role == Role.SCP_049_2) { keyValuePair.Value.AddHealth(10); }
-                        if (keyValuePair.Value.TeamRole.Role == Role.SCP_173) { keyValuePair.Value.AddHealth(45); }
-                        if (keyValuePair.Value.TeamRole.Role == Role.SCP_106) { keyValuePair.Value.AddHealth(10); }
-                        if (keyValuePair.Value.TeamRole.Role == Role.SCP_939_89) { keyValuePair.Value.AddHealth(20); }
-                        if (keyValuePair.Value.TeamRole.Role == Role.SCP_939_53) { keyValuePair.Value.AddHealth(20); }
-                    }
-
-                }
-            }
-            if (ev.Player.TeamRole.Role == Role.SCP_096)
-            {
-                if (Llorona == true)
-                {
-                    llorondead = ev.Player.GetPosition();
-                    Timing.Run(LLORON(ev.Player, llorondead));
-                    Llorona = false;
-                }
-                else { Llorona = true; }
-            }
+            
 
 
 
