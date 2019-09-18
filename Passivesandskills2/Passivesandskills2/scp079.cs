@@ -9,7 +9,7 @@ using Smod2.API;
 namespace Passivesandskills2
 {
 	partial class scp079 : IEventHandler079AddExp, IEventHandlerPlayerDie, IEventHandlerGeneratorFinish, IEventHandler079LevelUp, 
-		IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerWarheadDetonate, IEventHandlerWarheadStartCountdown, IEventHandlerWarheadStopCountdown
+		IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerWarheadDetonate, IEventHandlerWarheadStartCountdown, IEventHandlerWarheadStopCountdown, IEventHandler079TeslaGate
 	{
 		
 		bool Nuket = false;
@@ -32,8 +32,9 @@ namespace Passivesandskills2
 			PluginManager.Manager.Server.Map.DetonateWarhead();
 			yield return 2f;
 			PluginManager.Manager.Server.Map.DetonateWarhead();
-
-		}
+            yield return 60f;
+            PluginManager.Manager.Server.Map.DetonateWarhead();
+        }
 
 
 		public static IEnumerable<float> Computer(Player player)
@@ -85,7 +86,7 @@ namespace Passivesandskills2
 		{
 			if (overcharge == false)
 			{
-				if ((Computerr.ContainsKey(ev.Killer.SteamId))) { PluginManager.Manager.Server.Map.Broadcast(1, "079 mató a un jugador", true); }
+				if ((Computerr.ContainsKey(ev.Killer.SteamId))&&(ev.Player.SteamId != ev.Killer.SteamId)) { PluginManager.Manager.Server.Map.Broadcast(1, "SCP-079 mató a un jugador usando el cuerpo de otra persona...", true); }
 				posicionteni = ev.Player.GetPosition();
 
 				if ((Boom == false) && (Computerr.ContainsKey(ev.Player.SteamId))) { Timing.Run(Computer(ev.Player)); }
@@ -145,5 +146,19 @@ namespace Passivesandskills2
 		{
 			Nuket = false;
 		}
-	}
+
+        public void On079TeslaGate(Player079TeslaGateEvent ev)
+        {
+            if(level > 3)
+            {
+                ev.APDrain /= 2;
+                if(ev.Player.Scp079Data.MaxAP >= 400)
+                {
+                    ev.APDrain = 10;
+                }
+
+            }
+
+        }
+    }
 }
