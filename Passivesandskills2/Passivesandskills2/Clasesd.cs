@@ -45,7 +45,7 @@ namespace Passivesandskills2
 					ev.Player.SetAmmo(AmmoType.DROPPED_9, ev.Player.GetAmmo(AmmoType.DROPPED_9) - 3);
 				}
 				// [Dboys rules] //
-				if ((ev.Attacker.GetHealth() <= 40) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA))
+				if ((ev.Attacker.GetHealth() <= 40) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA)&&(ev.DamageType != DamageType.FALLDOWN))
 				{
 					ev.Attacker.SetHealth(ev.Attacker.GetHealth() + Convert.ToInt32(ev.Damage));
 					if (ev.Attacker.GetHealth() <= 20)

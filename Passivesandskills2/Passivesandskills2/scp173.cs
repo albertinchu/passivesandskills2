@@ -10,8 +10,9 @@ namespace Passivesandskills2
 	
 		static Dictionary<string, bool> Scp173 = new Dictionary<string, bool>();
 		static Dictionary<string, Vector> Scp173pos = new Dictionary<string, Vector>();
+        static Dictionary<string, bool> Scp173deads = new Dictionary<string, bool>();
 
-		public static IEnumerable<float> Scp173timer(Player player, Vector pos)
+        public static IEnumerable<float> Scp173timer(Player player, Vector pos)
 		{
 
 			yield return 60f;
@@ -22,7 +23,7 @@ namespace Passivesandskills2
 			yield return 0.2f;
 			player.Teleport(pos);
 
-			while (true)
+			while (Scp173deads[player.SteamId])
 			{
 				if (player.TeamRole.Role == Role.SCP_173)
 				{
@@ -47,7 +48,8 @@ namespace Passivesandskills2
 
 				if (Scp173[ev.Player.SteamId] == true)
 				{
-					ev.SpawnRagdoll = false;
+                    Scp173deads[ev.Player.SteamId] = true;
+                    ev.SpawnRagdoll = false;
 					ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, true);
 					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
 					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
@@ -56,13 +58,16 @@ namespace Passivesandskills2
 					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
 					ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, true);
 					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
-					ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, true);
+                    ev.Player.GiveItem(ItemType.FRAG_GRENADE);
+                    ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, true);
 					Timing.Run(Scp173timer(ev.Player, posd));
-				}
+                    
+                }
 				else
 				{
 					Scp173[ev.Player.SteamId] = true;
-				}
+                    Scp173deads[ev.Player.SteamId] = false;
+                }
 			}
 
 		}
@@ -73,8 +78,8 @@ namespace Passivesandskills2
 			if ((ev.Player.TeamRole.Role == Smod2.API.Role.SCP_173) && (!Scp173.ContainsKey(ev.Player.SteamId)))
 			{
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Go big or go Home]: cuando mueres te vas a lo GRANDE, tu habilidad es [Resurgir etereo]: revives al minuto con intervalos de invisibilidad. ", false);
-
-				Scp173.Add(ev.Player.SteamId, true);
+                Scp173deads.Add(ev.Player.SteamId, true);
+                Scp173.Add(ev.Player.SteamId, true);
 				Scp173pos.Add(ev.Player.SteamId, ev.Player.GetPosition());
 			}
 		}
@@ -83,6 +88,7 @@ namespace Passivesandskills2
 		{
 			Scp173.Clear();
 			Scp173pos.Clear();
+            Scp173deads.Clear();
 		}
 	}
 }
