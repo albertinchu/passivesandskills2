@@ -9,11 +9,7 @@ namespace Passivesandskills2
 {
 	partial class scp049and0492 : IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerPlayerDie
 	{
-		private Passivesandskills2 plugin;
-		public scp049and0492(Passivesandskills2 plugin)
-		{
-			this.plugin = plugin;
-		}
+		
 		static Dictionary<string, int> Zombie = new Dictionary<string, int>();
 		Vector posmuertee;
 		int conta049 = 0;

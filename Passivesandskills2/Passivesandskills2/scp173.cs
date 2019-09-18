@@ -7,11 +7,7 @@ namespace Passivesandskills2
 {
 	partial class scp173 : IEventHandlerPlayerDie, IEventHandlerSetRole, IEventHandlerWaitingForPlayers
 	{
-		private Passivesandskills2 plugin;
-		public scp173(Passivesandskills2 plugin)
-		{
-			this.plugin = plugin;
-		}
+	
 		static Dictionary<string, bool> Scp173 = new Dictionary<string, bool>();
 		static Dictionary<string, Vector> Scp173pos = new Dictionary<string, Vector>();
 

@@ -7,13 +7,9 @@ using Smod2.Events;
 using Smod2.API;
 namespace Passivesandskills2
 {
-	partial class NTF_Team : IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerDisconnect, IEventHandlerThrowGrenade
+	partial class Ntfteam : IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerDisconnect, IEventHandlerThrowGrenade
 	{
-		private Passivesandskills2 plugin;
-		public NTF_Team(Passivesandskills2 plugin)
-		{
-			this.plugin = plugin;
-		}
+		
 		static Dictionary<string, bool> NTFli = new Dictionary<string, bool>();
 		int contadorNTF = 0;
 

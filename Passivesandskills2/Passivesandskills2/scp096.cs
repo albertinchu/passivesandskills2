@@ -14,12 +14,7 @@ namespace Passivesandskills2
 		int bajasllorona = 0;
 		Vector llorondead;
 
-		private Passivesandskills2 plugin;
-		public scp096(Passivesandskills2 plugin)
-		{
-			this.plugin = plugin;
-		}
-
+		
 		public static IEnumerable<float> LLORON(Player player, Vector pos)
 		{
 

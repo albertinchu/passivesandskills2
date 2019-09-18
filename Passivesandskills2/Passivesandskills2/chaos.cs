@@ -8,11 +8,7 @@ namespace Passivesandskills2
 {
 	partial class chaos : IEventHandlerPlayerDie, IEventHandlerSetRole, IEventHandlerPlayerHurt
 		{ 
-		private Passivesandskills2 plugin;
-		public chaos(Passivesandskills2 plugin)
-		{
-			this.plugin = plugin;
-		}
+	
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
 		{

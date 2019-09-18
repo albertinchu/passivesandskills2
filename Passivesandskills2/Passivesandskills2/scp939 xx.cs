@@ -14,11 +14,7 @@ namespace Passivesandskills2
 {
 	partial class scp939_xx : IEventHandlerPlayerHurt, IEventHandlerSetRole
 	{
-		private Passivesandskills2 plugin;
-		public scp939_xx(Passivesandskills2 plugin)
-		{
-			this.plugin = plugin;
-		}
+	
 		public static IEnumerable<float> Veneno(Player player)
 		{
 			int cantidad = 0;

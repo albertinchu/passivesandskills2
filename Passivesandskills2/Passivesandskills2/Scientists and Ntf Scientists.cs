@@ -6,13 +6,9 @@ using Smod2.API;
 
 namespace Passivesandskills2
 {
-	partial class Scientists_and_Ntf_Scientists : IEventHandlerPlayerDropItem, IEventHandlerPlayerHurt, IEventHandlerMedkitUse, IEventHandlerSetRole, IEventHandlerWaitingForPlayers
+	partial class scientist : IEventHandlerPlayerDropItem, IEventHandlerPlayerHurt, IEventHandlerMedkitUse, IEventHandlerSetRole, IEventHandlerWaitingForPlayers
 	{
-		private Passivesandskills2 plugin;
-		public Scientists_and_Ntf_Scientists(Passivesandskills2 plugin)
-		{
-			this.plugin = plugin;
-		}
+		
 		static Dictionary<string, bool> Scientisth = new Dictionary<string, bool>();
 
 		public static IEnumerable<float> ScientistTimer(Player player)

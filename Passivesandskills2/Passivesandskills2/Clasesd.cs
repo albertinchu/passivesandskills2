@@ -7,7 +7,7 @@ using Smod2.API;
 
 namespace Passivesandskills2
 {
-	partial class Clasesd : IEventHandlerPlayerHurt, IEventHandlerSetRole, IEventHandlerPlayerDropItem, IEventHandlerWaitingForPlayers
+	partial class classd : IEventHandlerPlayerHurt, IEventHandlerPlayerDropItem, IEventHandlerWaitingForPlayers, IEventHandlerSetRole
 	{
 
 		static Dictionary<string, bool> Classdh = new Dictionary<string, bool>();
@@ -22,11 +22,7 @@ namespace Passivesandskills2
 			Classdh[player.SteamId] = true;
 		}
 
-		private Passivesandskills2 plugin;
-		public Clasesd(Passivesandskills2 plugin)
-		{
-			this.plugin = plugin;
-		}
+		
 		public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
 			//Class D - [Astucia] //

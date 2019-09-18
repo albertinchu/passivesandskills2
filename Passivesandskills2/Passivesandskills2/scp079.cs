@@ -11,11 +11,7 @@ namespace Passivesandskills2
 	partial class scp079 : IEventHandler079AddExp, IEventHandlerPlayerDie, IEventHandlerGeneratorFinish, IEventHandler079LevelUp, 
 		IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerWarheadDetonate, IEventHandlerWarheadStartCountdown, IEventHandlerWarheadStopCountdown
 	{
-		private Passivesandskills2 plugin;
-		public scp079(Passivesandskills2 plugin)
-		{
-			this.plugin = plugin;
-		}
+		
 		bool Nuket = false;
 		bool Boom = false;
 		int gen = 0;

@@ -8,13 +8,9 @@ using System.Collections.Generic;
 
 namespace Passivesandskills2
 {
-	partial class Guards : IEventHandlerPlayerHurt, IEventHandlerSetRole, IEventHandlerThrowGrenade, IEventHandlerPlayerDie, IEventHandlerWaitingForPlayers
+	partial class guards : IEventHandlerPlayerHurt, IEventHandlerThrowGrenade, IEventHandlerPlayerDie, IEventHandlerWaitingForPlayers
 	{
-		private Passivesandskills2 plugin;
-		public Guards(Passivesandskills2 plugin)
-		{
-			this.plugin = plugin;
-		}
+		
 		static Dictionary<string, int> Guardias = new Dictionary<string, int>();
 
 		public static IEnumerable<float> Venenoguardias(Player player)

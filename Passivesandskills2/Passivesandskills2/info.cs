@@ -1,21 +1,17 @@
 ﻿
+using Smod2.API;
 using Smod2.EventHandlers;
 using Smod2.Events;
 
 
 namespace Passivesandskills2
 {
-	partial class Events :  IEventHandlerCallCommand
-	   
+	partial class classd : IEventHandlerCallCommand
 	{
-		private Passivesandskills2 plugin;
-		public Events(Passivesandskills2 plugin)
-		{
-			this.plugin = plugin;
-		}
-  
+       
+    
 
-		public void OnCallCommand(PlayerCallCommandEvent ev)
+    public void OnCallCommand(PlayerCallCommandEvent ev)
 		{
 			if (ev.Command.StartsWith("passivesandskillsinfo"))
 			{
@@ -91,8 +87,12 @@ namespace Passivesandskills2
 					}
 				}
 			}
-		} 
-	}
+		}
+
+    
+
+   
+}
 }
 
 

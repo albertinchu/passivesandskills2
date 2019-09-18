@@ -9,11 +9,7 @@ namespace Passivesandskills2
 {
 	partial class scp106 : IEventHandlerSetRole, IEventHandlerPocketDimensionDie, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers
 	{
-		private Passivesandskills2 plugin;
-		public scp106(Passivesandskills2 plugin)
-		{
-			this.plugin = plugin;
-		}
+	
 		static Dictionary<string, int> Scp106 = new Dictionary<string, int>();
 
 		public void OnPlayerHurt(PlayerHurtEvent ev)
