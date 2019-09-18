@@ -23,7 +23,7 @@ public class Passivesandskills : Plugin
 
 	public override void OnEnable()
 	{
-		this.Info("PassivesAndSkills - Activado para mas información usa .passivesandskills.");
+		this.Info("PassivesAndSkills - Activado para mas información usa .passivesandskillsinfo.");
 	}
 
 	public override void Register()
