@@ -11,15 +11,19 @@ namespace Passivesandskills2
 	{
 		
 		static Dictionary<string, int> Zombie = new Dictionary<string, int>();
-		Vector posmuertee;
+        static Dictionary<string, Role> Roles = new Dictionary<string, Role>();
+        Vector posmuertee;
 		int conta049 = 0;
 
 		public void OnSetRole(PlayerSetRoleEvent ev)
 		{
-			if ((ev.Player.TeamRole.Role == Role.SCP_049_2))
+            if (!Roles.ContainsKey(ev.Player.SteamId)) { Roles.Add(ev.Player.SteamId, ev.Player.TeamRole.Role); }
+            Roles[ev.Player.SteamId] = ev.Player.TeamRole.Role;
+            if ((ev.Player.TeamRole.Role == Role.SCP_049_2))
 			{
 				if (!Zombie.ContainsKey(ev.Player.SteamId))
 				{
+                    
 					Zombie.Add(ev.Player.SteamId, 0);
 					Timing.Run(Zombielive(ev.Player));
 				}
@@ -28,18 +32,18 @@ namespace Passivesandskills2
 			if (ev.Player.TeamRole.Role == Role.SCP_049)
 			{
 				ev.Player.SendConsoleMessage("[Mutar]: Cada 6 Zombies curados el zombie número 6 tiene un 35 % de mutar en otro SCP a los 3 minutos, No puede mutar en SCP-096 o en SCP-079, La mutación es totalmente aleatoria ", "red");
-				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Manipulador de cuerpos]: Curas de forma instantanea a clasesd/scientists [Mutar]: Cada 6 zombies uno tiene posibilidades de mutar (mas info en la consola)  .", false);
+				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Manipulador de cuerpos]: Curas de forma instantanea a clasesd/scientists [Mutar]: Cada 6 bajas una tiene posibilidades de mutar (mas info en la consola)  .", false);
 			}
 		}
 
 		public static IEnumerable<float> Zombielive(Player player)
 		{
-			while (player.TeamRole.Role == Role.SCP_049_2)
+			while (Roles[player.SteamId] == Role.SCP_049_2)
 			{
 				yield return 60f;
 				Zombie[player.SteamId] += 1;
 			}
-			if (player.TeamRole.Role != Role.SCP_049_2)
+			if (Roles[player.SteamId] != Role.SCP_049_2)
 			{
 				Zombie[player.SteamId] = 0;
 			}
