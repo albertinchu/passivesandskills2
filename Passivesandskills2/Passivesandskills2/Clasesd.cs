@@ -28,6 +28,7 @@ namespace Passivesandskills2
 			//Class D - [Astucia] //
 			if (ev.Attacker.TeamRole.Role == Role.CLASSD)
 			{
+                ev.Attacker.SetGhostMode(false);
 				if (ev.Player.GetGhostMode() == true) { ev.Player.SetGhostMode(false); }
 				if (ev.Player.GetAmmo(AmmoType.DROPPED_5) >= 3)
 				{
