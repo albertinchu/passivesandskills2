@@ -8,7 +8,7 @@ using scp4aiur;
 
 namespace Passivesandskills2
 {
-	partial class scp106 : IEventHandlerSetRole, IEventHandlerPocketDimensionDie, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandler106CreatePortal
+	partial class scp106 : IEventHandlerSetRole, IEventHandlerPocketDimensionDie, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandler106CreatePortal, IEventHandler106Teleport
 	{
 	
 		static Dictionary<string, int> Scp106 = new Dictionary<string, int>();
