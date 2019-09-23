@@ -4,15 +4,37 @@ using Smod2;
 using Smod2.EventHandlers;
 using Smod2.Events;
 using Smod2.API;
+using scp4aiur;
 
 namespace Passivesandskills2
 {
-	partial class scp106 : IEventHandlerSetRole, IEventHandlerPocketDimensionDie, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers
+	partial class scp106 : IEventHandlerSetRole, IEventHandlerPocketDimensionDie, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandler106CreatePortal
 	{
 	
 		static Dictionary<string, int> Scp106 = new Dictionary<string, int>();
+        static Dictionary<string, Vector> Portales = new Dictionary<string, Vector>();
 
-		public void OnPlayerHurt(PlayerHurtEvent ev)
+        public void On106CreatePortal(Player106CreatePortalEvent ev)
+        {
+            Portales[ev.Player.SteamId] = ev.Player.GetPosition();
+        }
+
+        public void On106Teleport(Player106TeleportEvent ev)
+        {
+            Timing.Run(Portaltp(ev.Player));
+        }
+
+        public static IEnumerable<float> Portaltp(Player player)
+        {
+
+            yield return 5f;
+            foreach (KeyValuePair<string, Vector> key in Portales)
+            {
+                if (player.SteamId == key.Key) { player.Teleport(key.Value); }
+            }
+        }
+
+        public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
 			//[Golpe Crítico]//
 			if ((ev.Attacker.TeamRole.Role == Role.SCP_106))
