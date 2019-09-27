@@ -24,7 +24,7 @@ namespace Passivesandskills2
 				player.AddHealth(-4);
 				cantidad += 1;
 			}
-			if (cantidad == 4) { cantidad = 0; }
+			
 
 		}
 
