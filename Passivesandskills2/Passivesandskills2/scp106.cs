@@ -13,7 +13,7 @@ namespace Passivesandskills2
 	
 		static Dictionary<string, int> Scp106 = new Dictionary<string, int>();
         static Dictionary<string, Vector> Portales = new Dictionary<string, Vector>();
-
+        bool suicidio = false;
         public void On106CreatePortal(Player106CreatePortalEvent ev)
         {
             Portales[ev.Player.SteamId] = ev.Player.GetPosition();
@@ -69,5 +69,7 @@ namespace Passivesandskills2
 		{
 			Scp106.Clear();
 		}
-	}
+
+       
+    }
 }
