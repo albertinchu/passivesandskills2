@@ -9,7 +9,7 @@ namespace Passivesandskills2
 	{
 	
 		static Dictionary<string, bool> Scp173 = new Dictionary<string, bool>();
-		static Dictionary<string, Vector> Scp173pos = new Dictionary<string, Vector>();
+		
         static Dictionary<string, bool> Scp173deads = new Dictionary<string, bool>();
 
         public static IEnumerable<float> Scp173timer(Player player, Vector pos)
@@ -30,6 +30,7 @@ namespace Passivesandskills2
 					player.SetGhostMode(true, false, false);
 					yield return 3f;
 					player.SetGhostMode(false);
+                    yield return 3f;
 				}
 				else
 				{
@@ -42,6 +43,7 @@ namespace Passivesandskills2
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
 		{
+            
 			if (ev.Player.TeamRole.Role == Role.SCP_173)
 			{
 				Vector posd = ev.Player.GetPosition();
@@ -50,16 +52,16 @@ namespace Passivesandskills2
 				{
                     Scp173deads[ev.Player.SteamId] = true;
                     ev.SpawnRagdoll = false;
-					ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, true);
+					ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, new Vector(0,0,0), true, 0, true);
 					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
 					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
-					ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, true);
+					ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, new Vector(0, 0, 0), true, 0, true);
 					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
 					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
-					ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, true);
+					ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, new Vector(0, 0, 0), true, 0, true);
 					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
                     ev.Player.GiveItem(ItemType.FRAG_GRENADE);
-                    ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, true);
+                    ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, new Vector(0, 0, 0), true, 0, true);
 					Timing.Run(Scp173timer(ev.Player, posd));
                     
                 }
@@ -80,14 +82,14 @@ namespace Passivesandskills2
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Go big or go Home]: cuando mueres te vas a lo GRANDE, tu habilidad es [Resurgir etereo]: revives al minuto con intervalos de invisibilidad. ", false);
                 Scp173deads.Add(ev.Player.SteamId, true);
                 Scp173.Add(ev.Player.SteamId, true);
-				Scp173pos.Add(ev.Player.SteamId, ev.Player.GetPosition());
+			
 			}
 		}
 
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
 			Scp173.Clear();
-			Scp173pos.Clear();
+			
             Scp173deads.Clear();
 		}
 	}

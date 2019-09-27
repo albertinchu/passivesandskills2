@@ -18,7 +18,7 @@ namespace Passivesandskills2
 		public static IEnumerable<float> Veneno(Player player)
 		{
 			int cantidad = 0;
-			while (cantidad != 4)
+			while (cantidad <= 4)
 			{
 				yield return 2f;
 				player.AddHealth(-4);
@@ -31,7 +31,7 @@ namespace Passivesandskills2
 		public static IEnumerable<float> Venenomortal(Player player)
 		{
 			int cantidadd = 0;
-			while (cantidadd != 3)
+			while (cantidadd <= 3)
 			{
 				yield return 3f;
 				if (player.GetHealth() <= 8) { player.Kill(DamageType.DECONT); }
