@@ -13,6 +13,9 @@ namespace Passivesandskills2
 		static Dictionary<string, bool> NTFli = new Dictionary<string, bool>();
 		int contadorNTF = 0;
 
+        // el comandante hace mas daño segun los jugadores NTF vivos y sus granadas aplican 200 de salud ademas de curar a sus aliados cuando disparan a aliados
+        // el Teniente tiene la habilidad de teletransportar a un enemigo no scp a su posición y de bloquearlo allí 2 segundos, funciona con los zombies.
+        // cadetes resisten mejor el daño de explosiones y las flash agregan 20 de salud
 		public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
 			// COMANDANTE //

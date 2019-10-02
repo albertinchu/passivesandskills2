@@ -12,7 +12,8 @@ namespace Passivesandskills2
 	{
 		
 		static Dictionary<string, int> Guardias = new Dictionary<string, int>();
-
+        // Los guardias tienen un sistema de xp con el que suben de nivel y desbloquean distintas habilidades
+        // esta explicado en .info todo lo que hace este codigo.
 		public static IEnumerable<float> Venenoguardias(Player player)
 		{
 			int cantidad = 0;

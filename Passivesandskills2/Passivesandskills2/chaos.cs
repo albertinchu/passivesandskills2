@@ -9,7 +9,7 @@ namespace Passivesandskills2
 	partial class chaos : IEventHandlerPlayerDie, IEventHandlerSetRole, IEventHandlerPlayerHurt
 		{ 
 	
-
+        //  hacen daño adicional = a la vida que les falta/2 y al matar NTF obtienen botiquines 
 		public void OnPlayerDie(PlayerDeathEvent ev)
 		{
 			// Chaos - [Carroñero] //

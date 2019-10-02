@@ -11,6 +11,11 @@ namespace Passivesandskills2
 		
 		static Dictionary<string, bool> Scientisth = new Dictionary<string, bool>();
 
+        // daño % a SCPS y se curan vida por dañar scps
+        // el cientifico tiene la habilidad de hacerse inmortal 5 s con su cafe mañanero 60s de cooldown
+        // los NTF scientist se curan el doble con los botiquines
+
+
 		public static IEnumerable<float> ScientistTimer(Player player)
 		{
 			player.SetGodmode(true);

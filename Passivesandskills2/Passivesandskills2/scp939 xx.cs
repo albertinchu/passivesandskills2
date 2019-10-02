@@ -14,7 +14,8 @@ namespace Passivesandskills2
 {
 	partial class scp939_xx : IEventHandlerPlayerHurt, IEventHandlerSetRole
 	{
-	
+	// En este codigo se supone que lo que hace es que un perro tenga reduccion de daño cuando esta a poca vida y además quién le dispare recivirá daño
+    // y el otro perro causa daño por veneno el cual es mortal y mas dañino cuando el perro esta a poca vida.
 		public static IEnumerable<float> Veneno(Player player)
 		{
 			int cantidad = 0;

@@ -11,7 +11,8 @@ namespace Passivesandskills2
 	{
 
 		static Dictionary<string, bool> Classdh = new Dictionary<string, bool>();
-
+        // Los clases d roban munición si su rival tiene munición, ganan salud = al daño que hacen cuando estan a poca vida el cual se duplica si estan a muy poca vida
+        // tienen la habilidad de hacerse invisible por 35 de salud durante 10 segundos , disparar desactiva la habilidad
 		public static IEnumerable<float> ClassdTimer(Player player)
 		{
 			player.SetGhostMode(true, false, false);
@@ -21,14 +22,15 @@ namespace Passivesandskills2
 			player.GiveItem(ItemType.FLASHLIGHT);
 			Classdh[player.SteamId] = true;
 		}
-
+        
 		
 		public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
 			//Class D - [Astucia] //
 			if (ev.Attacker.TeamRole.Role == Role.CLASSD)
 			{
-                ev.Attacker.SetGhostMode(false);
+                if(ev.Attacker.GetGhostMode() == true) { ev.Attacker.SetGhostMode(false); }
+                
 				if (ev.Player.GetGhostMode() == true) { ev.Player.SetGhostMode(false); }
 				if (ev.Player.GetAmmo(AmmoType.DROPPED_5) >= 3)
 				{

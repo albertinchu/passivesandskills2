@@ -15,6 +15,9 @@ namespace Passivesandskills2
         Vector posmuertee;
 		int conta049 = 0;
 
+        // El 049 cura instantaneo a los clases d y scientist y cada 6 clases d 1 puede mutar con un 35% en otro scp
+        // Los zombies cuanto mas tiempo vivan mas daño hacen
+
 		public void OnSetRole(PlayerSetRoleEvent ev)
 		{
             if (!Roles.ContainsKey(ev.Player.SteamId)) { Roles.Add(ev.Player.SteamId, ev.Player.TeamRole.Role); }

@@ -22,6 +22,9 @@ namespace Passivesandskills2
 		Vector posicionteni;
 		static Dictionary<string, Player> Pasivaa = new Dictionary<string, Player>();
 
+        // Este codigo ace que cuando la nuke sea activada el pc pueda robar el cuerpo de quien muera en el tesla y usarlo como quiera
+        // Ademas de que ganas ap infinito al nivel 5 en funcion de la xp que ganes
+
 		public static IEnumerable<float> Secondboom()
 		{
 			yield return 5f;
