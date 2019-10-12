@@ -19,14 +19,16 @@ namespace Passivesandskills2
 		public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
 			// COMANDANTE //
-			if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Team.NINETAILFOX) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN)&&(ev.Player.TeamRole.Role != Role.NTF_COMMANDER))
+			if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN))
 			{
-				float damage = ev.Damage;
-				ev.Damage = 0;
-				if (ev.Player.GetHealth() < 150) { ev.Player.AddHealth((int)Math.Round(damage) / 2); }
+                if(ev.Player.TeamRole.Role != Role.NTF_COMMANDER) { ev.Damage = 0; }
+                
+                if ((ev.Player.TeamRole.Role == Role.NTF_CADET)&& (ev.Player.GetHealth() <= 150)) { ev.Player.AddHealth(5); }
+                if ((ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT)&&(ev.Player.GetHealth() <= 180)){ ev.Player.AddHealth(8); }
+                if ((ev.Player.TeamRole.Role == Role.NTF_SCIENTIST) && (ev.Player.GetHealth() <= 180)) { ev.Player.AddHealth(8); }
+                
 
-
-			}
+            }
 
 			if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Team.NINETAILFOX) && (ev.DamageType == DamageType.FRAG))
 			{
