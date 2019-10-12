@@ -27,7 +27,7 @@ namespace Passivesandskills2
         public static IEnumerable<float> Portaltp(Player player)
         {
 
-            yield return 5.2f;
+            yield return 5.1f;
             player.Teleport(Portales[player.SteamId]);
         }
 

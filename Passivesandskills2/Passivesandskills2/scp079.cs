@@ -30,21 +30,15 @@ namespace Passivesandskills2
 			yield return 5f;
 			PluginManager.Manager.Server.Map.DetonateWarhead();
 			yield return 2f;
-			PluginManager.Manager.Server.Map.DetonateWarhead();
+			
 			yield return 2f;
-			PluginManager.Manager.Server.Map.DetonateWarhead();
+			
 			yield return 2f;
 			PluginManager.Manager.Server.Map.DetonateWarhead();
             yield return 60f;
             PluginManager.Manager.Server.Map.DetonateWarhead();
         }
 
-
-		public static IEnumerable<float> Computer(Player player)
-		{
-			yield return 0.5f;
-			player.ChangeRole(Role.SCP_079);
-		}
 
 
 		public static IEnumerable<float> Pcoff()
@@ -89,25 +83,7 @@ namespace Passivesandskills2
 		{
 			if (overcharge == false)
 			{
-				if ((Computerr.ContainsKey(ev.Killer.SteamId))&&(ev.Player.SteamId != ev.Killer.SteamId)) { PluginManager.Manager.Server.Map.Broadcast(1, "SCP-079 mató a un jugador usando el cuerpo de otra persona...", true); }
-				posicionteni = ev.Player.GetPosition();
-
-				if ((Boom == false) && (Computerr.ContainsKey(ev.Player.SteamId))) { Timing.Run(Computer(ev.Player)); }
-
-				if ((ev.Player.SteamId == ev.Killer.SteamId) && (Nuket == true) && (ev.DamageTypeVar == DamageType.TESLA) && (ev.Player.TeamRole.Role != Role.SCP_096))
-				{
-					var nueva = ev.Player.TeamRole.Role;
-					ev.SpawnRagdoll = false;
-					foreach (KeyValuePair<string, Player> keyValue in Pasivaa)
-					{
-						if ((keyValue.Value.TeamRole.Role == Role.SCP_079) && (nueva != Role.SCP_173)) { keyValue.Value.ChangeRole(nueva); }
-						if ((keyValue.Value.TeamRole.Role == Role.SCP_079) && (nueva == Role.SCP_173))
-						{
-							keyValue.Value.ChangeRole(nueva); keyValue.Value.Teleport(PluginManager.Manager.Server.Map.GetSpawnPoints(Role.SCP_049).First());
-						}
-
-					}
-				}
+			
 			}
 		}
 
