@@ -32,7 +32,7 @@ namespace Passivesandskills2
 					player.SetGhostMode(true, false, false);
 					yield return 5f;
 					player.SetGhostMode(false);
-                    yield return 5f;
+                    yield return 5.5f;
 				}
 				else
 				{
