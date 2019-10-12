@@ -81,7 +81,7 @@ namespace Passivesandskills2
 							ev.Player.SendConsoleMessage("La pasiva es [Preocupación por los tuyos]: Los disparos del comandante hacen como cura la mitad del daño que causarían a sus aliados y las granadas Instacuran 200 de salud (¡OJO!: No se aplica a guardias ni científicos) por lo que no uses esta pasiva con ellos ", "blue");
 							break;
 						case "ntfliuternant":
-							ev.Player.SendConsoleMessage("La pasiva es [cambiar las tornas]: Cambiar las tornas es una pasiva Tactica con 20s de cooldown  la cual intercambia tu posición con la del enemigo cuando este esta a menos del 50% de vida atrapandolo durante 2 segundos en tu posición. (Esta habilidad no se aplica a SCPS pero si a Zombies, tampoco se aplica a aliados por lo que no intentes estupideces...)", "blue");
+							ev.Player.SendConsoleMessage("La pasiva es [cambiar las tornas]: Cambiar las tornas es una pasiva Tactica con 40s de cooldown  la cual Teletransporta a un jugador cuando tiene menos del 50% de la vida a un lugar aleatorio. (Esta habilidad no se aplica a SCPS pero si a Zombies, Clases D y Scientists, tampoco se aplica a aliados por lo que no intentes estupideces...)", "blue");
 							break;
 
 					}

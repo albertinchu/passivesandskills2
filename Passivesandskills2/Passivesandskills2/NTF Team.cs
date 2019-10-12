@@ -19,7 +19,7 @@ namespace Passivesandskills2
 		public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
 			// COMANDANTE //
-			if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Team.NINETAILFOX) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN))
+			if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Team.NINETAILFOX) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN)&&(ev.Player.TeamRole.Role != Role.NTF_COMMANDER))
 			{
 				float damage = ev.Damage;
 				ev.Damage = 0;
@@ -48,12 +48,13 @@ namespace Passivesandskills2
 				Vector posli = ev.Player.GetPosition();
 				if ((ev.Player.TeamRole.Role == Role.CLASSD) || (ev.Player.TeamRole.Role == Role.SCIENTIST))
 				{
+                    if(ev.Player.TeamRole.Role == Role.SCIENTIST) { ev.Damage = ev.Damage / 3; }
 					if ((ev.Player.GetHealth() <= 50) && (NTFli[ev.Attacker.SteamId] == true))
 					{
 						NTFli[ev.Attacker.SteamId] = false;
-						Timing.Run(Intimidacion(ev.Player, ev.Attacker.GetPosition()));
+						Timing.Run(Intimidacion(ev.Player));
 						Timing.Run(Cooldown(ev.Player));
-						ev.Attacker.Teleport(posli);
+						
 					}
 
 				}
@@ -62,7 +63,7 @@ namespace Passivesandskills2
 					if ((ev.Player.GetHealth() <= 60) && (NTFli[ev.Attacker.SteamId] == true))
 					{
 						NTFli[ev.Attacker.SteamId] = false;
-						Timing.Run(Intimidacion(ev.Player, ev.Attacker.GetPosition()));
+						Timing.Run(Intimidacion(ev.Player));
 						Timing.Run(Cooldown(ev.Player));
 						ev.Attacker.Teleport(posli);
 					}
@@ -73,7 +74,7 @@ namespace Passivesandskills2
 					if ((ev.Player.GetHealth() <= (ev.Player.TeamRole.MaxHP/2)) && (NTFli[ev.Attacker.SteamId] == true))
 					{
 						NTFli[ev.Attacker.SteamId] = false;
-						Timing.Run(Intimidacion(ev.Player, ev.Attacker.GetPosition()));
+						Timing.Run(Intimidacion(ev.Player));
 						Timing.Run(Cooldown(ev.Player));
 						ev.Attacker.Teleport(posli);
 					}
@@ -83,22 +84,42 @@ namespace Passivesandskills2
 		// Teniente //
 		public static IEnumerable<float> Cooldown(Player player)
 		{
-			yield return 20f;
+			yield return 40f;
 			NTFli[player.SteamId] = true;
 		}
 		// TENEINETE HABILIDAD //
-		public static IEnumerable<float> Intimidacion(Player player, Vector pos3)
+		public static IEnumerable<float> Intimidacion(Player player)
 		{
-			int contadorb = 0;
-			while ((contadorb < 8))
-			{
-				contadorb += 1;
-				yield return 0.25f;
-				player.Teleport(pos3);
-			}
+            System.Random sala = new System.Random();
 
-
-		}
+			int contadorb = sala.Next(0,100);
+            yield return 2f;
+		
+            if((contadorb >= 0)&&(contadorb <= 15))
+            {
+                player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_173));
+            }
+            if ((contadorb >= 16) && (contadorb <= 33))
+            {
+                player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_096));
+            }
+            if ((contadorb >= 34) && (contadorb <= 50))
+            {
+                player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_049));
+            }
+            if ((contadorb >= 51) && (contadorb <= 81))
+            {
+                player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_939_53));
+            }
+            if ((contadorb >= 82) && (contadorb <= 95))
+            {
+                player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.FACILITY_GUARD));
+            }
+            if ((contadorb >= 96) && (contadorb <= 100))
+            {
+                player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.FACILITY_GUARD));
+            }
+        }
 
 
 
