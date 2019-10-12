@@ -14,7 +14,7 @@ namespace Passivesandskills2
 		int contadorNTF = 0;
 
         // el comandante hace mas daño segun los jugadores NTF vivos y sus granadas aplican 200 de salud ademas de curar a sus aliados cuando disparan a aliados
-        // el Teniente tiene la habilidad de teletransportar a un enemigo no scp a su posición y de bloquearlo allí 2 segundos, funciona con los zombies.
+        // el Teniente tiene la habilidad de teletransportar a un enemigo no scp a una sala aleatoria , funciona con los zombies.
         // cadetes resisten mejor el daño de explosiones y las flash agregan 20 de salud
 		public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
@@ -93,9 +93,9 @@ namespace Passivesandskills2
             System.Random sala = new System.Random();
 
 			int contadorb = sala.Next(0,100);
-            yield return 2f;
-		
-            if((contadorb >= 0)&&(contadorb <= 15))
+
+            yield return 1f;
+            if ((contadorb >= 0)&&(contadorb <= 15))
             {
                 player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_173));
             }
@@ -117,8 +117,10 @@ namespace Passivesandskills2
             }
             if ((contadorb >= 96) && (contadorb <= 100))
             {
-                player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.FACILITY_GUARD));
+                player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCIENTIST));
             }
+            yield return 1f;
+            if(player.TeamRole.Role == Role.SCIENTIST) { player.AddHealth(25); }
         }
 
 
@@ -133,7 +135,7 @@ namespace Passivesandskills2
 					NTFli.Add(ev.Player.SteamId, true);
 				}
 				contadorNTF += 1;
-				ev.Player.SendConsoleMessage("[cambiar las tornas]: Cambiar las tornas es una pasiva Tactica con 20s de cooldown  la cual intercambia tu posición con la del enemigo cuando este esta a menos del 50% de vida atrapandolo durante 2 segundos en tu posición. (Esta habilidad no se aplica a SCPS pero si a Zombies y tampoco se aplica a aliados)", "blue");
+				ev.Player.SendConsoleMessage("[cambiar las tornas]: Cambiar las tornas es una pasiva Tactica con 40s de cooldown  la cual teletransporta al enemigo cuando este esta a menos del 50% de vida . (Esta habilidad no se aplica a SCPS pero si a Zombies y tampoco se aplica a aliados)", "blue");
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [cambiar las tornas]: Cambias la posición del enemigo con la tuya cuando esta por debajo de 50% atrapandolo (mas info en la consola)", false);
 			}
 			// CADETE //
@@ -164,7 +166,7 @@ namespace Passivesandskills2
 
 			if ((ev.Player.TeamRole.Role == Role.NTF_CADET) && (ev.GrenadeType == GrenadeType.FLASHBANG))
 			{
-				ev.Player.AddHealth(20);
+				ev.Player.AddHealth(40);
 			}
 		}
 		public void OnDisconnect(DisconnectEvent ev)

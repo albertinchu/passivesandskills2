@@ -20,17 +20,19 @@ namespace Passivesandskills2
 
 			Scp173[player.SteamId] = false;
 			player.ChangeRole(Role.SCP_173);
+            
 			yield return 0.2f;
 			player.Teleport(pos);
+            player.SetHealth((player.GetHealth() / 3)*2);
 
 			while (Scp173deads[player.SteamId])
 			{
 				if (player.TeamRole.Role == Role.SCP_173)
 				{
 					player.SetGhostMode(true, false, false);
-					yield return 3f;
+					yield return 5f;
 					player.SetGhostMode(false);
-                    yield return 3f;
+                    yield return 5f;
 				}
 				else
 				{

@@ -49,10 +49,10 @@ namespace Passivesandskills2
 			if ((ev.Player.TeamRole.Role == Role.SCP_939_89) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FRAG))
 			{
 				if (ev.Attacker.GetHealth() > 2) { ev.Attacker.AddHealth(-2); } else { ev.Attacker.Kill(DamageType.WALL); }
-				if (ev.Player.GetHealth() <= 500)
+				if (ev.Player.GetHealth() <= 600)
 				{
 					ev.Damage /= 2;
-					if (ev.Attacker.GetHealth() > 5) { ev.Attacker.AddHealth(-3); } else { ev.Attacker.Kill(DamageType.WALL); }
+					if (ev.Attacker.GetHealth() > 6) { ev.Attacker.AddHealth(-4); } else { ev.Attacker.Kill(DamageType.WALL); }
 
 				}
 
@@ -61,7 +61,7 @@ namespace Passivesandskills2
 			if (ev.Attacker.TeamRole.Role == Role.SCP_939_53)
 			{
 				Timing.Run(Veneno(ev.Player));
-				if (ev.Attacker.GetHealth() <= 800)
+				if (ev.Attacker.GetHealth() <= 1400)
 				{
 					Timing.Run(Venenomortal(ev.Player));
 				}
@@ -78,7 +78,7 @@ namespace Passivesandskills2
 			}
 			if (ev.Player.TeamRole.Role == Role.SCP_939_89)
 			{
-				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Espinas]: dañas a tus atacantes con 2 de daño por bala. [Mejora de Acero]:inflinges hasta 5 de daño por bala como espinas, este efecto no se aplica a daño por granada o electricidad.", true);
+				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Espinas]: dañas a tus atacantes con 2 de daño por bala. [Mejora de Acero]:inflinges hasta 6 de daño por bala como espinas, este efecto no se aplica a daño por granada o electricidad.", true);
 			}
 		}
 	}

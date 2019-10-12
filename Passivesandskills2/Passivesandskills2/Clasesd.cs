@@ -81,9 +81,9 @@ namespace Passivesandskills2
 					ev.Player.AddHealth(-35);
 					Timing.Run(ClassdTimer(ev.Player));
 				}
-				else
-				{
-					ev.Player.Kill();
+                if (ev.Player.GetHealth() < 35)
+                {
+					ev.Player.Kill(DamageType.FALLDOWN);
 				}
 
 			}
