@@ -54,12 +54,15 @@ namespace Passivesandskills2
                     ev.SpawnRagdoll = false;
 					ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, new Vector(0,0,0), true, 0, true);
 					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
-					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
+                    ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, false);
+                    ev.Player.GiveItem(ItemType.FRAG_GRENADE);
 					ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, new Vector(0, 0, 0), true, 0, true);
 					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
-					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
+                    ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, true);
+                    ev.Player.GiveItem(ItemType.FRAG_GRENADE);
 					ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, new Vector(0, 0, 0), true, 0, true);
 					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
+                    ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true,posd, true, 0, true);
                     ev.Player.GiveItem(ItemType.FRAG_GRENADE);
                     ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, new Vector(0, 0, 0), true, 0, true);
 					Timing.Run(Scp173timer(ev.Player, posd));
