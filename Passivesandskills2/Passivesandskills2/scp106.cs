@@ -8,28 +8,15 @@ using scp4aiur;
 
 namespace Passivesandskills2
 {
-	partial class scp106 : IEventHandlerSetRole, IEventHandlerPocketDimensionDie, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandler106CreatePortal, IEventHandler106Teleport
+	partial class scp106 : IEventHandlerSetRole, IEventHandlerPocketDimensionDie, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers
 	{
 	
 		static Dictionary<string, int> Scp106 = new Dictionary<string, int>();
-        static Dictionary<string, Vector> Portales = new Dictionary<string, Vector>();
+        
        
-        public void On106CreatePortal(Player106CreatePortalEvent ev)
-        {
-            Portales[ev.Player.SteamId] = ev.Player.GetPosition();
-        }
+     
 
-        public void On106Teleport(Player106TeleportEvent ev)
-        {
-            Timing.Run(Portaltp(ev.Player));
-        }
-
-        public static IEnumerable<float> Portaltp(Player player)
-        {
-
-            yield return 5.1f;
-            player.Teleport(Portales[player.SteamId]);
-        }
+     
 
         public void OnPlayerHurt(PlayerHurtEvent ev)
 		{

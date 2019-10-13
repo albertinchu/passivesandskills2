@@ -44,6 +44,9 @@ namespace Passivesandskills2
 				}
 
 			}
+
+            yield return 5f;
+            muertes = 0;
 		}
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
