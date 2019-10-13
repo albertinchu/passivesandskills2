@@ -7,7 +7,7 @@ using Smod2.Events;
 using Smod2.API;
 namespace Passivesandskills2
 {
-	partial class Ntfteam : IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerDisconnect, IEventHandlerThrowGrenade
+	partial class Ntfteam : IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerDisconnect, IEventHandlerThrowGrenade, IEventHandlerPlayerDie
 	{
 		
 		static Dictionary<string, bool> NTFli = new Dictionary<string, bool>();
@@ -183,5 +183,11 @@ namespace Passivesandskills2
 				}
 			}
 		}
-	}
+
+        public void OnPlayerDie(PlayerDeathEvent ev)
+        {
+            if((ev.Player.TeamRole.Role == Role.NTF_COMMANDER)&&(ev.Killer.TeamRole.Team == Team.NINETAILFOX)&&(ev.Killer.TeamRole.Role != Role.FACILITY_GUARD))
+            { ev.Killer.Kill(DamageType.LURE); }
+        }
+    }
 }
