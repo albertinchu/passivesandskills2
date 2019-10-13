@@ -16,25 +16,27 @@ namespace Passivesandskills2
 	{
 	// En este codigo se supone que lo que hace es que un perro tenga reduccion de daño cuando esta a poca vida y además quién le dispare recivirá daño
     // y el otro perro causa daño por veneno el cual es mortal y mas dañino cuando el perro esta a poca vida.
-		public static IEnumerable<float> Veneno(Player player)
+		public static IEnumerable<float> Veneno(Player player, Player perro2)
 		{
 			int cantidad = 0;
 			while (cantidad <= 4)
 			{
 				yield return 2f;
-				player.AddHealth(-4);
+                perro2.AddHealth(4);
+                player.AddHealth(-4);
 				cantidad += 1;
 			}
 			
 
 		}
 
-		public static IEnumerable<float> Venenomortal(Player player)
+		public static IEnumerable<float> Venenomortal(Player player, Player perro2)
 		{
 			int cantidadd = 0;
 			while (cantidadd <= 3)
 			{
 				yield return 3f;
+                perro2.AddHealth(5);
 				if (player.GetHealth() <= 8) { player.Kill(DamageType.DECONT); }
 				player.AddHealth(-8);
 				cantidadd += 1;
@@ -60,10 +62,10 @@ namespace Passivesandskills2
 			//SCP 939-53 / Teemo//
 			if (ev.Attacker.TeamRole.Role == Role.SCP_939_53)
 			{
-				Timing.Run(Veneno(ev.Player));
+				Timing.Run(Veneno(ev.Player,ev.Attacker));
 				if (ev.Attacker.GetHealth() <= 1400)
 				{
-					Timing.Run(Venenomortal(ev.Player));
+					Timing.Run(Venenomortal(ev.Player,ev.Attacker));
 				}
 			}
 

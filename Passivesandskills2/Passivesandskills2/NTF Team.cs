@@ -142,7 +142,7 @@ namespace Passivesandskills2
 			{
 				
 				ev.Player.SendConsoleMessage("[Flash rápido]: Tras lanzar una granada cegadora obtienes un escudo de 20 de salud, (este se anula si el comandante usa su granada para aplicarte 200 de salud pero se acumula si se aplicó los 200 de salud antes)", "blue");
-				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Tenacidad explosiva]: Recives daño reducido entre 2 de las granadas.[Flash Rápido]: (mas info en la consola)", false);
+				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Tenacidad explosiva]: Recibes daño reducido entre 2 de las granadas.[Flash Rápido]: (mas info en la consola)", false);
 			}
 			// COMANDANTE //
 			if ((ev.Player.TeamRole.Role == Role.NTF_COMMANDER))

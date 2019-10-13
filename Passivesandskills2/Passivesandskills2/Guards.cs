@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Passivesandskills2
 {
-	partial class guards : IEventHandlerPlayerHurt, IEventHandlerThrowGrenade, IEventHandlerPlayerDie, IEventHandlerWaitingForPlayers
+	partial class guards : IEventHandlerPlayerHurt, IEventHandlerThrowGrenade, IEventHandlerPlayerDie, IEventHandlerWaitingForPlayers, IEventHandlerCallCommand
 	{
 		
 		static Dictionary<string, int> Guardias = new Dictionary<string, int>();
@@ -64,10 +64,11 @@ namespace Passivesandskills2
 			if ((ev.Player.TeamRole.Role == Role.FACILITY_GUARD) && (!Guardias.ContainsKey(ev.Player.SteamId)))
 			{
 				Guardias.Add(ev.Player.SteamId, 0);
-				ev.Player.SendConsoleMessage("[Cazadores]: Ganancia de XP = 1 por atacar un SCP, 3 por atacar a un chaos, 20 por eliminar un chaos o zombie , 60 por eliminar un SCP. Nivel: 2 Ganas 500 de todas las municiones y vida, Nivel 3 Ganas Veneno el las balas que causa 3 de daño adicional, Nivel: 4 Ganas 1 granada y cada vez que la lanzas la vuelves a obtener y obtienes mas vida, Nivel 5 nueva pasiva [Mismo destino]: te llevas a tu asesino con tigo ");
-				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cazadores]: subes de nivel por atacar y matar scps y chaos, recompensas por nivel en la consola.", false);
+				ev.Player.SendConsoleMessage("[Cazadores]: Ganancia de XP = 1 por atacar un SCP, 3 por atacar a un chaos, 30 por eliminar un chaos o zombie , (60-100) por eliminar un SCP. Nivel: 2 Ganas 500 de todas las municiones y vida, Nivel 3 Ganas Veneno el las balas que causa 3 de daño adicional, Nivel: 4 Ganas 1 granada y cada vez que la lanzas la vuelves a obtener y obtienes mas vida, Nivel 5 nueva pasiva [Mismo destino]: te llevas a tu asesino con tigo ");
+				
 			}
-		}
+            ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cazadores]: subes de nivel por atacar y matar scps y chaos, recompensas por nivel en la consola.", false);
+        }
 
 		public void OnThrowGrenade(PlayerThrowGrenadeEvent ev)
 		{
@@ -98,5 +99,23 @@ namespace Passivesandskills2
 		{
 			Guardias.Clear();
 		}
-	}
+
+        public void OnCallCommand(PlayerCallCommandEvent ev)
+        {
+            if (ev.Command.StartsWith("passivesandskillsinfo"))
+            {
+                if ((Guardias.ContainsKey(ev.Player.SteamId))&& (ev.Player.TeamRole.Role == Role.FACILITY_GUARD))
+                {
+                    ev.Player.SendConsoleMessage("Tu Xp es " + Guardias[ev.Player.SteamId].ToString(), "blue"); ;
+
+                }
+                if ((!Guardias.ContainsKey(ev.Player.SteamId))||(ev.Player.TeamRole.Role != Role.FACILITY_GUARD))
+                {
+                    ev.Player.SendConsoleMessage("Tu no eres un guradia", "blue");
+
+                }
+
+            }
+        }
+    }
 }

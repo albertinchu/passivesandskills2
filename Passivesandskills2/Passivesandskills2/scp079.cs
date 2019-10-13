@@ -13,7 +13,7 @@ namespace Passivesandskills2
 	{
 		
 		bool Nuket = false;
-		bool Boom = false;
+		static bool Boom = false;
 		int gen = 0;
 		int level = 0;
 		static bool overcharge = false;
@@ -36,7 +36,11 @@ namespace Passivesandskills2
 			yield return 2f;
 			PluginManager.Manager.Server.Map.DetonateWarhead();
             yield return 60f;
-            PluginManager.Manager.Server.Map.DetonateWarhead();
+            if (Boom)
+            {
+                PluginManager.Manager.Server.Map.DetonateWarhead();
+            }
+               
         }
 
 
@@ -105,6 +109,7 @@ namespace Passivesandskills2
 			level = 0;
 			computerchan = "0";
 			gen = 0;
+            Timing.Remove(1);
 		}
 
 		public void OnDetonate()

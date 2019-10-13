@@ -51,6 +51,7 @@ namespace Passivesandskills2
 			{
 				yield return 60f;
 				Zombie[player.SteamId] += 1;
+                player.AddHealth(75);
 			}
 			if (Roles[player.SteamId] != Role.SCP_049_2)
 			{
@@ -97,7 +98,7 @@ namespace Passivesandskills2
 			//[Pasiva zombie Cuerpo errante]//
 			if (ev.Attacker.TeamRole.Role == Role.SCP_049_2)
 			{
-				ev.Damage += (ev.Damage / 100) * 15 * Zombie[ev.Attacker.SteamId];
+				ev.Damage += (ev.Damage / 100) * 20 * Zombie[ev.Attacker.SteamId];
 			}
 		}
 
