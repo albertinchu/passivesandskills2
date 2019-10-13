@@ -32,7 +32,7 @@ namespace Passivesandskills2
 		{
 			if (ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY)
 			{
-				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Carroñero]: Recives un botiquin por cada NTF que asesines [Luchador de doble filo]: La vida que te falte la inflinges como daño adicional entre 2.", false);
+				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Carroñero]: Recibes un botiquin por cada NTF que asesines [Luchador de doble filo]: La vida que te falte la inflinges como daño adicional entre 2.", false);
 			}
 		}
 	}
