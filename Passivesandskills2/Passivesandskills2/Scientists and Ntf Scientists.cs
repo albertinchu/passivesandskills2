@@ -63,7 +63,7 @@ namespace Passivesandskills2
 			{
 				if (ev.Attacker.GetHealth() <= 125)
 				{
-					ev.Attacker.AddHealth(1);
+					ev.Attacker.AddHealth(2);
 				}
 				if (ev.Player.TeamRole.Role == Role.SCP_173) { ev.Damage = ev.Damage + 18; }
 				if (ev.Player.TeamRole.Role == Role.SCP_049) { ev.Damage = ev.Damage + 9; }
@@ -78,15 +78,15 @@ namespace Passivesandskills2
 			{
 				if (ev.Attacker.GetHealth() <= 150)
 				{
-					ev.Attacker.AddHealth(3);
+					ev.Attacker.AddHealth(4);
 				}
 				if (ev.Player.TeamRole.Role == Role.SCP_173) { ev.Damage = ev.Damage + 36; }
 				if (ev.Player.TeamRole.Role == Role.SCP_049) { ev.Damage = ev.Damage + 18; }
 				if (ev.Player.TeamRole.Role == Role.SCP_049_2) { ev.Damage = ev.Damage + 50; }
 				if (ev.Player.TeamRole.Role == Role.SCP_096) { ev.Damage = ev.Damage + 20; }
 				if (ev.Player.TeamRole.Role == Role.SCP_106) { ev.Damage = ev.Damage + 6; }
-				if (ev.Player.TeamRole.Role == Role.SCP_939_53) { ev.Damage = ev.Damage + 26; }
-				if (ev.Player.TeamRole.Role == Role.SCP_939_89) { ev.Damage = ev.Damage + 26; }
+				if (ev.Player.TeamRole.Role == Role.SCP_939_53) { ev.Player.AddHealth(-26); }
+				if (ev.Player.TeamRole.Role == Role.SCP_939_89) { ev.Player.AddHealth(-26) ; }
 			}
 		}
 

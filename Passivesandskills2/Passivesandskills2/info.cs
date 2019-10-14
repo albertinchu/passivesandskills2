@@ -45,19 +45,19 @@ namespace Passivesandskills2
 
 							break;
 						case "scientist":
-							ev.Player.SendConsoleMessage("La pasiva de los científicos es [Conocimientos SCP]: roban 1 de vida y inflingen mas daño a los Scps 0.5% de su vida maxima por bala, La habilidad es [el cafe mañanero]: la cual te hace invulnerable drurante 5 segundos y te cura 25 de salud, esta se puede acumular como escudo permanente y se puede usar una vez cada 60s  .", "white");
+							ev.Player.SendConsoleMessage("La pasiva de los científicos es [Conocimientos SCP]: Roban 1 de vida y inflingen mas daño a los Scps 0.5% de su vida maxima por bala, La habilidad es [el cafe mañanero]: la cual te hace invulnerable drurante 5 segundos y te cura 25 de salud, esta se puede acumular como escudo permanente y se puede usar una vez cada 60s  .", "white");
 							break;
 						case "ntfscientist":
-							ev.Player.SendConsoleMessage("La pasiva de los científicos es [Conocimientos SCP Avanzado]: roban 3 de vida y causan mas daño a los Scps 1% de su vida máxima por bala, [Medicina] Los botiquines curan el doble","blue");
+							ev.Player.SendConsoleMessage("La pasiva de los científicos es [Conocimientos SCP Avanzado]: Roban 3 de vida y causan mas daño a los Scps 1% de su vida máxima por bala, [Medicina] Los botiquines curan el doble","blue");
 							break;
 						case "ntfcadet":
-							ev.Player.SendConsoleMessage("La pasiva de los cadetes es [Tenacidad Explosiva] reciben daño reducido entre 2 de granadas,[Flash rápido]: Tras lanzar una granada cegadora obtienes un escudo de 20 de salud, (este se anula si el comandante usa su granada para aplicarte 200 de salud pero se acumula si se aplicó los 200 de salud antes de forma que acabarías con 220 de salud) ", "blue");
+							ev.Player.SendConsoleMessage("La pasiva de los cadetes es [Tenacidad Explosiva] Reciben daño reducido entre 2 de granadas,[Flash rápido]: Tras lanzar una granada cegadora obtienes un escudo de 20 de salud, (este se anula si el comandante usa su granada para aplicarte 200 de salud pero se acumula si se aplicó los 200 de salud antes de forma que acabarías con 220 de salud) ", "blue");
 							break;
 						case "chaos":
 							ev.Player.SendConsoleMessage("La pasiva de los chaos es [Carroñero]: Reciben un botiquín por cada NTF que asesinan [Luchador de doble filo]: La vida que le falte la inflinge como daño adicional entre 2 si les falta 50 causan 25 de daño", "green");
 							break;
 						case "scp-173":
-							ev.Player.SendConsoleMessage("La pasiva del 173 es [Go big or go Home]: cuando mueres te vas a lo GRANDE Literalmente, tu habilidad es [Resurgir etereo]: revives al minuto con intervalos de invisibilidad, aunque hagas respawn revivirás como 173", "red");
+							ev.Player.SendConsoleMessage("La pasiva del 173 es [Go big or go Home]: Cuando mueres te vas a lo GRANDE Literalmente, tu habilidad es [Resurgir etereo]: revives al minuto con intervalos de invisibilidad, aunque hagas respawn revivirás como 173", "red");
 							break;
 						case "scp-079":
 							ev.Player.SendConsoleMessage("La pasiva del 079 es [Mejorado] ahora cuando el SCP 079 sube al maximo nivel transforma su xp en ap máximo , su habilidad es [Control remoto] cuando la nuke es activada si algo muere por el tesla perdera el control y sera controlado por SCP 079, SCPS incluidos [Mejora tesla] = ahora cuando SCP 079 es de un nivel mayor al 3 gasta la mitad de ap en los teslas y si su ap máximo es mayor a 400 gasta solo 10 ap ","red");
@@ -78,7 +78,7 @@ namespace Passivesandskills2
 							ev.Player.SendConsoleMessage("La pasiva es [Cazadores] esta pasiva es un sistema de niveles y xp, empiezan con nivel 1 y van ganando 3 de xp por bala acertada a chaos y scps y ganan 30 de xp al matar chaos y zombies, la recompensa por nivel es Nivel 2: obtienen 500 de todas las municiones + 150 de salud instantanea. Nivel 3: Balas venenosas que hacen daño adicional. Nivel 4: Granada Frag que cuando es lanzada se recupera de forma indefinida y 300 de salud. Nivel 5: Mismo destino....   ", "grey");
 							break;
 						case "ntfcomander":
-							ev.Player.SendConsoleMessage("La pasiva es [Preocupación por los tuyos]: Los disparos del comandante hacen como cura la mitad del daño que causarían a sus aliados y las granadas Instacuran 200 de salud (¡OJO!: No se aplica a guardias ni científicos) por lo que no uses esta pasiva con ellos ", "blue");
+							ev.Player.SendConsoleMessage("La pasiva es [Preocupación por los tuyos]: Los disparos del comandante hacen como cura el daño que causarían a sus aliados y las granadas Instacuran 200 de salud (¡OJO!: No se aplica a guardias ni científicos) por lo que no uses esta pasiva con ellos ", "blue");
 							break;
 						case "ntfliuternant":
 							ev.Player.SendConsoleMessage("La pasiva es [cambiar las tornas]: Cambiar las tornas es una pasiva Tactica con 40s de cooldown  la cual Teletransporta a un jugador cuando tiene menos del 50% de la vida a un lugar aleatorio. (Esta habilidad no se aplica a SCPS pero si a Zombies, Clases D y Scientists, tampoco se aplica a aliados por lo que no intentes estupideces...)", "blue");

@@ -64,7 +64,7 @@ namespace Passivesandskills2
 						NTFli[ev.Attacker.SteamId] = false;
 						Timing.Run(Intimidacion(ev.Player));
 						Timing.Run(Cooldown(ev.Player));
-						ev.Attacker.Teleport(posli);
+						
 					}
 
 				}
@@ -75,7 +75,7 @@ namespace Passivesandskills2
 						NTFli[ev.Attacker.SteamId] = false;
 						Timing.Run(Intimidacion(ev.Player));
 						Timing.Run(Cooldown(ev.Player));
-						ev.Attacker.Teleport(posli);
+						
 					}
 				}
 			}
@@ -92,31 +92,51 @@ namespace Passivesandskills2
             System.Random sala = new System.Random();
 
 			int contadorb = sala.Next(0,100);
-
+            
             yield return 1f;
-            if ((contadorb >= 0)&&(contadorb <= 15))
+            if (player.TeamRole.Role != Role.SCIENTIST)
             {
-                player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_173));
+                if ((contadorb >= 0) && (contadorb <= 33))
+                {
+                    player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_173));
+                }           
+                if ((contadorb >= 34) && (contadorb <= 50))
+                {
+                    player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_049));
+                }
+                if ((contadorb >= 51) && (contadorb <= 81))
+                {
+                    player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_939_53));
+                }
+                if ((contadorb >= 82) && (contadorb <= 95))
+                {
+                    player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.FACILITY_GUARD));
+                }
+                if ((contadorb >= 96) && (contadorb <= 100))
+                {
+                    player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCIENTIST));
+                }
             }
-            if ((contadorb >= 16) && (contadorb <= 33))
+            if (player.TeamRole.Role == Role.SCIENTIST)
             {
-                player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_096));
-            }
-            if ((contadorb >= 34) && (contadorb <= 50))
-            {
-                player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_049));
-            }
-            if ((contadorb >= 51) && (contadorb <= 81))
-            {
-                player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_939_53));
-            }
-            if ((contadorb >= 82) && (contadorb <= 95))
-            {
-                player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.FACILITY_GUARD));
-            }
-            if ((contadorb >= 96) && (contadorb <= 100))
-            {
-                player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCIENTIST));
+             
+                if ((contadorb >= 0) && (contadorb <= 33))
+                {
+                    player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_096));
+                }
+                if ((contadorb >= 34) && (contadorb <= 50))
+                {
+                    player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_049));
+                }
+                if ((contadorb >= 51) && (contadorb <= 74))
+                {
+                    player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_939_53));
+                }
+                if ((contadorb >= 75) && (contadorb <= 100))
+                {
+                    player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.FACILITY_GUARD));
+                }
+                
             }
             yield return 1f;
             if(player.TeamRole.Role == Role.SCIENTIST) { player.AddHealth(25); }
@@ -135,13 +155,13 @@ namespace Passivesandskills2
 				}
 				
 				ev.Player.SendConsoleMessage("[cambiar las tornas]: Cambiar las tornas es una pasiva Tactica con 40s de cooldown  la cual teletransporta al enemigo cuando este esta a menos del 50% de vida . (Esta habilidad no se aplica a SCPS pero si a Zombies y tampoco se aplica a aliados)", "blue");
-				ev.Player.PersonalBroadcast(10, "Tu pasiva es [cambiar las tornas]: Cambias la posición del enemigo con la tuya cuando esta por debajo de 50% atrapandolo (mas info en la consola)", false);
+				ev.Player.PersonalBroadcast(10, "Tu pasiva es [cambiar las tornas]: Cambias la posición del enemigo de forma aleatoria cuando esta por debajo de 50% atrapandolo (mas info en la consola)", false);
 			}
 			// CADETE //
 			if (ev.Player.TeamRole.Role == Role.NTF_CADET)
 			{
 				
-				ev.Player.SendConsoleMessage("[Flash rápido]: Tras lanzar una granada cegadora obtienes un escudo de 20 de salud, (este se anula si el comandante usa su granada para aplicarte 200 de salud pero se acumula si se aplicó los 200 de salud antes)", "blue");
+				ev.Player.SendConsoleMessage("[Flash rápido]: Tras lanzar una granada cegadora obtienes un escudo de 40 de salud, (este se anula si el comandante usa su granada para aplicarte 200 de salud pero se acumula si se aplicó los 200 de salud antes)", "blue");
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Tenacidad explosiva]: Recibes daño reducido entre 2 de las granadas.[Flash Rápido]: (mas info en la consola)", false);
 			}
 			// COMANDANTE //

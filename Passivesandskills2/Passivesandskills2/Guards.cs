@@ -102,7 +102,7 @@ namespace Passivesandskills2
 
         public void OnCallCommand(PlayerCallCommandEvent ev)
         {
-            if (ev.Command.StartsWith("passivesandskillsinfo"))
+            if (ev.Command.StartsWith("passivesandskillslevel"))
             {
                 if ((Guardias.ContainsKey(ev.Player.SteamId))&& (ev.Player.TeamRole.Role == Role.FACILITY_GUARD))
                 {
