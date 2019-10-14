@@ -20,12 +20,14 @@ namespace Passivesandskills2
 
         public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
+            if(ev.Attacker.GetGhostMode() == true) { ev.Attacker.SetGhostMode(false); }
 			//[Golpe Crítico]//
 			if ((ev.Attacker.TeamRole.Role == Role.SCP_106))
 			{
 				Scp106[ev.Attacker.SteamId] += 1;
 				if (Scp106[ev.Attacker.SteamId] >= 5)
 				{
+                    ev.Attacker.SetGhostMode(true);
 					ev.Player.Kill(DamageType.SCP_106);
 					Scp106[ev.Attacker.SteamId] = 0;
 				}
@@ -46,6 +48,7 @@ namespace Passivesandskills2
             {
                 Scp106.Add(ev.Player.SteamId, 0);
                 ev.Player.PersonalBroadcast(10, "Tu pasiva es [Digestión]: Te curas cuando alguien muere en tu dimensión [Golpe Crítico]: Tu quinta victima muere al instante.", false);
+                ev.Player.PersonalBroadcast(10, "Tu Habilidad es [Presencia Espectral]: Cuando ejecutas a una persona por Golpe crítico te haces invisible hasta que ataques a otra persona.", false);
             }
            
 		}

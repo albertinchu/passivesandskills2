@@ -67,7 +67,11 @@ namespace Passivesandskills2
 				ev.Player.SendConsoleMessage("[Cazadores]: Ganancia de XP = 1 por atacar un SCP, 3 por atacar a un chaos, 30 por eliminar un chaos o zombie , (60-100) por eliminar un SCP. Nivel: 2 Ganas 500 de todas las municiones y vida, Nivel 3 Ganas Veneno el las balas que causa 3 de daño adicional, Nivel: 4 Ganas 1 granada y cada vez que la lanzas la vuelves a obtener y obtienes mas vida, Nivel 5 nueva pasiva [Mismo destino]: te llevas a tu asesino con tigo ");
 				
 			}
-            ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cazadores]: subes de nivel por atacar y matar scps y chaos, recompensas por nivel en la consola.", false);
+            if(ev.Player.TeamRole.Role == Role.FACILITY_GUARD)
+            {
+                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cazadores]: subes de nivel por atacar y matar scps y chaos, recompensas por nivel en la consola.", false);
+            }
+            
         }
 
 		public void OnThrowGrenade(PlayerThrowGrenadeEvent ev)
@@ -106,7 +110,29 @@ namespace Passivesandskills2
             {
                 if ((Guardias.ContainsKey(ev.Player.SteamId))&& (ev.Player.TeamRole.Role == Role.FACILITY_GUARD))
                 {
-                    ev.Player.SendConsoleMessage("Tu Xp es " + Guardias[ev.Player.SteamId].ToString(), "blue"); ;
+                    ev.Player.SendConsoleMessage("Tu Xp es " + Guardias[ev.Player.SteamId].ToString(), "blue"); 
+                    if(Guardias[ev.Player.SteamId] <= 49)
+                    {
+                        ev.Player.SendConsoleMessage("Tu Nivel es 1", "blue");
+                    }
+                    if ((Guardias[ev.Player.SteamId] >= 50)&&(Guardias[ev.Player.SteamId] <= 149))
+                    {
+                        ev.Player.SendConsoleMessage("Tu Nivel es 2", "blue");
+
+                    }
+                    if ((Guardias[ev.Player.SteamId] >= 150) && (Guardias[ev.Player.SteamId] <= 299))
+                    {
+                        ev.Player.SendConsoleMessage("Tu Nivel es 3", "blue");
+                    }
+                    if ((Guardias[ev.Player.SteamId] >= 300) && (Guardias[ev.Player.SteamId] <= 449))
+                    {
+                        ev.Player.SendConsoleMessage("Tu Nivel es 4", "blue");
+                    }
+                    if ((Guardias[ev.Player.SteamId] >= 550) )
+                    {
+                        ev.Player.SendConsoleMessage("Nivel Máximo, Nivel 5", "red");
+                    }
+
 
                 }
                 if ((!Guardias.ContainsKey(ev.Player.SteamId))||(ev.Player.TeamRole.Role != Role.FACILITY_GUARD))

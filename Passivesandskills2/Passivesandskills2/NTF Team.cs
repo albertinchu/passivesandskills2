@@ -208,6 +208,8 @@ namespace Passivesandskills2
         {
             if((ev.Player.TeamRole.Role == Role.NTF_COMMANDER)&&(ev.Killer.TeamRole.Team == Team.NINETAILFOX)&&(ev.Killer.TeamRole.Role != Role.FACILITY_GUARD))
             { ev.Killer.Kill(DamageType.LURE); }
+
+
         }
     }
 }

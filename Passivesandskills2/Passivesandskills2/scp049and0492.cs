@@ -26,18 +26,19 @@ namespace Passivesandskills2
 			{
                 conta049 += 1;
                 if (!Zombie.ContainsKey(ev.Player.SteamId))
-				{
-                    
-					Zombie.Add(ev.Player.SteamId, 0);
-					Timing.Run(Zombielive(ev.Player));
-                    if(conta049 >= 6)
-                    {
-                        Timing.Run(Mutar(ev.Player));
-                        conta049 = 0;
-                    }
+				{                
+					Zombie.Add(ev.Player.SteamId, 0);	            
 				}
-				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cuerpo errante]: Cuanto mas tiempo permanezcas con vida mas daño haces (15% + de daño cada 1 minuto de vida).", false);
-			}
+                Timing.Run(Zombielive(ev.Player));
+                if (conta049 >= 6)
+                {
+                    Timing.Run(Mutar(ev.Player));
+                    conta049 = 0;
+                }
+                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cuerpo errante]: Cuanto mas tiempo permanezcas con vida mas daño haces (15% + de daño cada 1 minuto de vida).", false);
+                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cuerpo Creciente]: Cada minuto ganas 75 de salud de forma permanente a no ser que te quedes quieto, (perderas la vida extra)", false);
+
+            }
 			if (ev.Player.TeamRole.Role == Role.SCP_049)
 			{
 				ev.Player.SendConsoleMessage("[Mutar]: Cada 6 Zombies curados el zombie número 6 tiene un 35 % de mutar en otro SCP a los 3 minutos, No puede mutar en SCP-096 o en SCP-079, La mutación es totalmente aleatoria ", "red");
@@ -117,12 +118,8 @@ namespace Passivesandskills2
 				if ((ev.Player.TeamRole.Team == Team.SCIENTIST) || (ev.Player.TeamRole.Team == Team.CLASSD))
 				{
 					Timing.Run(Resurrec(ev.Player, posmuertee));
-					conta049 += 1;
-					if (conta049 >= 6)
-					{
-						Timing.Run(Mutar(ev.Player));
-						conta049 = 0;
-					}
+					
+					
 				}
 
 			}
