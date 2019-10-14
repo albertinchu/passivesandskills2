@@ -272,6 +272,21 @@ namespace Passivesandskills2
 
                 }
             }
+            if (ev.Command.StartsWith("nukenow"))
+            {
+                if (ev.Player.TeamRole.Role != Role.SCP_079) { ev.ReturnMessage = "Tu no eres SCP-079, pero buen inteneto ;)"; }
+                if (ev.Player.TeamRole.Role == Role.SCP_079)
+                {
+                    if (ev.Player.Scp079Data.AP < 450) { ev.ReturnMessage = "Necesitas mas Energía (450)"; }
+                    if (ev.Player.Scp079Data.AP >= 450)
+                    {
+                        ev.Player.Scp079Data.AP -= 450;
+                        ev.ReturnMessage = "..., Lo importante es ganar ....";
+                        PluginManager.Manager.Server.Map.DetonateWarhead();
+                    }
+                }
+                
+            }
         }
     }
 }
