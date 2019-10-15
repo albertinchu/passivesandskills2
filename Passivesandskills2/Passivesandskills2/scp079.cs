@@ -10,8 +10,9 @@ namespace Passivesandskills2
 {
 	partial class scp079 : IEventHandler079AddExp, IEventHandlerPlayerDie, IEventHandlerGeneratorFinish, IEventHandler079LevelUp,IEventHandlerCallCommand,
 		IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerWarheadDetonate, IEventHandlerWarheadStartCountdown, IEventHandlerWarheadStopCountdown, IEventHandler079TeslaGate
+        ,IEventHandlerElevatorUse
 	{
-		
+		static bool elevatoss = false;
 		bool Nuket = false;
 		static bool Boom = false;
 		int gen = 0;
@@ -115,6 +116,13 @@ namespace Passivesandskills2
             habilidad079 = true;
 
         }
+        public static IEnumerable<float> elevators()
+        {
+            elevatoss = true;
+            yield return 20f;
+            elevatoss = false;
+
+        }
 
 
 
@@ -184,6 +192,7 @@ namespace Passivesandskills2
 			gen = 0;
             Timing.Remove(1);
             habilidad079 = true;
+            elevatoss = false;
 		}
 
 		public void OnDetonate()
@@ -285,6 +294,34 @@ namespace Passivesandskills2
                         PluginManager.Manager.Server.Map.DetonateWarhead();
                     }
                 }
+                
+            }
+            if (ev.Command.StartsWith("elevatorsoff"))
+            {
+                if (ev.Player.TeamRole.Role != Role.SCP_079) { ev.ReturnMessage = "Tu no eres SCP-079, pero buen inteneto ;)"; }
+                if (ev.Player.TeamRole.Role == Role.SCP_079)
+                {
+                    if (ev.Player.Scp079Data.AP < 200) { ev.ReturnMessage = "Necesitas mas Energía (200)"; }
+                    if (ev.Player.Scp079Data.AP >= 200)
+                    {
+                        ev.Player.Scp079Data.AP -= 200;
+                        ev.Player.Scp079Data.MaxAP += 20;
+                        ev.ReturnMessage = "Protocolo 496E63656E64696F2064657465637461646F2C20616E756C616E646F20617363656E736F72657320 ejecutado";
+                        Timing.Run(Cooldown079());
+                        Timing.Run(elevators());
+                        habilidad079 = false;
+                    }
+                }
+
+            }
+        }
+
+        public void OnElevatorUse(PlayerElevatorUseEvent ev)
+        {
+            if (elevatoss)
+            {
+                if(ev.Player.TeamRole.Team != Team.SCP) { ev.AllowUse = false; }
+               
                 
             }
         }
