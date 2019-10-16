@@ -30,33 +30,38 @@ namespace Passivesandskills2
 
 		public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
-			if ((ev.Attacker.TeamRole.Role == Role.FACILITY_GUARD) && ((ev.Player.TeamRole.Team == Team.SCP) || (ev.Player.TeamRole.Team == Team.CHAOS_INSURGENCY)))
-			{
-				Guardias[ev.Attacker.SteamId] += 1;
-				if (Guardias[ev.Attacker.SteamId] == 50)
-				{
-					ev.Attacker.PersonalBroadcast(3, "<color=#FF05FF> Nivel 2 </color>", false);
-					ev.Attacker.SetHealth(150, DamageType.CONTAIN);
-					ev.Attacker.SetAmmo(AmmoType.DROPPED_5, 500);
-					ev.Attacker.SetAmmo(AmmoType.DROPPED_7, 500);
-					ev.Attacker.SetAmmo(AmmoType.DROPPED_9, 500);
-				}
-				if (Guardias[ev.Attacker.SteamId] == 150)
-				{
-					ev.Attacker.PersonalBroadcast(3, "<color=#FF0500> Nivel 3 </color>", false);
-				}
-				if (Guardias[ev.Attacker.SteamId] >= 150) { Timing.Run(Venenoguardias(ev.Player)); }
-				if (Guardias[ev.Attacker.SteamId] == 300)
-				{
-					ev.Attacker.PersonalBroadcast(3, "<color=#C50000> Nivel 4 </color>", false);
-					ev.Attacker.GiveItem(ItemType.FRAG_GRENADE);
-					ev.Attacker.SetHealth(300);
-				}
-				if (Guardias[ev.Attacker.SteamId] == 550)
-				{
-					ev.Attacker.PersonalBroadcast(3, "<color=#C50000> Nivel 5 </color>", false);
-				}
-			}
+            
+            if ((ev.Attacker.TeamRole.Role == Role.FACILITY_GUARD))
+            {
+                if (!Guardias.ContainsKey(ev.Attacker.SteamId)) { Guardias.Add(ev.Attacker.SteamId, 0); }
+                if ((ev.Attacker.TeamRole.Role == Role.CHAOS_INSURGENCY) || (ev.Player.TeamRole.Team == Team.SCP))
+                {
+                    Guardias[ev.Attacker.SteamId] += 1;
+                    if (Guardias[ev.Attacker.SteamId] == 50)
+                    {
+                        ev.Attacker.PersonalBroadcast(3, "<color=#FF05FF> Nivel 2 </color>", false);
+                        ev.Attacker.SetHealth(150, DamageType.CONTAIN);
+                        ev.Attacker.SetAmmo(AmmoType.DROPPED_5, 500);
+                        ev.Attacker.SetAmmo(AmmoType.DROPPED_7, 500);
+                        ev.Attacker.SetAmmo(AmmoType.DROPPED_9, 500);
+                    }
+                    if (Guardias[ev.Attacker.SteamId] == 150)
+                    {
+                        ev.Attacker.PersonalBroadcast(3, "<color=#FF0500> Nivel 3 </color>", false);
+                    }
+                    if (Guardias[ev.Attacker.SteamId] >= 150) { Timing.Run(Venenoguardias(ev.Player)); }
+                    if (Guardias[ev.Attacker.SteamId] == 300)
+                    {
+                        ev.Attacker.PersonalBroadcast(3, "<color=#C50000> Nivel 4 </color>", false);
+                        ev.Attacker.GiveItem(ItemType.FRAG_GRENADE);
+                        ev.Attacker.SetHealth(300);
+                    }
+                    if (Guardias[ev.Attacker.SteamId] == 550)
+                    {
+                        ev.Attacker.PersonalBroadcast(3, "<color=#C50000> Nivel 5 </color>", false);
+                    }
+                }
+            }
 		}
 
 		public void OnSetRole(PlayerSetRoleEvent ev)
