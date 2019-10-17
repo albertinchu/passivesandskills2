@@ -27,18 +27,7 @@ namespace Passivesandskills2
                 if ((ev.Player.TeamRole.Team == Team.NINETAILFOX) || (ev.Player.TeamRole.Team == Team.SCIENTIST) || (ev.Player.TeamRole.Team == Team.CLASSD))
 
                 { ev.Damage += ((120 - ev.Attacker.GetHealth()) / 2); }
-                 if(ev.Player.TeamRole.Role == Role.SCP_106)
-                {
-                    ev.Damage += ((120 - ev.Attacker.GetHealth()) / 10);
-                }
-                if (ev.Player.TeamRole.Role == Role.SCP_049_2)
-                {
-                    ev.Damage += ((120 - ev.Attacker.GetHealth()));
-                }
-                if ((ev.Player.TeamRole.Team == Team.SCP)&&(ev.Player.TeamRole.Role != Role.SCP_106)&&(ev.Player.TeamRole.Role != Role.SCP_049_2))
-                {
-                    ev.Damage += ((120 - ev.Attacker.GetHealth()) / 8);
-                }
+                                       
             }
 		}
 
@@ -47,7 +36,8 @@ namespace Passivesandskills2
 			if (ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY)
 			{
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Carroñero]: Recibes un botiquin por cada NTF que asesines [Luchador de doble filo]: La vida que te falte la inflinges como daño adicional entre 2.", false);
-			}
+                ev.Player.PersonalBroadcast(10, "Luchador de doble filo no afecta a SCPS", false);
+            }
 		}
 	}
 

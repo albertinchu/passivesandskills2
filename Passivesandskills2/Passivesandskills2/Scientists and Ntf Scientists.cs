@@ -6,17 +6,18 @@ using Smod2.API;
 
 namespace Passivesandskills2
 {
-	partial class scientist : IEventHandlerPlayerDropItem, IEventHandlerPlayerHurt, IEventHandlerMedkitUse, IEventHandlerSetRole, IEventHandlerWaitingForPlayers
+	partial class scientist : IEventHandlerPlayerDropItem, IEventHandlerPlayerHurt, IEventHandlerMedkitUse, IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerCallCommand
 	{
 		
 		static Dictionary<string, bool> Scientisth = new Dictionary<string, bool>();
+        static Dictionary<string, bool> Items = new Dictionary<string, bool>();
 
         // daño % a SCPS y se curan vida por dañar scps
         // el cientifico tiene la habilidad de hacerse inmortal 5 s con su cafe mañanero 60s de cooldown
         // los NTF scientist se curan el doble con los botiquines
 
 
-		public static IEnumerable<float> ScientistTimer(Player player)
+        public static IEnumerable<float> ScientistTimer(Player player)
 		{
 			player.SetGodmode(true);
 			yield return 5f;
@@ -32,8 +33,15 @@ namespace Passivesandskills2
 			yield return 5f;
 			player.GiveItem(ItemType.CUP);
 		}
+        public static IEnumerable<float> Itemstimer(Player player)
+        {
+            Items[player.SteamId] = false;
+            yield return 180f;
+            Items[player.SteamId] = true;
 
-		public void OnMedkitUse(PlayerMedkitUseEvent ev)
+        }
+
+        public void OnMedkitUse(PlayerMedkitUseEvent ev)
 		{
 			if (ev.Player.TeamRole.Role == Role.NTF_SCIENTIST)
 			{
@@ -110,6 +118,29 @@ namespace Passivesandskills2
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
 			Scientisth.Clear();
+            Items.Clear();
 		}
-	}
+
+        public void OnCallCommand(PlayerCallCommandEvent ev)
+        {
+            if (ev.Command.StartsWith("habilidad"))
+            {
+                if (!Items.ContainsKey(ev.Player.SteamId))
+                {
+                    Items.Add(ev.Player.SteamId, true);
+
+                }
+                if((Items[ev.Player.SteamId])&&(ev.Player.TeamRole.Role == Role.CLASSD))
+                {
+                    ev.Player.GiveItem(ItemType.FLASHLIGHT);
+                    Timing.Run(Itemstimer(ev.Player));
+                }
+                if ((Items[ev.Player.SteamId]) && (ev.Player.TeamRole.Role == Role.SCIENTIST))
+                {
+                    Timing.Run(Itemstimer(ev.Player));
+                    ev.Player.GiveItem(ItemType.CUP);
+                }
+            }
+        }
+    }
 }

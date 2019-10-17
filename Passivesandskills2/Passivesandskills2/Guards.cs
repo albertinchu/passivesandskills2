@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Passivesandskills2
 {
-	partial class guards : IEventHandlerPlayerHurt, IEventHandlerThrowGrenade, IEventHandlerPlayerDie, IEventHandlerWaitingForPlayers, IEventHandlerCallCommand
+	partial class guards : IEventHandlerPlayerHurt, IEventHandlerThrowGrenade, IEventHandlerPlayerDie, IEventHandlerWaitingForPlayers, IEventHandlerCallCommand, IEventHandlerSetRole
 	{
 		
 		static Dictionary<string, int> Guardias = new Dictionary<string, int>();
@@ -140,11 +140,16 @@ namespace Passivesandskills2
 
 
                 }
-                if ((!Guardias.ContainsKey(ev.Player.SteamId))||(ev.Player.TeamRole.Role != Role.FACILITY_GUARD))
+                if ((ev.Player.TeamRole.Role != Role.FACILITY_GUARD))
                 {
                     ev.Player.SendConsoleMessage("Tu no eres un guradia", "blue");
 
                 }
+                if (!Guardias.ContainsKey(ev.Player.SteamId))
+                {
+                    ev.Player.SendConsoleMessage("O tu no eres un guardia o estas mas bugeado que este juego", "blue");
+                }
+
 
             }
         }

@@ -7,7 +7,7 @@ using Smod2.API;
 
 namespace Passivesandskills2
 {
-	partial class classd : IEventHandlerPlayerHurt, IEventHandlerPlayerDropItem, IEventHandlerWaitingForPlayers, IEventHandlerSetRole
+	partial class classd : IEventHandlerPlayerHurt, IEventHandlerPlayerDropItem, IEventHandlerWaitingForPlayers, IEventHandlerSetRole, IEventHandlerCallCommand
 	{
 
 		static Dictionary<string, bool> Classdh = new Dictionary<string, bool>();
@@ -75,17 +75,18 @@ namespace Passivesandskills2
 			if ((ev.Player.TeamRole.Role == Role.CLASSD) && (Classdh[ev.Player.SteamId] == true) && (ev.Item.ItemType == ItemType.FLASHLIGHT))
 			{
 				ev.ChangeTo = ItemType.NULL;
-				if (ev.Player.GetHealth() >= 35)
+                if (ev.Player.GetHealth() < 35)
+                {
+                    ev.Player.Kill(DamageType.FALLDOWN);
+                }
+
+                if (ev.Player.GetHealth() >= 35)
 				{
 					Classdh[ev.Player.SteamId] = false;
 					ev.Player.AddHealth(-35);
 					Timing.Run(ClassdTimer(ev.Player));
 				}
-                if (ev.Player.GetHealth() < 35)
-                {
-					ev.Player.Kill(DamageType.FALLDOWN);
-				}
-
+               
 			}
 		}
 
@@ -93,5 +94,8 @@ namespace Passivesandskills2
 		{
 			Classdh.Clear();
 		}
-	}
+       
+
+    }
+    
 }

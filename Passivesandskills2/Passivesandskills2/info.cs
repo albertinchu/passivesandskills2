@@ -13,6 +13,7 @@ namespace Passivesandskills2
 
     public void OnCallCommand(PlayerCallCommandEvent ev)
 		{
+            
 			if (ev.Command.StartsWith("passivesandskillsinfo"))
 			{
 				ev.Player.SendConsoleMessage("Passives and skills es un modo de juego que aporta nuevas habilidades a todos los roles Excepto tutorial, Para información sobre cada role usa .passivesandskills [role en ingles] (classd,scientist,ntfscientist,ntfcadet,ntfliuternant,ntfcomander,guard,scp-xxx,chaos)", "blue");

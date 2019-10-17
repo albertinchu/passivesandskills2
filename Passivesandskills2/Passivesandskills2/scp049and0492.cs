@@ -4,6 +4,7 @@ using Smod2.EventHandlers;
 using scp4aiur;
 using Smod2.Events;
 using Smod2.API;
+using Smod2.Attributes;
 
 namespace Passivesandskills2
 {
@@ -73,23 +74,39 @@ namespace Passivesandskills2
 			yield return 5f;
 
 			if ((numero >= 5))
-			{ player.ChangeRole(Role.SCP_106, false); }
-			if ((numero >= 10) && (numero <= 6))
-			{ player.ChangeRole(Role.SCP_049, false); }
+			{
+                player.ChangeRole(Role.SCP_106, false);
+                player.SetHealth(325);
+            }
+            if ((numero >= 10) && (numero <= 6))
+            {
+                player.ChangeRole(Role.SCP_049, false);
+                player.SetHealth(1000);
+            }
 			if ((numero >= 16) && (numero <= 20))
-			{ player.ChangeRole(Role.SCP_049, false); }
+			{
+                player.ChangeRole(Role.SCP_049, false);
+                player.SetHealth(1000);
+            }
 			if ((numero >= 95) && (numero <= 100))
-			{ player.ChangeRole(Role.SCP_173, false); }
+			{
+                player.ChangeRole(Role.SCP_173, false);
+                player.SetHealth(1600);
+                yield return 0.2f;
+                player.Teleport(Smod2.PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_049));
+            }
 			if (((numero >= 89) && (numero <= 94)))
 			{
 				if (numero < 92)
 				{
 					player.ChangeRole(Role.SCP_939_53, false);
-				}
+                    player.SetHealth(1600);
+                }
 				else
 				{
 					player.ChangeRole(Role.SCP_939_89, false);
-				}
+                    player.SetHealth(1600);
+                }
 			}
 
 		}
