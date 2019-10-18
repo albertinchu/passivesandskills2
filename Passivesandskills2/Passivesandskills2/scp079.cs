@@ -243,6 +243,7 @@ namespace Passivesandskills2
                         if ((ev.Player.Scp079Data.AP >= 200)&&(habilidad079))
                         {
                             ev.Player.Scp079Data.AP -= 200;
+                            ev.Player.SendConsoleMessage("Procedimiento 70726F746F636F6C6F206465206175746F646573747275636369F36E Cancelado.", "blue");
                             ev.ReturnMessage = "Procedimiento 70726F746F636F6C6F206465206175746F646573747275636369F36E Cancelado. ";
                             habilidad079 = false;
                             Timing.Run(Cooldown079());
@@ -268,7 +269,8 @@ namespace Passivesandskills2
                         if ((ev.Player.Scp079Data.AP >= 200) && (habilidad079))
                         {
                             ev.Player.Scp079Data.AP -= 350;
-                            ev.ReturnMessage = "Procedimiento 50726F746F636F6C6F20646520456D657267656E63696120416374697661646F2070756572746173206162696572746173 ejecutado. ";
+                        ev.Player.SendConsoleMessage("Procedimiento 50726F746F636F6C6F20646520456D657267656E63696120416374697661646F2070756572746173206162696572746173 ejecutado.", "blue");
+                        ev.ReturnMessage = "Procedimiento 50726F746F636F6C6F20646520456D657267656E63696120416374697661646F2070756572746173206162696572746173 ejecutado. ";
                             habilidad079 = false;
                             Timing.Run(Cooldown079());
                             Timing.Run(liberar());
@@ -285,10 +287,11 @@ namespace Passivesandskills2
                 if (ev.Player.TeamRole.Role != Role.SCP_079) { ev.ReturnMessage = "Tu no eres SCP-079, pero buen inteneto ;)"; }
                 if (ev.Player.TeamRole.Role == Role.SCP_079)
                 {
-                    if (ev.Player.Scp079Data.AP < 450) { ev.ReturnMessage = "Necesitas mas Energía (450)"; }
-                    if (ev.Player.Scp079Data.AP >= 450)
+                    if (ev.Player.Scp079Data.AP < 400) { ev.ReturnMessage = "Necesitas mas Energía (400)"; }
+                    if (ev.Player.Scp079Data.AP >= 400)
                     {
-                        ev.Player.Scp079Data.AP -= 450;
+                        ev.Player.Scp079Data.AP -= 400;
+                        ev.Player.SendConsoleMessage("Lo importante es ganar... no?", "red");
                         ev.ReturnMessage = "..., Lo importante es ganar ....";
                         PluginManager.Manager.Server.Map.DetonateWarhead();
                     }
@@ -305,6 +308,7 @@ namespace Passivesandskills2
                     {
                         ev.Player.Scp079Data.AP -= 200;
                         ev.Player.Scp079Data.MaxAP += 20;
+                        ev.Player.SendConsoleMessage("Protocolo 496E63656E64696F2064657465637461646F2C20616E756C616E646F20617363656E736F72657320 ejecutado", "blue");
                         ev.ReturnMessage = "Protocolo 496E63656E64696F2064657465637461646F2C20616E756C616E646F20617363656E736F72657320 ejecutado";
                         Timing.Run(Cooldown079());
                         Timing.Run(elevators());
@@ -312,6 +316,51 @@ namespace Passivesandskills2
                     }
                 }
 
+            }
+            if (ev.Command.StartsWith("nanobots"))
+            {
+                if (ev.Player.TeamRole.Role != Role.SCP_079) { ev.ReturnMessage = "Tu no eres SCP-079, pero buen inteneto ;)"; }
+                if (ev.Player.TeamRole.Role == Role.SCP_079)
+                {
+                   
+                   
+                    
+                        if (ev.Player.Scp079Data.AP < 200) { ev.ReturnMessage = "Necesitas mas Energía (200)"; }
+
+
+                        if ((ev.Player.Scp079Data.AP >= 200) && (habilidad079))
+                        {
+                            ev.Player.Scp079Data.AP -= 200;
+                            ev.Player.SendConsoleMessage("Enviando nanobots al ataque.", "blue");
+                            ev.ReturnMessage = "Enviando nanobots al ataque .";
+                            habilidad079 = false;
+                            Timing.Run(Cooldown079());
+                            System.Random playrs = new System.Random();
+                        int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
+                        if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }
+                        
+                        if(PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team != Team.SCP)
+                        {
+                            if (PluginManager.Manager.Server.GetPlayers()[posic].GetHealth() <= 50)
+                            {
+                                PluginManager.Manager.Server.GetPlayers()[posic].Kill(DamageType.TESLA);
+                                ev.Player.Scp079Data.Exp += 30;
+                                if(ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 3; }
+                            }
+                            if (PluginManager.Manager.Server.GetPlayers()[posic].GetHealth() > 50)
+                            {
+                                PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(-50);
+                            }
+                            
+                           
+                        }
+                            ev.Player.Scp079Data.Exp += 150;
+                            if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 20; }
+                        }
+                        if (!habilidad079) { ev.ReturnMessage = "habilidad en cooldown"; }
+                    
+
+                }
             }
         }
 

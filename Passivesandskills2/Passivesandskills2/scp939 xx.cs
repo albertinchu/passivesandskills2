@@ -50,11 +50,16 @@ namespace Passivesandskills2
 			//SCP 939-89 / Ramus //
 			if ((ev.Player.TeamRole.Role == Role.SCP_939_89) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FRAG))
 			{
-				if (ev.Attacker.GetHealth() > 2) { ev.Attacker.AddHealth(-2); } else { ev.Attacker.Kill(DamageType.WALL); }
+				if (ev.Attacker.GetHealth() > 2) { ev.Attacker.AddHealth(-4); } else { ev.Attacker.Kill(DamageType.WALL); }
 				if (ev.Player.GetHealth() <= 600)
 				{
 					ev.Damage /= 2;
-					if (ev.Attacker.GetHealth() > 6) { ev.Attacker.AddHealth(-4); } else { ev.Attacker.Kill(DamageType.WALL); }
+					if (ev.Attacker.GetHealth() > 6) { ev.Attacker.AddHealth(-6); } else { ev.Attacker.Kill(DamageType.WALL); }
+                    if(ev.Player.GetHealth() <= 200)
+                    {
+                        ev.Damage = 3;
+                        ev.Attacker.AddHealth(-2);
+                    }
 
 				}
 
@@ -63,7 +68,7 @@ namespace Passivesandskills2
 			if (ev.Attacker.TeamRole.Role == Role.SCP_939_53)
 			{
 				Timing.Run(Veneno(ev.Player,ev.Attacker));
-				if (ev.Attacker.GetHealth() <= 1400)
+				if (ev.Attacker.GetHealth() <= 1600)
 				{
 					Timing.Run(Venenomortal(ev.Player,ev.Attacker));
 				}
@@ -80,8 +85,9 @@ namespace Passivesandskills2
 			}
 			if (ev.Player.TeamRole.Role == Role.SCP_939_89)
 			{
-				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Espinas]: dañas a tus atacantes con 2 de daño por bala. [Mejora de Acero]:inflinges hasta 6 de daño por bala como espinas, este efecto no se aplica a daño por granada o electricidad.", true);
-			}
+				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Espinas]: dañas a tus atacantes con 4 de daño por bala. [Mejora de Acero]:inflinges hasta 10 de daño por bala como espinas, este efecto no se aplica a daño por granada o electricidad.", true);
+                ev.Player.PersonalBroadcast(10, " [Mejora Titanio]: dañas a tus atacantes con 12 de daño por bala. ", true);
+            }
 		}
 	}
 }

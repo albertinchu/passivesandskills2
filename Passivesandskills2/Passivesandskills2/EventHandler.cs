@@ -12,7 +12,7 @@ namespace Passivesandskills2
             this.plugin = plugin;
         }
     }
-
+    
     partial class classd
     {
         private Passivesandskills plugin;

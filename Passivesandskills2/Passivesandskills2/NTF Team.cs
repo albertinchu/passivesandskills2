@@ -59,7 +59,7 @@ namespace Passivesandskills2
 				}
 				if ((ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY))
 				{
-					if ((ev.Player.GetHealth() <= 60) && (NTFli[ev.Attacker.SteamId] == true))
+					if ((ev.Player.GetHealth() <= 85) && (NTFli[ev.Attacker.SteamId] == true))
 					{
 						NTFli[ev.Attacker.SteamId] = false;
 						Timing.Run(Intimidacion(ev.Player));
@@ -93,7 +93,7 @@ namespace Passivesandskills2
 
 			int contadorb = sala.Next(0,100);
             
-            yield return 1f;
+            yield return 0.1f;
             if (player.TeamRole.Role != Role.SCIENTIST)
             {
                 if ((contadorb >= 0) && (contadorb <= 33))
@@ -161,7 +161,7 @@ namespace Passivesandskills2
 			if (ev.Player.TeamRole.Role == Role.NTF_CADET)
 			{
 				
-				ev.Player.SendConsoleMessage("[Flash rápido]: Tras lanzar una granada cegadora obtienes un escudo de 40 de salud, (este se anula si el comandante usa su granada para aplicarte 200 de salud pero se acumula si se aplicó los 200 de salud antes)", "blue");
+				ev.Player.SendConsoleMessage("[Flash rápido]: Tras lanzar una granada cegadora obtienes un escudo de 30 de salud, (este se anula si el comandante usa su granada para aplicarte 200 de salud pero se acumula si se aplicó los 200 de salud antes)", "blue");
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Tenacidad explosiva]: Recibes daño reducido entre 2 de las granadas.[Flash Rápido]: (mas info en la consola)", false);
 			}
 			// COMANDANTE //
@@ -189,7 +189,7 @@ namespace Passivesandskills2
             }
 			if ((ev.Player.TeamRole.Role == Role.NTF_CADET) && (ev.GrenadeType == GrenadeType.FLASHBANG))
 			{
-				ev.Player.AddHealth(40);
+				ev.Player.AddHealth(30);
 			}
 		}
 		public void OnDisconnect(DisconnectEvent ev)

@@ -20,6 +20,7 @@ namespace Passivesandskills2
 
         public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
+            //[Presencia Espectral]
             if(ev.Attacker.GetGhostMode() == true) { ev.Attacker.SetGhostMode(false); }
 			//[Golpe Crítico]//
 			if ((ev.Attacker.TeamRole.Role == Role.SCP_106))

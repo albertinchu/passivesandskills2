@@ -40,6 +40,7 @@ public class Passivesandskills : Plugin
             this.AddEventHandlers(new scp106(this));
             this.AddEventHandlers(new scp173(this));
             this.AddEventHandlers(new scp939_xx(this));
+           
             GamemodeManager.Manager.RegisterMode(this);
 
 	}
