@@ -189,8 +189,7 @@ namespace Passivesandskills2
 			overcharge = false;
 			level = 0;
 			computerchan = "0";
-			gen = 0;
-            Timing.Remove(1);
+			gen = 0;          
             habilidad079 = true;
             elevatoss = false;
 		}
