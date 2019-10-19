@@ -15,7 +15,7 @@ namespace Passivesandskills2
 
         // el comandante hace mas daño segun los jugadores NTF vivos y sus granadas aplican 200 de salud ademas de curar a sus aliados cuando disparan a aliados
         // el Teniente tiene la habilidad de teletransportar a un enemigo no scp a una sala aleatoria , funciona con los zombies.
-        // cadetes resisten mejor el daño de explosiones y las flash agregan 40 de salud
+        // cadetes resisten mejor el daño de explosiones y las flash agregan 30 de salud
 		public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
 			// COMANDANTE //
