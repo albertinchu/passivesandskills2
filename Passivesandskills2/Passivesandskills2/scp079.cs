@@ -320,12 +320,12 @@ namespace Passivesandskills2
                    
                    
                     
-                        if (ev.Player.Scp079Data.AP < 200) { ev.ReturnMessage = "Necesitas mas Energía (200)"; }
+                        if (ev.Player.Scp079Data.AP < 100) { ev.ReturnMessage = "Necesitas mas Energía (100)"; }
 
 
-                        if ((ev.Player.Scp079Data.AP >= 200) && (habilidad079))
+                        if ((ev.Player.Scp079Data.AP >= 100) && (habilidad079))
                         {
-                            ev.Player.Scp079Data.AP -= 200;
+                            ev.Player.Scp079Data.AP -= 100;
                             ev.Player.SendConsoleMessage("Enviando nanobots al ataque.", "blue");
                             ev.ReturnMessage = "Enviando nanobots al ataque .";
                             habilidad079 = false;
@@ -349,8 +349,8 @@ namespace Passivesandskills2
                             
                            
                         }
-                            ev.Player.Scp079Data.Exp += 150;
-                            if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 20; }
+                            ev.Player.Scp079Data.Exp += 30;
+                            if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 10; }
                         }
                         if (!habilidad079) { ev.ReturnMessage = "habilidad en cooldown"; }
                     

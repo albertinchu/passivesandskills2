@@ -32,7 +32,7 @@ namespace Passivesandskills2
 					player.SetGhostMode(true, false, false);
 					yield return 5f;
 					player.SetGhostMode(false);
-                    yield return 5.5f;
+                    yield return 5f;
 				}
 				else
 				{
@@ -54,7 +54,7 @@ namespace Passivesandskills2
 				{
                     Scp173deads[ev.Player.SteamId] = true;
                     ev.SpawnRagdoll = false;
-					ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, new Vector(0,0,0), true, 0, true);
+					ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, new Vector(0,2,0), true, 0, true);
 					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
                     ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, posd, true, 0, false);
                     ev.Player.GiveItem(ItemType.FRAG_GRENADE);
@@ -66,7 +66,7 @@ namespace Passivesandskills2
 					ev.Player.GiveItem(ItemType.FRAG_GRENADE);
                     ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true,posd, true, 0, true);
                     ev.Player.GiveItem(ItemType.FRAG_GRENADE);
-                    ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, new Vector(0, 0, 0), true, 0, true);
+                    ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true, new Vector(0, 4, 0), true, 0, false);
 					Timing.Run(Scp173timer(ev.Player, posd));
                     
                 }

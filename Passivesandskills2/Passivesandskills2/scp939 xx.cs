@@ -12,58 +12,65 @@ using Smod2.API;
 
 namespace Passivesandskills2
 {
-	partial class scp939_xx : IEventHandlerPlayerHurt, IEventHandlerSetRole
-	{
-	// En este codigo se supone que lo que hace es que un perro tenga reduccion de daño cuando esta a poca vida y además quién le dispare recivirá daño
-    // y el otro perro causa daño por veneno el cual es mortal y mas dañino cuando el perro esta a poca vida.
-		public static IEnumerable<float> Veneno(Player player, Player perro2)
-		{
-			int cantidad = 0;
-			while (cantidad <= 4)
-			{
-				yield return 2f;
+    partial class scp939_xx : IEventHandlerPlayerHurt, IEventHandlerSetRole
+    {
+        // En este codigo se supone que lo que hace es que un perro tenga reduccion de daño cuando esta a poca vida y además quién le dispare recivirá daño
+        // y el otro perro causa daño por veneno el cual es mortal y mas dañino cuando el perro esta a poca vida.
+        public static IEnumerable<float> Veneno(Player player, Player perro2)
+        {
+            int cantidad = 0;
+            while (cantidad <= 4)
+            {
+                yield return 2f;
                 perro2.AddHealth(4);
                 player.AddHealth(-4);
-				cantidad += 1;
-			}
-			
+                cantidad += 1;
+            }
 
-		}
 
-		public static IEnumerable<float> Venenomortal(Player player, Player perro2)
-		{
-			int cantidadd = 0;
-			while (cantidadd <= 3)
-			{
-				yield return 3f;
+        }
+
+        public static IEnumerable<float> Venenomortal(Player player, Player perro2)
+        {
+            int cantidadd = 0;
+            while (cantidadd <= 3)
+            {
+                yield return 3f;
                 perro2.AddHealth(5);
-				if (player.GetHealth() <= 8) { player.Kill(DamageType.DECONT); }
-				player.AddHealth(-8);
-				cantidadd += 1;
-			}
-			
-		}
+                if (player.GetHealth() <= 8) { player.Kill(DamageType.DECONT); }
+                player.AddHealth(-8);
+                cantidadd += 1;
+            }
+
+        }
 
 
-		public void OnPlayerHurt(PlayerHurtEvent ev)
-		{
-			//SCP 939-89 / Ramus //
-			if ((ev.Player.TeamRole.Role == Role.SCP_939_89) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FRAG))
-			{
-				if (ev.Attacker.GetHealth() > 2) { ev.Attacker.AddHealth(-4); } else { ev.Attacker.Kill(DamageType.WALL); }
-				if (ev.Player.GetHealth() <= 600)
-				{
-					ev.Damage /= 2;
-					if (ev.Attacker.GetHealth() > 6) { ev.Attacker.AddHealth(-6); } else { ev.Attacker.Kill(DamageType.WALL); }
-                    if(ev.Player.GetHealth() <= 200)
+        public void OnPlayerHurt(PlayerHurtEvent ev)
+        {
+            //SCP 939-89 / Ramus //
+            if ((ev.Player.TeamRole.Role == Role.SCP_939_89) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FRAG))
+            {
+                if (ev.Attacker.GetHealth() > 4) { ev.Attacker.AddHealth(-4); } else { ev.Attacker.Kill(DamageType.WALL); }
+                if (ev.Player.GetHealth() <= 600)
+                {
+                    ev.Damage /= 2;
+                    if (ev.Attacker.GetHealth() > 10) { ev.Attacker.AddHealth(-6); } else { ev.Attacker.Kill(DamageType.WALL); }
+                    if (ev.Player.GetHealth() <= 200)
                     {
                         ev.Damage = 3;
-                        ev.Attacker.AddHealth(-2);
+                        if (ev.Attacker.GetHealth() > 12) { ev.Attacker.AddHealth(-2); } else { ev.Attacker.Kill(DamageType.WALL); }
                     }
 
-				}
+                }
 
-			}
+
+            }
+            ///[Titanium upgrade]//
+            if ((ev.Player.TeamRole.Role == Role.SCP_939_89)&& (ev.Player.GetHealth() <= 200) && (ev.DamageType == DamageType.FRAG))
+            {
+                if(ev.Damage >= 100) { ev.Damage = 100; }
+            } 
+            
 			//SCP 939-53 / Teemo//
 			if (ev.Attacker.TeamRole.Role == Role.SCP_939_53)
 			{
