@@ -8,7 +8,7 @@ using Smod2.API;
 
 namespace Passivesandskills2
 {
-	partial class scp079 : IEventHandler079AddExp, IEventHandlerPlayerDie, IEventHandlerGeneratorFinish, IEventHandler079LevelUp,IEventHandlerCallCommand,
+	partial class scp079 : IEventHandler079AddExp, IEventHandlerGeneratorFinish, IEventHandler079LevelUp,IEventHandlerCallCommand,
 		IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerWarheadDetonate, IEventHandlerWarheadStartCountdown, IEventHandlerWarheadStopCountdown, IEventHandler079TeslaGate
         ,IEventHandlerElevatorUse
 	{
@@ -50,7 +50,7 @@ namespace Passivesandskills2
             yield return 5f;
             System.Random Number = new System.Random();
             int proba = Number.Next(0, 100);
-            if (proba <= 15)
+            if (proba <= 20)
             {
                 contador = 1;
                 foreach (Player player in PluginManager.Manager.Server.GetPlayers())
@@ -65,7 +65,7 @@ namespace Passivesandskills2
                 }
 
             }
-            if((proba >= 16)&&(proba <= 29))
+            if((proba >= 21)&&(proba <= 31))
             {
 
                 foreach (Player player in PluginManager.Manager.Server.GetPlayers())
@@ -85,7 +85,7 @@ namespace Passivesandskills2
                     }
                 }
             }
-            if ((proba >= 30))
+            if ((proba >= 32))
             {
 
                 foreach (Player player in PluginManager.Manager.Server.GetPlayers())
@@ -147,11 +147,11 @@ namespace Passivesandskills2
 		public void On079LevelUp(Player079LevelUpEvent ev)
 		{
 			level = ev.Player.Scp079Data.Level;
-			if (level == 3)
+			if (ev.Player.Scp079Data.Level == 3)
 			{
 				ev.Player.Scp079Data.MaxAP = 200;
 			}
-			if ((level > 3))
+			if ((ev.Player.Scp079Data.Level > 3))
 			{
 				ev.Player.Scp079Data.MaxAP = 300;
 				PluginManager.Manager.Server.Map.AnnounceCustomMessage("G G . SCP 079 LEVEL 5");
@@ -164,13 +164,7 @@ namespace Passivesandskills2
 			if (gen == 5) { Timing.Run(Pcoff()); }
 		}
 
-		public void OnPlayerDie(PlayerDeathEvent ev)
-		{
-			if (overcharge == false)
-			{
-			
-			}
-		}
+	
 
 		public void OnSetRole(PlayerSetRoleEvent ev)
 		{
@@ -180,6 +174,7 @@ namespace Passivesandskills2
 				computerchan = ev.Player.SteamId;
 				Computerr.Add(ev.Player.SteamId, true);
 			}
+            if(ev.Player.TeamRole.Role == Role.SCP_079) { ev.Player.PersonalBroadcast(10, "Tu habilidad es [control absoluto]: puedes usar los comandos .nukeoff .cellsopen .nukenow .nanobots y .elevatorsoff", false); }
 		}
 
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
@@ -215,12 +210,12 @@ namespace Passivesandskills2
 
         public void On079TeslaGate(Player079TeslaGateEvent ev)
         {
-            if(level > 3)
+            if(level >= 3)
             {
                 ev.APDrain /= 2;
                 if(ev.Player.Scp079Data.MaxAP >= 400)
                 {
-                    ev.APDrain = 10;
+                    ev.APDrain = 0;
                 }
 
             }
@@ -240,7 +235,7 @@ namespace Passivesandskills2
                         if (ev.Player.Scp079Data.AP < 200) { ev.ReturnMessage = "Necesitas mas Energía (200)"; }
 
 
-                        if ((ev.Player.Scp079Data.AP >= 200)&&(habilidad079))
+                        if ((ev.Player.Scp079Data.AP >= 200)&&(habilidad079 == true))
                         {
                             ev.Player.Scp079Data.AP -= 200;
                             ev.Player.SendConsoleMessage("Procedimiento 70726F746F636F6C6F206465206175746F646573747275636369F36E Cancelado.", "blue");
@@ -307,7 +302,7 @@ namespace Passivesandskills2
                     if (ev.Player.Scp079Data.AP >= 200)
                     {
                         ev.Player.Scp079Data.AP -= 200;
-                        ev.Player.Scp079Data.MaxAP += 20;
+                        if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 20; }
                         ev.Player.SendConsoleMessage("Protocolo 496E63656E64696F2064657465637461646F2C20616E756C616E646F20617363656E736F72657320 ejecutado", "blue");
                         ev.ReturnMessage = "Protocolo 496E63656E64696F2064657465637461646F2C20616E756C616E646F20617363656E736F72657320 ejecutado";
                         Timing.Run(Cooldown079());

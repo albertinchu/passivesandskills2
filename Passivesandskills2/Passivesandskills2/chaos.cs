@@ -27,7 +27,11 @@ namespace Passivesandskills2
                 if ((ev.Player.TeamRole.Team == Team.NINETAILFOX) || (ev.Player.TeamRole.Team == Team.SCIENTIST) || (ev.Player.TeamRole.Team == Team.CLASSD))
 
                 { ev.Damage += ((120 - ev.Attacker.GetHealth()) / 2); }
-                                       
+                if((ev.Player.TeamRole.Team == Team.SCP)&&(ev.Player.TeamRole.Role != Role.SCP_106)&&(ev.Attacker.GetHealth() <= 80))
+                {
+                    ev.Damage += 20;
+                } 
+                if((ev.Player.TeamRole.Role == Role.SCP_106)&& (ev.Attacker.GetHealth() <= 80)) { ev.Damage += 3; }                 
             }
 		}
 

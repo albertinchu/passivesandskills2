@@ -39,7 +39,7 @@ namespace Passivesandskills2
 		{
             foreach (Player player in PluginManager.Manager.Server.GetPlayers())
             {
-                if (player.TeamRole.Role == Role.SCP_106) { player.AddHealth(35); }
+                if (player.TeamRole.Role == Role.SCP_106) { player.AddHealth(30); }
             }
         }
 

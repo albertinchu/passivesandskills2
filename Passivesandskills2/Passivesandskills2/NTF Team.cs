@@ -55,6 +55,19 @@ namespace Passivesandskills2
 						Timing.Run(Cooldown(ev.Player));
 						
 					}
+                    if(NTFli[ev.Attacker.SteamId] == false)
+                    {
+                        if(ev.Player.TeamRole.Team == Team.SCP)
+                        ev.Damage += ev.Player.GetHealth()/100;
+                        if(ev.Player.TeamRole.Team != Team.SCP)
+                        {
+                            ev.Damage += 15;
+                            if(ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY)
+                            {
+                                ev.Damage += 10;
+                            }
+                        }
+                    }
 
 				}
 				if ((ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY))
