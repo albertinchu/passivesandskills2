@@ -168,8 +168,9 @@ namespace Passivesandskills2
 				}
 				
 				ev.Player.SendConsoleMessage("[cambiar las tornas]: Cambiar las tornas es una pasiva Tactica con 40s de cooldown  la cual teletransporta al enemigo cuando este esta a menos del 50% de vida . (Esta habilidad no se aplica a SCPS pero si a Zombies y tampoco se aplica a aliados)", "blue");
-				ev.Player.PersonalBroadcast(10, "Tu pasiva es [cambiar las tornas]: Cambias la posición del enemigo de forma aleatoria cuando esta por debajo de 50% atrapandolo (mas info en la consola)", false);
-			}
+				ev.Player.PersonalBroadcast(10, "Tu pasiva es [cambiar las tornas]: Cambias la posición del enemigo de forma aleatoria cuando esta por debajo de 50% atrapandolo (mas info en la consola), cuando has usado tu habilidad durante 40s tienes la pasiva", false);
+                ev.Player.PersonalBroadcast(10, "De servicio que aumenta tu daño en 15 a todos los objetivos y es el doble de daño contra chaos, con SCPS 1% de la vida actual del SCP", false);
+            }
 			// CADETE //
 			if (ev.Player.TeamRole.Role == Role.NTF_CADET)
 			{

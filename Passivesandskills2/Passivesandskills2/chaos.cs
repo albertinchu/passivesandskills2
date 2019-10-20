@@ -40,7 +40,7 @@ namespace Passivesandskills2
 			if (ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY)
 			{
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Carroñero]: Recibes un botiquin por cada NTF que asesines [Luchador de doble filo]: La vida que te falte la inflinges como daño adicional entre 2.", false);
-                ev.Player.PersonalBroadcast(10, "Luchador de doble filo no afecta a SCPS", false);
+                ev.Player.PersonalBroadcast(10, "Luchador de doble filo no afecta a SCPS de la misma forma, cuando estas a 80 o menos causas 20 de daño a SCPS y 3 de daño al 106", false);
             }
 		}
 	}
