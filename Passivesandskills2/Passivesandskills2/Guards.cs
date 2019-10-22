@@ -17,7 +17,8 @@ namespace Passivesandskills2
 		public static IEnumerable<float> Venenoguardias(Player player)
 		{
 			int cantidad = 0;
-			while (cantidad != 4)
+            
+            while (cantidad != 4)
 			{
 				yield return 2f;
 				player.AddHealth(-3);
