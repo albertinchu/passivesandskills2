@@ -23,11 +23,12 @@ namespace Passivesandskills2
 		Vector posicionteni;
 		static Dictionary<string, Player> Pasivaa = new Dictionary<string, Player>();
         static bool habilidad079 = true;
+        private List<Smod2.API.TeslaGate> teslas;
 
         // Este codigo ace que cuando la nuke sea activada el pc pueda robar el cuerpo de quien muera en el tesla y usarlo como quiera
         // Ademas de que ganas ap infinito al nivel 5 en funcion de la xp que ganes
 
-		public static IEnumerable<float> Secondboom()
+        public static IEnumerable<float> Secondboom()
 		{
 			yield return 5f;
 			PluginManager.Manager.Server.Map.DetonateWarhead();
@@ -43,6 +44,24 @@ namespace Passivesandskills2
                 PluginManager.Manager.Server.Map.DetonateWarhead();
             }
                
+        }
+        public IEnumerable<float> Teslass()
+        {
+            int contador = 0;
+            while (contador <= 10)
+            {
+                
+
+                
+                    foreach (Smod2.API.TeslaGate tesla in teslas)
+                    {
+                        tesla.Activate(true);
+                    }
+
+
+                yield return 1f;
+                contador += 1;
+            }
         }
         public static IEnumerable<float> liberar()
         {
@@ -113,6 +132,13 @@ namespace Passivesandskills2
         {
             
             yield return 120f;
+            habilidad079 = true;
+
+        }
+        public static IEnumerable<float> Cooldown0792()
+        {
+
+            yield return 60f;
             habilidad079 = true;
 
         }
@@ -299,13 +325,14 @@ namespace Passivesandskills2
                 if (ev.Player.TeamRole.Role == Role.SCP_079)
                 {
                     if (ev.Player.Scp079Data.AP < 200) { ev.ReturnMessage = "Necesitas mas Energía (200)"; }
-                    if (ev.Player.Scp079Data.AP >= 200)
+                    if ((ev.Player.Scp079Data.AP >= 200)&& (habilidad079 == true))
                     {
                         ev.Player.Scp079Data.AP -= 200;
-                        if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 20; }
+                        ev.Player.Scp079Data.Exp += 50;
+                        if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 7; }
                         ev.Player.SendConsoleMessage("Protocolo 496E63656E64696F2064657465637461646F2C20616E756C616E646F20617363656E736F72657320 ejecutado", "blue");
                         ev.ReturnMessage = "Protocolo 496E63656E64696F2064657465637461646F2C20616E756C616E646F20617363656E736F72657320 ejecutado";
-                        Timing.Run(Cooldown079());
+                        Timing.Run(Cooldown0792());
                         Timing.Run(elevators());
                         habilidad079 = false;
                     }
@@ -356,6 +383,26 @@ namespace Passivesandskills2
                     
 
                 }
+            }
+            if (ev.Command.StartsWith("Tesla"))
+            {
+                if (ev.Player.TeamRole.Role != Role.SCP_079) { ev.ReturnMessage = "Tu no eres SCP-079, pero buen inteneto ;)"; }
+                if (ev.Player.TeamRole.Role == Role.SCP_079)
+                {
+                    if (ev.Player.Scp079Data.AP < 125) { ev.ReturnMessage = "Necesitas mas Energía (125)"; }
+                    if ((ev.Player.Scp079Data.AP >= 125)&& (habilidad079 == true))
+                    {
+                        ev.Player.Scp079Data.AP -= 125;
+                        ev.Player.Scp079Data.Exp += 25;
+                        if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 5; }
+                        ev.Player.SendConsoleMessage("Sobrecargando Teslas", "blue");
+                        ev.ReturnMessage = "Protocolo Sobrecarga ejecutado";
+                        Timing.Run(Cooldown0792());
+                        Timing.Run(Teslass());
+                        habilidad079 = false;
+                    }
+                }
+
             }
         }
 
