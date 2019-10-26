@@ -36,8 +36,9 @@ namespace Passivesandskills2
                     Timing.Run(Mutar(ev.Player));
                     conta049 = 0;
                 }
+                Zombie[ev.Player.SteamId] = 0;
                 ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cuerpo errante]: Cuanto mas tiempo permanezcas con vida mas daño haces (15% + de daño cada 1 minuto de vida).", false);
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cuerpo Creciente]: Cada minuto ganas 75 de salud de forma permanente a no ser que te quedes quieto, (perderas la vida extra)", false);
+                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cuerpo Creciente]: Cada minuto ganas 80 de salud de forma permanente hasta 5 veces a no ser que te quedes quieto, (perderas la vida extra)", false);
 
             }
 			if (ev.Player.TeamRole.Role == Role.SCP_049)
@@ -55,6 +56,8 @@ namespace Passivesandskills2
 				Zombie[player.SteamId] += 1;
                 player.AddHealth(80);
                 if(Zombie[player.SteamId] >= 5) { break; }
+                if(Zombie[player.SteamId] > 0) { break; }
+                
 			}
 			
 		}
@@ -115,6 +118,7 @@ namespace Passivesandskills2
 			if (ev.Attacker.TeamRole.Role == Role.SCP_049_2)
 			{
 				ev.Damage += (ev.Damage / 100) * 20 * Zombie[ev.Attacker.SteamId];
+                if(Zombie[ev.Attacker.SteamId] == 5) { ev.Damage += ev.Player.GetHealth(); }
 			}
 		}
 
@@ -126,7 +130,7 @@ namespace Passivesandskills2
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
 		{
-            if (Zombie.ContainsKey(ev.Player.SteamId)) { Zombie[ev.Player.SteamId]=0; }
+            if (Zombie.ContainsKey(ev.Player.SteamId)) { Zombie[ev.Player.SteamId]= -1; }
 			if (ev.Killer.TeamRole.Role == Smod2.API.Role.SCP_049)
 			{
 
