@@ -34,7 +34,7 @@ namespace Passivesandskills2
             
             if ((ev.Attacker.TeamRole.Role == Role.FACILITY_GUARD))
             {
-                if (!Guardias.ContainsKey(ev.Attacker.SteamId)) { Guardias.Add(ev.Attacker.SteamId, 0); }
+               
                 if ((ev.Attacker.TeamRole.Role == Role.CHAOS_INSURGENCY) || (ev.Player.TeamRole.Team == Team.SCP))
                 {
                     Guardias[ev.Attacker.SteamId] += 1;
@@ -91,17 +91,17 @@ namespace Passivesandskills2
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
 		{
-            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && ((ev.Player.TeamRole.Role == Role.SCP_939_53)||(ev.Player.TeamRole.Role == Role.SCP_939_53))) { Guardias[ev.Player.SteamId] += 80; }
-            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_096)) { Guardias[ev.Player.SteamId] += 75; }
-            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_173)) { Guardias[ev.Player.SteamId] += 75; }
-            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_106)) { Guardias[ev.Player.SteamId] += 70; }
-            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_049)) { Guardias[ev.Player.SteamId] += 70; }
-            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_049_2)) { Guardias[ev.Player.SteamId] += 30; }
-            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY)) { Guardias[ev.Player.SteamId] += 30; }
+            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && ((ev.Player.TeamRole.Role == Role.SCP_939_53)||(ev.Killer.TeamRole.Role == Role.SCP_939_53))) { Guardias[ev.Player.SteamId] += 80; }
+            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_096)) { Guardias[ev.Killer.SteamId] += 75; }
+            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_173)) { Guardias[ev.Killer.SteamId] += 75; }
+            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_106)) { Guardias[ev.Killer.SteamId] += 70; }
+            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_049)) { Guardias[ev.Killer.SteamId] += 70; }
+            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_049_2)) { Guardias[ev.Killer.SteamId] += 30; }
+            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY)) { Guardias[ev.Killer.SteamId] += 30; }
 			if ((ev.Player.TeamRole.Role == Role.FACILITY_GUARD) && (Guardias[ev.Player.SteamId] >= 550))
 			{
 				ev.Killer.ChangeRole(Role.SPECTATOR);
-				PluginManager.Manager.Server.Map.Broadcast(4, "<color=#ABABAB" + ev.Player.Name + "</color> se llevó a <color=#C50000> " + ev.Killer.Name + " </color> con él...", false);
+				PluginManager.Manager.Server.Map.Broadcast(4, "<color=#ABABAB>" + ev.Player.Name + "</color> se llevó a <color=#C50000> " + ev.Killer.Name + " </color> con él...", false);
 			}
 		}
 
