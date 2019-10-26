@@ -18,8 +18,7 @@ namespace Passivesandskills2
 		int gen = 0;
 		int level = 0;
 		static bool overcharge = false;
-		string computerchan;
-		static Dictionary<string, bool> Computerr = new Dictionary<string, bool>();
+		string computerchan;q
 		Vector posicionteni;
 		static Dictionary<string, Player> Pasivaa = new Dictionary<string, Player>();
         static bool habilidad079 = true;
@@ -192,10 +191,10 @@ namespace Passivesandskills2
 		public void OnSetRole(PlayerSetRoleEvent ev)
 		{
 			if (!Pasivaa.ContainsKey(ev.Player.SteamId)) { Pasivaa.Add(ev.Player.SteamId, ev.Player); }
-			if ((ev.Role == Role.SCP_079) && (computerchan != ev.Player.SteamId) && (Computerr.ContainsKey(ev.Player.SteamId)))
+			if ((ev.Role == Role.SCP_079) && (computerchan != ev.Player.SteamId) )
 			{
 				computerchan = ev.Player.SteamId;
-				Computerr.Add(ev.Player.SteamId, true);
+				
 			}
             if(ev.Player.TeamRole.Role == Role.SCP_079) { ev.Player.PersonalBroadcast(10, "Tu habilidad es [control absoluto]: puedes usar los comandos .nukeoff .cellsopen .nukenow .nanobots y .elevatorsoff", false); }
 		}

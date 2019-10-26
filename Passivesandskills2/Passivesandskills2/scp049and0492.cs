@@ -49,16 +49,14 @@ namespace Passivesandskills2
 
 		public static IEnumerable<float> Zombielive(Player player)
 		{
-			while (Roles[player.SteamId] == Role.SCP_049_2)
+			while (player.TeamRole.Role == Role.SCP_049_2)
 			{
 				yield return 60f;
 				Zombie[player.SteamId] += 1;
-                player.AddHealth(75);
+                player.AddHealth(80);
+                if(Zombie[player.SteamId] >= 5) { break; }
 			}
-			if (Roles[player.SteamId] != Role.SCP_049_2)
-			{
-				Zombie[player.SteamId] = 0;
-			}
+			
 		}
 		public static IEnumerable<float> Resurrec(Player player, Vector posdead)
 		{
@@ -128,6 +126,7 @@ namespace Passivesandskills2
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
 		{
+            if (Zombie.ContainsKey(ev.Player.SteamId)) { Zombie[ev.Player.SteamId]=0; }
 			if (ev.Killer.TeamRole.Role == Smod2.API.Role.SCP_049)
 			{
 
