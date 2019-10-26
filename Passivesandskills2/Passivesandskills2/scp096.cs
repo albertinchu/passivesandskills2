@@ -33,15 +33,21 @@ namespace Passivesandskills2
 			{
 				if (player.TeamRole.Role == Role.SCP_096)
 				{
-					if (player.GetHealth() > 35) { player.AddHealth(-35); } else { player.Kill(DamageType.CONTAIN); muertes = 1; }
+					if (player.GetHealth() > 35) 
+                    { 
+                        player.AddHealth(-35); 
+                    }
+                    else 
+                    {
+                        player.Kill(DamageType.CONTAIN); muertes = 1;
+                        Llorona = true;
+                        break;
+                    
+                    }
 					yield return 3f;
 
 				}
-				else
-				{
-                    Llorona = true;
-                    break;
-				}
+				
 
 			}
 

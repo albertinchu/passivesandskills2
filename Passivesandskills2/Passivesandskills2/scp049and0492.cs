@@ -134,6 +134,7 @@ namespace Passivesandskills2
 				posmuertee = ev.Player.GetPosition();
 				if ((ev.Player.TeamRole.Team == Team.SCIENTIST) || (ev.Player.TeamRole.Team == Team.CLASSD))
 				{
+                    ev.SpawnRagdoll = false;
 					Timing.Run(Resurrec(ev.Player, posmuertee));
 					
 					

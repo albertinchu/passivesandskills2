@@ -19,3 +19,4 @@ C:\Users\pablo\Source\Repos\Passivesandskills2.00\Passivesandskills2\Passivesand
 C:\Users\pablo\Source\Repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\obj\Debug\Passivesandskills2.dll
 C:\Users\pablo\Source\Repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\obj\Debug\Passivesandskills2.pdb
 C:\Users\pablo\source\repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\bin\Debug\UnityEngine.PhysicsModule.dll
+C:\Users\pablo\source\repos\Passivesandskills2.00\Passivesandskills2\Passivesandskills2\obj\Debug\Passivesandskills2.csprojAssemblyReference.cache

@@ -8,15 +8,19 @@ using scp4aiur;
 
 namespace Passivesandskills2
 {
-	partial class scp106 : IEventHandlerSetRole, IEventHandlerPocketDimensionDie, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers
+	partial class scp106 : IEventHandlerSetRole, IEventHandlerPocketDimensionDie, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerPlayerDie
 	{
 	
 		static Dictionary<string, int> Scp106 = new Dictionary<string, int>();
-        
-       
-     
 
-     
+        public void OnPlayerDie(PlayerDeathEvent ev)
+        {
+            if(ev.DamageTypeVar == DamageType.POCKET )
+            { 
+                ev.SpawnRagdoll = false; 
+                
+            }
+        }
 
         public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
@@ -37,6 +41,7 @@ namespace Passivesandskills2
 
 		public void OnPocketDimensionDie(PlayerPocketDimensionDieEvent ev)
 		{
+            
             foreach (Player player in PluginManager.Manager.Server.GetPlayers())
             {
                 if (player.TeamRole.Role == Role.SCP_106) { player.AddHealth(30); }
