@@ -9,11 +9,11 @@ using Smod2.API;
 namespace Passivesandskills2
 {
 	partial class scp079 : IEventHandler079AddExp, IEventHandlerGeneratorFinish, IEventHandler079LevelUp,IEventHandlerCallCommand,
-		IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerWarheadDetonate, IEventHandlerWarheadStartCountdown, IEventHandlerWarheadStopCountdown, IEventHandler079TeslaGate
+		IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerWarheadDetonate, IEventHandler079TeslaGate
         ,IEventHandlerElevatorUse
 	{
 		static bool elevatoss = false;
-		bool Nuket = false;
+		
 		static bool Boom = false;
 		int gen = 0;
 		int level = 0;
@@ -32,11 +32,7 @@ namespace Passivesandskills2
 		{
 			yield return 5f;
 			PluginManager.Manager.Server.Map.DetonateWarhead();
-			yield return 2f;
-			
-			yield return 2f;
-			
-			yield return 2f;
+		
 			PluginManager.Manager.Server.Map.DetonateWarhead();
             yield return 60f;
             if (Boom)
@@ -168,6 +164,7 @@ namespace Passivesandskills2
 				ev.Player.Scp079Data.MaxAP = ev.Player.Scp079Data.MaxAP + (Xp / 10);
 
 			}
+            
 		}
 
 		public void On079LevelUp(Player079LevelUpEvent ev)
@@ -205,7 +202,7 @@ namespace Passivesandskills2
 
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
-			Nuket = false;
+			
 			Boom = false;   
 			overcharge = false;
 			level = 0;
@@ -224,21 +221,14 @@ namespace Passivesandskills2
 			}
 		}
 
-		public void OnStartCountdown(WarheadStartEvent ev)
-		{
-			Nuket = true;
-		}
-
-		public void OnStopCountdown(WarheadStopEvent ev)
-		{
-			Nuket = false;
-		}
+	
 
         public void On079TeslaGate(Player079TeslaGateEvent ev)
         {
             if(level >= 3)
             {
                 ev.APDrain /= 2;
+                
                 if(ev.Player.Scp079Data.MaxAP >= 400)
                 {
                     ev.APDrain = 0;
