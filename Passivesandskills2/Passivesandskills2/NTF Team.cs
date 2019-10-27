@@ -46,16 +46,17 @@ namespace Passivesandskills2
 			if (ev.Attacker.TeamRole.Role == Role.NTF_LIEUTENANT)
 			{
 				Vector posli = ev.Player.GetPosition();
-				if ((ev.Player.TeamRole.Role == Role.CLASSD) || (ev.Player.TeamRole.Role == Role.SCIENTIST))
-				{
-                    if(ev.Player.TeamRole.Role == Role.SCIENTIST) { ev.Damage = ev.Damage / 3; }
-					if ((ev.Player.GetHealth() <= 50) && (NTFli[ev.Attacker.SteamId] == true))
-					{
-						NTFli[ev.Attacker.SteamId] = false;
-						Timing.Run(Intimidacion(ev.Player));
-						Timing.Run(Cooldown(ev.Player));
-						
-					}
+                if ((ev.Player.TeamRole.Role == Role.CLASSD) || (ev.Player.TeamRole.Role == Role.SCIENTIST))
+                {
+                    if (ev.Player.TeamRole.Role == Role.SCIENTIST) { ev.Damage = ev.Damage / 3; }
+                    if ((ev.Player.GetHealth() <= 50) && (NTFli[ev.Attacker.SteamId] == true))
+                    {
+                        NTFli[ev.Attacker.SteamId] = false;
+                        Timing.Run(Intimidacion(ev.Player));
+                        Timing.Run(Cooldown(ev.Player));
+
+                    }
+                }
                     if(NTFli[ev.Attacker.SteamId] == false)
                     {
                         if(ev.Player.TeamRole.Team == Team.SCP)
@@ -70,7 +71,7 @@ namespace Passivesandskills2
                         }
                     }
 
-				}
+				
 				if ((ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY))
 				{
 					if ((ev.Player.GetHealth() <= 85) && (NTFli[ev.Attacker.SteamId] == true))
@@ -80,7 +81,6 @@ namespace Passivesandskills2
 						Timing.Run(Cooldown(ev.Player));
 						
 					}
-
 				}
 				if(ev.Player.TeamRole.Role == Role.SCP_049_2)
 				{
