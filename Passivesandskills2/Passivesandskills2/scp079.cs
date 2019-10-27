@@ -240,7 +240,7 @@ namespace Passivesandskills2
                     if (ev.Player.Scp079Data.Level >= 2)
                     {
                         if (ev.Player.Scp079Data.AP < 200) { ev.ReturnMessage = "Necesitas mas Energía (200)"; }
-
+                        if ((habilidad079 == false) && (ev.Player.Scp079Data.AP >= 200)) { ev.ReturnMessage = "Habilidad en cooldown"; }
 
                         if ((ev.Player.Scp079Data.AP >= 200)&&(habilidad079 == true))
                         {
@@ -267,8 +267,8 @@ namespace Passivesandskills2
                     
                         if (ev.Player.Scp079Data.AP < 350) { ev.ReturnMessage = "Necesitas mas Energía (350)"; }
 
-
-                        if ((ev.Player.Scp079Data.AP >= 200) && (habilidad079))
+                    if ((habilidad079 == false) && (ev.Player.Scp079Data.AP >= 350)) { ev.ReturnMessage = "Habilidad en cooldown"; }
+                    if ((ev.Player.Scp079Data.AP >= 200) && (habilidad079))
                         {
                             ev.Player.Scp079Data.AP -= 350;
                         ev.Player.SendConsoleMessage("Procedimiento 50726F746F636F6C6F20646520456D657267656E63696120416374697661646F2070756572746173206162696572746173 ejecutado.", "blue");
@@ -306,6 +306,7 @@ namespace Passivesandskills2
                 if (ev.Player.TeamRole.Role == Role.SCP_079)
                 {
                     if (ev.Player.Scp079Data.AP < 200) { ev.ReturnMessage = "Necesitas mas Energía (200)"; }
+                    if ((habilidad079 == false) && (ev.Player.Scp079Data.AP >= 200)) { ev.ReturnMessage = "Habilidad en cooldown"; }
                     if ((ev.Player.Scp079Data.AP >= 200)&& (habilidad079 == true))
                     {
                         ev.Player.Scp079Data.AP -= 200;
@@ -329,9 +330,9 @@ namespace Passivesandskills2
                    
                     
                         if (ev.Player.Scp079Data.AP < 100) { ev.ReturnMessage = "Necesitas mas Energía (100)"; }
+                    if ((habilidad079 == false) && (ev.Player.Scp079Data.AP >= 100)) { ev.ReturnMessage = "Habilidad en cooldown"; }
 
-
-                        if ((ev.Player.Scp079Data.AP >= 100) && (habilidad079))
+                    if ((ev.Player.Scp079Data.AP >= 100) && (habilidad079))
                         {
                             ev.Player.Scp079Data.AP -= 100;
                             ev.Player.SendConsoleMessage("Enviando nanobots al ataque.", "blue");
@@ -365,12 +366,13 @@ namespace Passivesandskills2
 
                 }
             }
-            if (ev.Command.StartsWith("Tesla"))
+            if (ev.Command.StartsWith("teslas"))
             {
                 if (ev.Player.TeamRole.Role != Role.SCP_079) { ev.ReturnMessage = "Tu no eres SCP-079, pero buen inteneto ;)"; }
                 if (ev.Player.TeamRole.Role == Role.SCP_079)
                 {
                     if (ev.Player.Scp079Data.AP < 125) { ev.ReturnMessage = "Necesitas mas Energía (125)"; }
+                    if((habilidad079 == false)&& (ev.Player.Scp079Data.AP >= 125)) { ev.ReturnMessage = "Habilidad en cooldown"; }
                     if ((ev.Player.Scp079Data.AP >= 125)&& (habilidad079 == true))
                     {
                         ev.Player.Scp079Data.AP -= 125;
