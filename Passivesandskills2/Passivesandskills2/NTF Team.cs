@@ -185,7 +185,6 @@ namespace Passivesandskills2
 			// COMANDANTE //
 			if ((ev.Player.TeamRole.Role == Role.NTF_COMMANDER))
 			{
-
 				
 				ev.Player.SendConsoleMessage("[Preocupación por los tuyos]: Tus disparos hacen como cura la mitad del daño que causarían a tus aliados y las granadas Instacuran 200 de salud (¡OJO!: No se aplica a guardias ni científicos", "blue");
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Lider del Escudrón]: Inflinges daño adicional segun el número de NTF vivos [Preocupación por los tuyos]: tus ataques curan aliados (mas info en la consola)", false);
