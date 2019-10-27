@@ -19,8 +19,8 @@ namespace Passivesandskills2
 		int level = 0;
 		
 		string computerchan;
-		Vector posicionteni;
-		static Dictionary<string, Player> Pasivaa = new Dictionary<string, Player>();
+		
+		static Dictionary<string, bool> Pasivaa = new Dictionary<string, bool>();
         static bool habilidad079 = true;
         private List<Smod2.API.TeslaGate> teslas;
 
@@ -126,18 +126,25 @@ namespace Passivesandskills2
 
         }
 
-        public static IEnumerable<float> Cooldown079()
+        public static IEnumerable<float> Cooldown079(Player player)
         {
             
             yield return 120f;
-            habilidad079 = true;
+            Pasivaa[player.SteamId] = true;
 
         }
-        public static IEnumerable<float> Cooldown0792()
+        public static IEnumerable<float> Cooldown0792(Player player)
         {
 
             yield return 60f;
-            habilidad079 = true;
+            Pasivaa[player.SteamId] = true;
+
+        }
+        public static IEnumerable<float> Cooldown0793(Player player)
+        {
+
+            yield return 60f;
+            Pasivaa[player.SteamId] = true;
 
         }
         public static IEnumerable<float> elevators()
@@ -185,7 +192,7 @@ namespace Passivesandskills2
 
 		public void OnSetRole(PlayerSetRoleEvent ev)
 		{
-			if (!Pasivaa.ContainsKey(ev.Player.SteamId)) { Pasivaa.Add(ev.Player.SteamId, ev.Player); }
+			if (!Pasivaa.ContainsKey(ev.Player.SteamId)) { Pasivaa.Add(ev.Player.SteamId, true); }
 			if ((ev.Role == Role.SCP_079) && (computerchan != ev.Player.SteamId) )
 			{
 				computerchan = ev.Player.SteamId;
@@ -197,12 +204,12 @@ namespace Passivesandskills2
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
 			
-			Boom = false;   
-			
+			Boom = false;
+            Pasivaa.Clear();
 			level = 0;
 			computerchan = "0";
 			         
-            habilidad079 = true;
+           
             elevatoss = false;
 		}
 
@@ -243,20 +250,20 @@ namespace Passivesandskills2
                     if (ev.Player.Scp079Data.Level >= 2)
                     {
                         if (ev.Player.Scp079Data.AP < 200) { ev.ReturnMessage = "Necesitas mas Energía (200)"; }
-                        if ((habilidad079 == false) && (ev.Player.Scp079Data.AP >= 200)) { ev.ReturnMessage = "Habilidad en cooldown"; }
+                        if ((Pasivaa[ev.Player.SteamId] == false) && (ev.Player.Scp079Data.AP >= 200)) { ev.ReturnMessage = "Habilidad en cooldown"; }
 
-                        if ((ev.Player.Scp079Data.AP >= 200)&&(habilidad079 == true))
+                        if ((ev.Player.Scp079Data.AP >= 200)&&(Pasivaa[ev.Player.SteamId] == true))
                         {
                             ev.Player.Scp079Data.AP -= 200;
                             ev.Player.SendConsoleMessage("Procedimiento 70726F746F636F6C6F206465206175746F646573747275636369F36E Cancelado.", "blue");
                             ev.ReturnMessage = "Procedimiento 70726F746F636F6C6F206465206175746F646573747275636369F36E Cancelado. ";
-                            habilidad079 = false;
-                            Timing.Run(Cooldown079());
+                            Pasivaa[ev.Player.SteamId] = false;
+                            Timing.Run(Cooldown079(ev.Player));
                             PluginManager.Manager.Server.Map.StopWarhead();
                             ev.Player.Scp079Data.Exp += 100;
                             if(ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 10; }
                         }
-                        if (!habilidad079) { ev.ReturnMessage = "habilidad en cooldown"; }
+                        if (Pasivaa[ev.Player.SteamId] == false) { ev.ReturnMessage = "habilidad en cooldown"; }
                     }
                     
                 }
@@ -270,14 +277,14 @@ namespace Passivesandskills2
                     
                         if (ev.Player.Scp079Data.AP < 350) { ev.ReturnMessage = "Necesitas mas Energía (350)"; }
 
-                    if ((habilidad079 == false) && (ev.Player.Scp079Data.AP >= 350)) { ev.ReturnMessage = "Habilidad en cooldown"; }
-                    if ((ev.Player.Scp079Data.AP >= 200) && (habilidad079))
+                    if ((Pasivaa[ev.Player.SteamId] == false) && (ev.Player.Scp079Data.AP >= 350)) { ev.ReturnMessage = "Habilidad en cooldown"; }
+                    if ((ev.Player.Scp079Data.AP >= 200) && (Pasivaa[ev.Player.SteamId] == true))
                         {
                             ev.Player.Scp079Data.AP -= 350;
                         ev.Player.SendConsoleMessage("Procedimiento 50726F746F636F6C6F20646520456D657267656E63696120416374697661646F2070756572746173206162696572746173 ejecutado.", "blue");
                         ev.ReturnMessage = "Procedimiento 50726F746F636F6C6F20646520456D657267656E63696120416374697661646F2070756572746173206162696572746173 ejecutado. ";
-                            habilidad079 = false;
-                            Timing.Run(Cooldown079());
+                        Pasivaa[ev.Player.SteamId] = false;
+                            Timing.Run(Cooldown079(ev.Player));
                             Timing.Run(liberar());
                             ev.Player.Scp079Data.Exp += 350;
                             if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 35; }
@@ -309,17 +316,17 @@ namespace Passivesandskills2
                 if (ev.Player.TeamRole.Role == Role.SCP_079)
                 {
                     if (ev.Player.Scp079Data.AP < 200) { ev.ReturnMessage = "Necesitas mas Energía (200)"; }
-                    if ((habilidad079 == false) && (ev.Player.Scp079Data.AP >= 200)) { ev.ReturnMessage = "Habilidad en cooldown"; }
-                    if ((ev.Player.Scp079Data.AP >= 200)&& (habilidad079 == true))
+                    if ((Pasivaa[ev.Player.SteamId] == false) && (ev.Player.Scp079Data.AP >= 200)) { ev.ReturnMessage = "Habilidad en cooldown"; }
+                    if ((ev.Player.Scp079Data.AP >= 200)&& (Pasivaa[ev.Player.SteamId] == true))
                     {
                         ev.Player.Scp079Data.AP -= 200;
                         ev.Player.Scp079Data.Exp += 50;
                         if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 7; }
                         ev.Player.SendConsoleMessage("Protocolo 496E63656E64696F2064657465637461646F2C20616E756C616E646F20617363656E736F72657320 ejecutado", "blue");
                         ev.ReturnMessage = "Protocolo 496E63656E64696F2064657465637461646F2C20616E756C616E646F20617363656E736F72657320 ejecutado";
-                        Timing.Run(Cooldown0792());
+                        Timing.Run(Cooldown0792(ev.Player));
                         Timing.Run(elevators());
-                        habilidad079 = false;
+                        Pasivaa[ev.Player.SteamId] = false;
                     }
                 }
 
@@ -329,44 +336,85 @@ namespace Passivesandskills2
                 if (ev.Player.TeamRole.Role != Role.SCP_079) { ev.ReturnMessage = "Tu no eres SCP-079, pero buen inteneto ;)"; }
                 if (ev.Player.TeamRole.Role == Role.SCP_079)
                 {
-                   
-                   
-                    
-                        if (ev.Player.Scp079Data.AP < 100) { ev.ReturnMessage = "Necesitas mas Energía (100)"; }
-                    if ((habilidad079 == false) && (ev.Player.Scp079Data.AP >= 100)) { ev.ReturnMessage = "Habilidad en cooldown"; }
 
-                    if ((ev.Player.Scp079Data.AP >= 100) && (habilidad079))
+
+                    if (ev.Player.Scp079Data.Level < 3)
+                    {
+                        if (ev.Player.Scp079Data.AP < 100) { ev.ReturnMessage = "Necesitas mas Energía (100)"; }
+
+                        if ((Pasivaa[ev.Player.SteamId] == false) && (ev.Player.Scp079Data.AP >= 100)) { ev.ReturnMessage = "Habilidad en cooldown"; }
+
+                        if ((ev.Player.Scp079Data.AP >= 100) && (Pasivaa[ev.Player.SteamId] == true))
                         {
                             ev.Player.Scp079Data.AP -= 100;
                             ev.Player.SendConsoleMessage("Enviando nanobots al ataque.", "blue");
                             ev.ReturnMessage = "Enviando nanobots al ataque .";
-                            habilidad079 = false;
-                            Timing.Run(Cooldown0792());
+                            Pasivaa[ev.Player.SteamId] = false;
+                            Timing.Run(Cooldown0792(ev.Player));
                             System.Random playrs = new System.Random();
-                        int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
-                        while (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SPECTATOR) { posic = posic + 1; }
+                            int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
+                            while (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SPECTATOR) { posic = posic + 1; }
                             if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }
-                        
-                        if(PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team != Team.SCP)
-                        {
-                            if (PluginManager.Manager.Server.GetPlayers()[posic].GetHealth() <= 50)
+
+                            if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team != Team.SCP)
                             {
-                                PluginManager.Manager.Server.GetPlayers()[posic].Kill(DamageType.TESLA);
-                                ev.Player.Scp079Data.Exp += 30;
-                                if(ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 3; }
+                                if (PluginManager.Manager.Server.GetPlayers()[posic].GetHealth() <= 50)
+                                {
+                                    PluginManager.Manager.Server.GetPlayers()[posic].Kill(DamageType.TESLA);
+                                    ev.Player.Scp079Data.Exp += 30;
+                                    if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 3; }
+                                }
+                                if (PluginManager.Manager.Server.GetPlayers()[posic].GetHealth() > 50)
+                                {
+                                    PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(-50);
+                                }
+
+
                             }
-                            if (PluginManager.Manager.Server.GetPlayers()[posic].GetHealth() > 50)
-                            {
-                                PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(-50);
-                            }
-                            
-                           
-                        }
                             ev.Player.Scp079Data.Exp += 30;
                             if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 10; }
                         }
-                        if (!habilidad079) { ev.ReturnMessage = "habilidad en cooldown"; }
-                    
+                        if (Pasivaa[ev.Player.SteamId] == false) { ev.ReturnMessage = "habilidad en cooldown"; }
+                    }
+                    if (ev.Player.Scp079Data.Level >= 3)
+                    {
+                        if (ev.Player.Scp079Data.AP < 50) { ev.ReturnMessage = "Necesitas mas Energía (50)"; }
+
+                        if ((Pasivaa[ev.Player.SteamId] == false) && (ev.Player.Scp079Data.AP >= 50)) { ev.ReturnMessage = "Habilidad en cooldown"; }
+
+                        if ((ev.Player.Scp079Data.AP >= 50) && (Pasivaa[ev.Player.SteamId] == true))
+                        {
+                            ev.Player.Scp079Data.AP -= 50;
+                            ev.Player.SendConsoleMessage("Enviando nanobots mejorados al ataque.", "red");
+                            ev.ReturnMessage = "Enviando nanobots mejorados al ataque .";
+                            Pasivaa[ev.Player.SteamId] = false;
+                            if(ev.Player.Scp079Data.Level <= 3) { Timing.Run(Cooldown0792(ev.Player)); } else { Timing.Run(Cooldown0793(ev.Player)); }
+                            
+                            System.Random playrs = new System.Random();
+                            int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
+                            while (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SPECTATOR) { posic = posic + 1; }
+                            if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }
+
+                            if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team != Team.SCP)
+                            {
+                                if (PluginManager.Manager.Server.GetPlayers()[posic].GetHealth() <= 75)
+                                {
+                                    PluginManager.Manager.Server.GetPlayers()[posic].Kill(DamageType.TESLA);
+                                    ev.Player.Scp079Data.Exp += 30;
+                                    if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 3; }
+                                }
+                                if (PluginManager.Manager.Server.GetPlayers()[posic].GetHealth() > 75)
+                                {
+                                    PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(-75);
+                                }
+
+
+                            }
+                            ev.Player.Scp079Data.Exp += 30;
+                            if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 15; }
+                        }
+                        if (Pasivaa[ev.Player.SteamId] == false) { ev.ReturnMessage = "habilidad en cooldown"; }
+                    }
 
                 }
             }
@@ -376,17 +424,17 @@ namespace Passivesandskills2
                 if (ev.Player.TeamRole.Role == Role.SCP_079)
                 {
                     if (ev.Player.Scp079Data.AP < 125) { ev.ReturnMessage = "Necesitas mas Energía (125)"; }
-                    if((habilidad079 == false)&& (ev.Player.Scp079Data.AP >= 125)) { ev.ReturnMessage = "Habilidad en cooldown"; }
-                    if ((ev.Player.Scp079Data.AP >= 125)&& (habilidad079 == true))
+                    if((Pasivaa[ev.Player.SteamId] == false) && (ev.Player.Scp079Data.AP >= 125)) { ev.ReturnMessage = "Habilidad en cooldown"; }
+                    if ((ev.Player.Scp079Data.AP >= 125)&& (Pasivaa[ev.Player.SteamId] == true))
                     {
                         ev.Player.Scp079Data.AP -= 125;
-                        ev.Player.Scp079Data.Exp += 25;
-                        if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 5; }
+                        ev.Player.Scp079Data.Exp += 35;
+                        if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 7; }
                         ev.Player.SendConsoleMessage("Sobrecargando Teslas", "blue");
                         ev.ReturnMessage = "Protocolo Sobrecarga ejecutado";
-                        Timing.Run(Cooldown0792());
+                        Timing.Run(Cooldown0792(ev.Player));
                         Timing.Run(Teslass());
-                        habilidad079 = false;
+                        Pasivaa[ev.Player.SteamId] = false;
                     }
                 }
 
