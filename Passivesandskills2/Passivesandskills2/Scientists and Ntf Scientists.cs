@@ -23,7 +23,10 @@ namespace Passivesandskills2
 			yield return 5f;
 			player.SetGodmode(false);
 			yield return 55f;
-			player.GiveItem(ItemType.CUP);
+            if (player.TeamRole.Role == Role.SCIENTIST)
+            {
+                player.GiveItem(ItemType.CUP);
+            }
 			Scientisth[player.SteamId] = true;
 
 		}

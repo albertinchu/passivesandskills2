@@ -38,7 +38,7 @@ namespace Passivesandskills2
                 }
                 Zombie[ev.Player.SteamId] = 0;
                 ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cuerpo errante]: Cuanto mas tiempo permanezcas con vida mas daño haces (15% + de daño cada 1 minuto de vida).", false);
-                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cuerpo Creciente]: Cada minuto ganas 80 de salud de forma permanente hasta 5 veces a no ser que te quedes quieto, (perderas la vida extra)", false);
+                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cuerpo Creciente]: Cada minuto ganas 150 de salud de forma permanente hasta 5 veces a no ser que te quedes quieto, (perderas la vida extra)", false);
 
             }
 			if (ev.Player.TeamRole.Role == Role.SCP_049)
@@ -54,7 +54,7 @@ namespace Passivesandskills2
 			{
 				yield return 60f;
 				Zombie[player.SteamId] += 1;
-                player.AddHealth(80);
+                player.AddHealth(150);
                 if(Zombie[player.SteamId] >= 5) { break; }
                 if(Zombie[player.SteamId] > 0) { break; }
                 

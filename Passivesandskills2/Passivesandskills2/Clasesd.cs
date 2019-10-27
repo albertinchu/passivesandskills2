@@ -19,8 +19,13 @@ namespace Passivesandskills2
 			yield return 10f;
 			player.SetGhostMode(false);
 			yield return 50f;
-			player.GiveItem(ItemType.FLASHLIGHT);
-			Classdh[player.SteamId] = true;
+            if (player.TeamRole.Role == Role.CLASSD)
+            {
+                player.GiveItem(ItemType.FLASHLIGHT);
+            }
+                Classdh[player.SteamId] = true;
+            
+            
 		}
         
 		

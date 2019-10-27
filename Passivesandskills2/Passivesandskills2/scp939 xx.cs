@@ -74,11 +74,14 @@ namespace Passivesandskills2
 			//SCP 939-53 / Teemo//
 			if (ev.Attacker.TeamRole.Role == Role.SCP_939_53)
 			{
-				Timing.Run(Veneno(ev.Player,ev.Attacker));
-				if (ev.Attacker.GetHealth() <= 1600)
-				{
-					Timing.Run(Venenomortal(ev.Player,ev.Attacker));
-				}
+                if (ev.Player.TeamRole.Role != Role.TUTORIAL)
+                {
+                    Timing.Run(Veneno(ev.Player, ev.Attacker));
+                    if (ev.Attacker.GetHealth() <= 1600)
+                    {
+                        Timing.Run(Venenomortal(ev.Player, ev.Attacker));
+                    }
+                }
 			}
 
 
