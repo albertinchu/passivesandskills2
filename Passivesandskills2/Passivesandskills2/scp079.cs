@@ -42,7 +42,9 @@ namespace Passivesandskills2
         }
         public IEnumerable<float> Teslass()
         {
+            
             int contador = 0;
+            
             while (contador <= 10)
             {
                 
@@ -51,6 +53,7 @@ namespace Passivesandskills2
                     foreach (Smod2.API.TeslaGate tesla in teslas)
                     {
                         tesla.Activate(true);
+                        tesla.TriggerDistance *= 2;
                     }
 
 
@@ -341,7 +344,8 @@ namespace Passivesandskills2
                             Timing.Run(Cooldown0792());
                             System.Random playrs = new System.Random();
                         int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
-                        if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }
+                        while (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SPECTATOR) { posic = posic + 1; }
+                            if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }
                         
                         if(PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team != Team.SCP)
                         {

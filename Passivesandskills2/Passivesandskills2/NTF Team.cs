@@ -53,7 +53,7 @@ namespace Passivesandskills2
                     {
                         NTFli[ev.Attacker.SteamId] = false;
                         Timing.Run(Intimidacion(ev.Player));
-                        Timing.Run(Cooldown(ev.Player));
+                        Timing.Run(Cooldown(ev.Attacker));
 
                     }
                 }
@@ -78,7 +78,7 @@ namespace Passivesandskills2
 					{
 						NTFli[ev.Attacker.SteamId] = false;
 						Timing.Run(Intimidacion(ev.Player));
-						Timing.Run(Cooldown(ev.Player));
+						Timing.Run(Cooldown(ev.Attacker));
 						
 					}
 				}
@@ -88,7 +88,7 @@ namespace Passivesandskills2
 					{
 						NTFli[ev.Attacker.SteamId] = false;
 						Timing.Run(Intimidacion(ev.Player));
-						Timing.Run(Cooldown(ev.Player));
+						Timing.Run(Cooldown(ev.Attacker));
 						
 					}
 				}
