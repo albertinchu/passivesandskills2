@@ -45,7 +45,7 @@ namespace Passivesandskills2
 			// TENIENTE //
 			if (ev.Attacker.TeamRole.Role == Role.NTF_LIEUTENANT)
 			{
-				Vector posli = ev.Player.GetPosition();
+				
                 if ((ev.Player.TeamRole.Role == Role.CLASSD) || (ev.Player.TeamRole.Role == Role.SCIENTIST))
                 {
                     if (ev.Player.TeamRole.Role == Role.SCIENTIST) { ev.Damage = ev.Damage / 3; }

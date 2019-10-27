@@ -17,14 +17,16 @@ namespace Passivesandskills2
 		public static IEnumerable<float> Venenoguardias(Player player)
 		{
 			int cantidad = 0;
-            
-            while (cantidad != 4)
-			{
-				yield return 2f;
-				player.AddHealth(-3);
-				cantidad += 1;
-			}
-			if (cantidad == 4) { cantidad = 0; }
+            if (player.TeamRole.Role != Role.TUTORIAL)
+            {
+                while (cantidad != 4)
+                {
+                    yield return 2f;
+                    player.AddHealth(-3);
+                    cantidad += 1;
+                }
+                if (cantidad == 4) { cantidad = 0; }
+            }
 
 		}
 
