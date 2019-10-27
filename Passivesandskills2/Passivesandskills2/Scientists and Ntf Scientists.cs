@@ -128,6 +128,7 @@ namespace Passivesandskills2
         {
             if (ev.Command.StartsWith("habilidad"))
             {
+                ev.ReturnMessage = "comando ejecutado";
                 if (!Items.ContainsKey(ev.Player.SteamId))
                 {
                     Items.Add(ev.Player.SteamId, true);
