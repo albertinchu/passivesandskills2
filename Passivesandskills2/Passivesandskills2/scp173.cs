@@ -38,7 +38,7 @@ namespace Passivesandskills2
 				{
 					break;
 				}
-
+                if(player.TeamRole.Role != Role.SCP_173) { break; }
 			}
 		}
 

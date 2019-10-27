@@ -11,19 +11,25 @@ namespace Passivesandskills2
 	{
 
 		static Dictionary<string, bool> Classdh = new Dictionary<string, bool>();
+        static Dictionary<string, int> cooldownn = new Dictionary<string, int>();
         // Los clases d roban munición si su rival tiene munición, ganan salud = al daño que hacen cuando estan a poca vida el cual se duplica si estan a muy poca vida
         // tienen la habilidad de hacerse invisible por 35 de salud durante 10 segundos , disparar desactiva la habilidad
-		public static IEnumerable<float> ClassdTimer(Player player)
+        public static IEnumerable<float> ClassdTimer(Player player)
 		{
 			player.SetGhostMode(true, false, false);
 			yield return 10f;
 			player.SetGhostMode(false);
-			yield return 50f;
-            if (player.TeamRole.Role == Role.CLASSD)
+            while (cooldownn[player.SteamId] <= 50)
+            {
+                yield return 1f;
+                cooldownn[player.SteamId] += 1;
+            }
+            if ((player.TeamRole.Role == Role.CLASSD)&&(cooldownn[player.SteamId] >= 50))
             {
                 player.GiveItem(ItemType.FLASHLIGHT);
-            }
                 Classdh[player.SteamId] = true;
+            }
+            
             
             
 		}
@@ -34,7 +40,8 @@ namespace Passivesandskills2
 			//Class D - [Astucia] //
 			if (ev.Attacker.TeamRole.Role == Role.CLASSD)
 			{
-                if(ev.Attacker.GetGhostMode() == true) { ev.Attacker.SetGhostMode(false); }
+                cooldownn[ev.Attacker.SteamId] += 3;
+                if (ev.Attacker.GetGhostMode() == true) { ev.Attacker.SetGhostMode(false); }
                 
 				if (ev.Player.GetGhostMode() == true) { ev.Player.SetGhostMode(false); }
 				if (ev.Player.GetAmmo(AmmoType.DROPPED_5) >= 3)
@@ -68,6 +75,7 @@ namespace Passivesandskills2
 		{
 			if ((ev.Role == Role.CLASSD) && (!Classdh.ContainsKey(ev.Player.SteamId)))
 			{
+                cooldownn.Add(ev.Player.SteamId, 0);
 				Classdh.Add(ev.Player.SteamId, true);
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Astucia] robas munición al disparar. [Dboy rules]: cuando estas a poca vida robas vida. Tu Habilidad es [Sigilo de doble filo]tirar tu linterna te hace invisible por 35 de salud (puedes morir si tienes menos de 36 de salud). ", false);
 				ev.Player.PersonalBroadcast(10, " [Sigilo de doble filo]: (puedes morir si tienes menos de 36 de salud). ", false);
@@ -98,6 +106,7 @@ namespace Passivesandskills2
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
 			Classdh.Clear();
+            cooldownn.Clear();
 		}
        
 

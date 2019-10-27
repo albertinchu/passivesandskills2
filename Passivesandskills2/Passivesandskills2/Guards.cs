@@ -25,7 +25,7 @@ namespace Passivesandskills2
                     player.AddHealth(-3);
                     cantidad += 1;
                 }
-                if (cantidad == 4) { cantidad = 0; }
+                
             }
 
 		}
@@ -44,9 +44,9 @@ namespace Passivesandskills2
                     {
                         ev.Attacker.PersonalBroadcast(3, "<color=#FF05FF> Nivel 2 </color>", false);
                         ev.Attacker.SetHealth(150, DamageType.CONTAIN);
-                        ev.Attacker.SetAmmo(AmmoType.DROPPED_5, 500);
-                        ev.Attacker.SetAmmo(AmmoType.DROPPED_7, 500);
-                        ev.Attacker.SetAmmo(AmmoType.DROPPED_9, 500);
+                        ev.Attacker.SetAmmo(AmmoType.DROPPED_5, 700);
+                        ev.Attacker.SetAmmo(AmmoType.DROPPED_7, 700);
+                        ev.Attacker.SetAmmo(AmmoType.DROPPED_9, 700);
                     }
                     if (Guardias[ev.Attacker.SteamId] == 150)
                     {
@@ -93,7 +93,7 @@ namespace Passivesandskills2
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
 		{
-            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && ((ev.Player.TeamRole.Role == Role.SCP_939_53)||(ev.Killer.TeamRole.Role == Role.SCP_939_53))) { Guardias[ev.Player.SteamId] += 80; }
+            if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && ((ev.Player.TeamRole.Role == Role.SCP_939_53)||(ev.Player.TeamRole.Role == Role.SCP_939_89))) { Guardias[ev.Killer.SteamId] += 80; }
             if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_096)) { Guardias[ev.Killer.SteamId] += 75; }
             if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_173)) { Guardias[ev.Killer.SteamId] += 75; }
             if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_106)) { Guardias[ev.Killer.SteamId] += 70; }
