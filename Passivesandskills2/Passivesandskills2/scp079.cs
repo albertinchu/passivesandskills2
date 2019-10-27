@@ -8,17 +8,17 @@ using Smod2.API;
 
 namespace Passivesandskills2
 {
-	partial class scp079 : IEventHandler079AddExp, IEventHandlerGeneratorFinish, IEventHandler079LevelUp,IEventHandlerCallCommand,
+	partial class scp079 : IEventHandler079AddExp, IEventHandler079LevelUp,IEventHandlerCallCommand,
 		IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerWarheadDetonate, IEventHandler079TeslaGate
         ,IEventHandlerElevatorUse
 	{
 		static bool elevatoss = false;
 		
 		static bool Boom = false;
-		int gen = 0;
+		
 		int level = 0;
-		static bool overcharge = false;
-		string computerchan;q
+		
+		string computerchan;
 		Vector posicionteni;
 		static Dictionary<string, Player> Pasivaa = new Dictionary<string, Player>();
         static bool habilidad079 = true;
@@ -147,11 +147,7 @@ namespace Passivesandskills2
 
 
 
-        public static IEnumerable<float> Pcoff()
-		{
-			yield return 60f;
-			overcharge = true;
-		}
+       
 
 		public void On079AddExp(Player079AddExpEvent ev)
 		{
@@ -180,11 +176,7 @@ namespace Passivesandskills2
 			}
 		}
 
-		public void OnGeneratorFinish(GeneratorFinishEvent ev)
-		{
-			gen += 1;
-			if (gen == 5) { Timing.Run(Pcoff()); }
-		}
+	
 
 	
 
@@ -203,10 +195,10 @@ namespace Passivesandskills2
 		{
 			
 			Boom = false;   
-			overcharge = false;
+			
 			level = 0;
 			computerchan = "0";
-			gen = 0;          
+			         
             habilidad079 = true;
             elevatoss = false;
 		}
@@ -345,7 +337,7 @@ namespace Passivesandskills2
                             ev.Player.SendConsoleMessage("Enviando nanobots al ataque.", "blue");
                             ev.ReturnMessage = "Enviando nanobots al ataque .";
                             habilidad079 = false;
-                            Timing.Run(Cooldown079());
+                            Timing.Run(Cooldown0792());
                             System.Random playrs = new System.Random();
                         int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
                         if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }

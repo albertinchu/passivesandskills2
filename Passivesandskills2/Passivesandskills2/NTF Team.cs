@@ -11,12 +11,13 @@ namespace Passivesandskills2
 	{
 		
 		static Dictionary<string, bool> NTFli = new Dictionary<string, bool>();
-		
+        
+
 
         // el comandante hace mas daño segun los jugadores NTF vivos y sus granadas aplican 200 de salud ademas de curar a sus aliados cuando disparan a aliados
         // el Teniente tiene la habilidad de teletransportar a un enemigo no scp a una sala aleatoria , funciona con los zombies.
         // cadetes resisten mejor el daño de explosiones y las flash agregan 30 de salud
-		public void OnPlayerHurt(PlayerHurtEvent ev)
+        public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
 			// COMANDANTE //
 			if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN))
@@ -160,17 +161,20 @@ namespace Passivesandskills2
 		public void OnSetRole(PlayerSetRoleEvent ev)
 		{
 			// TENIENTE //
+            
 			if (ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT)
 			{
 				if (!NTFli.ContainsKey(ev.Player.SteamId))
 				{
 					NTFli.Add(ev.Player.SteamId, true);
-				}
+                    ev.Player.SendConsoleMessage("[cambiar las tornas]: Cambiar las tornas es una pasiva Tactica con 40s de cooldown  la cual teletransporta al enemigo cuando este esta a menos del 50% de vida . (Esta habilidad no se aplica a SCPS pero si a Zombies y tampoco se aplica a aliados)", "blue");
+                    ev.Player.PersonalBroadcast(10, "Tu pasiva es [cambiar las tornas]: Cambias la posición del enemigo de forma aleatoria cuando esta por debajo de 50% atrapandolo (mas info en la consola), cuando has usado tu habilidad durante 40s tienes la pasiva", false);
+                    ev.Player.PersonalBroadcast(10, "De servicio que aumenta tu daño en 15 a todos los objetivos y es el doble de daño contra chaos, con SCPS 1% de la vida actual del SCP", false);
+                }
 				
-				ev.Player.SendConsoleMessage("[cambiar las tornas]: Cambiar las tornas es una pasiva Tactica con 40s de cooldown  la cual teletransporta al enemigo cuando este esta a menos del 50% de vida . (Esta habilidad no se aplica a SCPS pero si a Zombies y tampoco se aplica a aliados)", "blue");
-				ev.Player.PersonalBroadcast(10, "Tu pasiva es [cambiar las tornas]: Cambias la posición del enemigo de forma aleatoria cuando esta por debajo de 50% atrapandolo (mas info en la consola), cuando has usado tu habilidad durante 40s tienes la pasiva", false);
-                ev.Player.PersonalBroadcast(10, "De servicio que aumenta tu daño en 15 a todos los objetivos y es el doble de daño contra chaos, con SCPS 1% de la vida actual del SCP", false);
+				
             }
+            
 			// CADETE //
 			if (ev.Player.TeamRole.Role == Role.NTF_CADET)
 			{
