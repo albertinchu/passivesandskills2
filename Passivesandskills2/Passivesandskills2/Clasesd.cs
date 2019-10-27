@@ -40,7 +40,8 @@ namespace Passivesandskills2
 			//Class D - [Astucia] //
 			if (ev.Attacker.TeamRole.Role == Role.CLASSD)
 			{
-                cooldownn[ev.Attacker.SteamId] += 3;
+                if(Classdh[ev.Player.SteamId] == false) { cooldownn[ev.Attacker.SteamId] += 3; }
+                
                 if (ev.Attacker.GetGhostMode() == true) { ev.Attacker.SetGhostMode(false); }
                 
 				if (ev.Player.GetGhostMode() == true) { ev.Player.SetGhostMode(false); }
