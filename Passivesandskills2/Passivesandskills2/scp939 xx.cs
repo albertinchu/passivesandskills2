@@ -23,7 +23,8 @@ namespace Passivesandskills2
             {
                 yield return 2f;
                 perro2.AddHealth(4);
-                player.AddHealth(-4);
+                if(player.TeamRole.Role != Role.SPECTATOR) { player.AddHealth(-4); }
+                
                 cantidad += 1;
             }
 
@@ -38,7 +39,8 @@ namespace Passivesandskills2
                 yield return 3f;
                 perro2.AddHealth(5);
                 if (player.GetHealth() <= 8) { player.Kill(DamageType.DECONT); }
-                player.AddHealth(-8);
+                if(player.TeamRole.Role != Role.SPECTATOR) { player.AddHealth(-8); }
+                
                 cantidadd += 1;
             }
 
