@@ -3,6 +3,7 @@ using Smod2.EventHandlers;
 using scp4aiur;
 using Smod2.Events;
 using Smod2.API;
+using Smod2;
 
 namespace Passivesandskills2
 {
@@ -10,7 +11,7 @@ namespace Passivesandskills2
 	{
 		static bool Llorona = true;
         static int muertes = 0;
-        static Dictionary<string, Player> Pasiva = new Dictionary<string, Player>();
+        
 
 		int bajasllorona = 0;
 		Vector llorondead;
@@ -60,17 +61,17 @@ namespace Passivesandskills2
 			if (ev.Killer.TeamRole.Role == Role.SCP_096)
 			{
 				bajasllorona += 1;
-				foreach (KeyValuePair<string, Player> keyValuePair in Pasiva)
+				foreach (Player player in PluginManager.Manager.Server.GetPlayers())
 				{
-					if ((keyValuePair.Value.TeamRole.Team == Team.SCP) && (keyValuePair.Value.TeamRole.Role != Role.SCP_079))
+					if ((player.TeamRole.Team == Team.SCP) && (player.TeamRole.Role != Role.SCP_079))
 					{
-						if (keyValuePair.Value.TeamRole.Role == Role.SCP_096) { keyValuePair.Value.AddHealth(20); }
-						if (keyValuePair.Value.TeamRole.Role == Role.SCP_049) { keyValuePair.Value.AddHealth(20); }
-						if (keyValuePair.Value.TeamRole.Role == Role.SCP_049_2) { keyValuePair.Value.AddHealth(10); }
-						if (keyValuePair.Value.TeamRole.Role == Role.SCP_173) { keyValuePair.Value.AddHealth(45); }
-						if (keyValuePair.Value.TeamRole.Role == Role.SCP_106) { keyValuePair.Value.AddHealth(10); }
-						if (keyValuePair.Value.TeamRole.Role == Role.SCP_939_89) { keyValuePair.Value.AddHealth(40); }
-						if (keyValuePair.Value.TeamRole.Role == Role.SCP_939_53) { keyValuePair.Value.AddHealth(40); }
+						if (player.TeamRole.Role == Role.SCP_096) { player.AddHealth(20); }
+						if (player.TeamRole.Role == Role.SCP_049) { player.AddHealth(20); }
+						if (player.TeamRole.Role == Role.SCP_049_2) { player.AddHealth(10); }
+						if (player.TeamRole.Role == Role.SCP_173) { player.AddHealth(45); }
+						if (player.TeamRole.Role == Role.SCP_106) { player.AddHealth(10); }
+						if (player.TeamRole.Role == Role.SCP_939_89) { player.AddHealth(40); }
+						if (player.TeamRole.Role == Role.SCP_939_53) { player.AddHealth(40); }
 					}
 
 				}
@@ -96,7 +97,7 @@ namespace Passivesandskills2
 
 		public void OnSetRole(PlayerSetRoleEvent ev)
 		{
-			if (!Pasiva.ContainsKey(ev.Player.SteamId)) { Pasiva.Add(ev.Player.SteamId, ev.Player); }
+			
 			if (((ev.Player.TeamRole.Role == Role.SCP_096))&&(Llorona == true))
 			{
 				Llorona = true;
@@ -107,7 +108,7 @@ namespace Passivesandskills2
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
 			Llorona = true;
-			Pasiva.Clear();
+			
 			bajasllorona = 0;
 		}
 		public void OnScp096Panic(Scp096PanicEvent ev)
