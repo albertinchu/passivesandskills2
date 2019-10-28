@@ -30,8 +30,17 @@ namespace Passivesandskills2
                 
 
             }
+            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER)&&((ev.Player.TeamRole.Team == Team.SCP)||(ev.Player.TeamRole.Team == Team.CLASSD) || (ev.Player.TeamRole.Team == Team.CHAOS_INSURGENCY))) 
+            {
+                ev.Damage += 15;
+                if(ev.Player.GetHealth() <= ev.Player.TeamRole.MaxHP / 2) 
+                {
+                    ev.Damage += 15;
+                }
+            }
 
-			if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Team.NINETAILFOX) && (ev.DamageType == DamageType.FRAG))
+
+            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Team.NINETAILFOX) && (ev.DamageType == DamageType.FRAG))
 			{
 				ev.Damage = 0;
 				ev.Player.SetHealth(200, DamageType.FRAG);
@@ -187,7 +196,7 @@ namespace Passivesandskills2
 			{
 				
 				ev.Player.SendConsoleMessage("[Preocupación por los tuyos]: Tus disparos hacen como cura la mitad del daño que causarían a tus aliados y las granadas Instacuran 200 de salud (¡OJO!: No se aplica a guardias ni científicos", "blue");
-				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Lider del Escudrón]: Inflinges daño adicional segun el número de NTF vivos [Preocupación por los tuyos]: tus ataques curan aliados (mas info en la consola)", false);
+				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Lider del Escudrón]: Inflinges daño adicional a secas (15)[Preocupación por los tuyos]: tus ataques curan aliados (mas info en la consola)", false);
 			}
 		}
 
