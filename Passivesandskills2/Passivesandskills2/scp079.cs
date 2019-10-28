@@ -353,7 +353,14 @@ namespace Passivesandskills2
                             Timing.Run(Cooldown0792(ev.Player));
                             System.Random playrs = new System.Random();
                             int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
-                            while (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SPECTATOR) { posic = posic + 1; }
+                            while ((PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SPECTATOR) || (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role == Role.SCP_079)) 
+                            {
+                                if (posic > PluginManager.Manager.Server.NumPlayers)
+                                { 
+                                    posic = 0; 
+                                }
+                                posic = posic + 1; 
+                            }
                             if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }
 
                             if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team != Team.SCP)
@@ -392,7 +399,7 @@ namespace Passivesandskills2
                             
                             System.Random playrs = new System.Random();
                             int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
-                            while (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SPECTATOR) { posic = posic + 1; }
+                            while ((PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SPECTATOR)||(PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role == Role.SCP_079)) { if (posic > PluginManager.Manager.Server.NumPlayers) { posic = 0; } posic = posic + 1; }
                             if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }
 
                             if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team != Team.SCP)
