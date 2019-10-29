@@ -24,25 +24,17 @@ namespace Passivesandskills2
                 yield return 2f;
                 perro2.AddHealth(4);
                 if(player.TeamRole.Role != Role.SPECTATOR) { player.AddHealth(-4); }
-                
-                cantidad += 1;
+                if (perro2.GetHealth() <= 1600) 
+                {
+                    if (player.GetHealth() <= 8) { player.Kill(DamageType.DECONT); }
+                    if (player.TeamRole.Role != Role.SPECTATOR) { player.AddHealth(-8); }
+                    perro2.AddHealth(5);
+
+                }
+
+                    cantidad += 1;
             }
 
-
-        }
-
-        public static IEnumerable<float> Venenomortal(Player player, Player perro2)
-        {
-            int cantidadd = 0;
-            while (cantidadd <= 3)
-            {
-                yield return 3f;
-                perro2.AddHealth(5);
-                if (player.GetHealth() <= 8) { player.Kill(DamageType.DECONT); }
-                if(player.TeamRole.Role != Role.SPECTATOR) { player.AddHealth(-8); }
-                
-                cantidadd += 1;
-            }
 
         }
 
@@ -79,10 +71,6 @@ namespace Passivesandskills2
                 if (ev.Player.TeamRole.Role != Role.TUTORIAL)
                 {
                     Timing.Run(Veneno(ev.Player, ev.Attacker));
-                    if (ev.Attacker.GetHealth() <= 1600)
-                    {
-                        Timing.Run(Venenomortal(ev.Player, ev.Attacker));
-                    }
                 }
 			}
 
