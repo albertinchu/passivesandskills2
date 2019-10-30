@@ -16,23 +16,77 @@ namespace Passivesandskills2
     {
         // En este codigo se supone que lo que hace es que un perro tenga reduccion de daño cuando esta a poca vida y además quién le dispare recivirá daño
         // y el otro perro causa daño por veneno el cual es mortal y mas dañino cuando el perro esta a poca vida.
-        public static IEnumerable<float> Veneno(Player player, Player perro2)
+
+       
+        static Dictionary<Player, int> mordido = new Dictionary<Player, int>();
+        static Dictionary<Player, bool> Vmortal = new Dictionary<Player, bool>();
+        static Dictionary<Player, Player> atacant = new Dictionary<Player, Player>();
+        public static IEnumerable<float> Veneno()
         {
-            int cantidad = 0;
-            while (cantidad <= 4)
+            
+            while (true)
             {
-                yield return 2f;
-                perro2.AddHealth(4);
-                if(player.TeamRole.Role != Role.SPECTATOR) { player.AddHealth(-4); }
-                if (perro2.GetHealth() <= 1600) 
-                {
-                    if (player.GetHealth() <= 8) { player.Kill(DamageType.DECONT); }
-                    if (player.TeamRole.Role != Role.SPECTATOR) { player.AddHealth(-8); }
-                    perro2.AddHealth(5);
+               foreach(KeyValuePair<Player,int> pair in mordido) 
+               { 
+                    if(pair.Value >= 17) 
+                    {
+                        pair.Key.AddHealth(-4); mordido[pair.Key] -= 1; 
+                        atacant[pair.Key].AddHealth(4);
+                        if (Vmortal[atacant[pair.Key]]) 
+                        {
+                                pair.Key.AddHealth(-8);
+                                atacant[pair.Key].AddHealth(5);
 
+                        }                          
+                    }
+                    if (pair.Value >= 13)
+                    {
+                        pair.Key.AddHealth(-4); mordido[pair.Key] -= 1;
+                        atacant[pair.Key].AddHealth(4);
+                        if (Vmortal[atacant[pair.Key]])
+                        {
+                            pair.Key.AddHealth(-8);
+                            atacant[pair.Key].AddHealth(5);
+
+                        }
+                    }
+                    if (pair.Value >= 9)
+                    {
+                        pair.Key.AddHealth(-4); mordido[pair.Key] -= 1;
+                        atacant[pair.Key].AddHealth(4);
+                        if (Vmortal[atacant[pair.Key]])
+                        {
+                            pair.Key.AddHealth(-8);
+                            atacant[pair.Key].AddHealth(5);
+
+                        }
+                    }
+                    if (pair.Value >= 5)
+                    {
+                        pair.Key.AddHealth(-4); mordido[pair.Key] -= 1;
+                        atacant[pair.Key].AddHealth(4);
+                        if (Vmortal[atacant[pair.Key]])
+                        {
+                            pair.Key.AddHealth(-8);
+                            atacant[pair.Key].AddHealth(5);
+
+                        }
+                    }
+                    if (pair.Value >= 1)
+                    {
+                        pair.Key.AddHealth(-4); mordido[pair.Key] -= 1;
+                        atacant[pair.Key].AddHealth(4);
+                        if (Vmortal[atacant[pair.Key]])
+                        {
+                            pair.Key.AddHealth(-8);
+                            atacant[pair.Key].AddHealth(5);
+
+                        }
+                    }
                 }
-
-                    cantidad += 1;
+                
+                
+                yield return 3f;
             }
 
 
@@ -68,9 +122,11 @@ namespace Passivesandskills2
 			//SCP 939-53 / Teemo//
 			if (ev.Attacker.TeamRole.Role == Role.SCP_939_53)
 			{
+                if(ev.Attacker.GetHealth() <= 1650) {  Vmortal[ev.Attacker] = true;}
                 if (ev.Player.TeamRole.Role != Role.TUTORIAL)
                 {
-                    Timing.Run(Veneno(ev.Player, ev.Attacker));
+                    if (mordido.ContainsKey(ev.Player)) { mordido[ev.Player] += 4; atacant[ev.Player] = ev.Attacker; }
+                    if (!mordido.ContainsKey(ev.Player)) { mordido.Add(ev.Player, 4); ; atacant.Add(ev.Player, ev.Attacker); }
                 }
 			}
 
@@ -81,6 +137,7 @@ namespace Passivesandskills2
 		{
 			if (ev.Player.TeamRole.Role == Role.SCP_939_53)
 			{
+                if (!Vmortal.ContainsKey(ev.Player)) { Vmortal.Add(ev.Player, false); }
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es[Fauces Venenosas]: al morder a alguien le inyectas veneno no letal. [Veneno Letal]: cuando estas a poca vida este veneno es mas letal de forma que puede incluso matar ", false);
 			}
 			if (ev.Player.TeamRole.Role == Role.SCP_939_89)
