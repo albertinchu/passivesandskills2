@@ -12,7 +12,7 @@ using Smod2.API;
 
 namespace Passivesandskills2
 {
-    partial class scp939_xx : IEventHandlerPlayerHurt, IEventHandlerSetRole
+    partial class scp939_xx : IEventHandlerPlayerHurt, IEventHandlerSetRole, IEventHandlerWaitingForPlayers
     {
         // En este codigo se supone que lo que hace es que un perro tenga reduccion de daño cuando esta a poca vida y además quién le dispare recivirá daño
         // y el otro perro causa daño por veneno el cual es mortal y mas dañino cuando el perro esta a poca vida.
@@ -27,7 +27,8 @@ namespace Passivesandskills2
             while (true)
             {
                foreach(KeyValuePair<Player,int> pair in mordido) 
-               { 
+               {
+                    if (!PluginManager.Manager.Server.GetPlayers().Contains(pair.Key)) { mordido.Remove(pair.Key); atacant.Remove(pair.Key); }
                     if(pair.Value >= 17) 
                     {
                         pair.Key.AddHealth(-4); mordido[pair.Key] -= 1; 
@@ -92,6 +93,7 @@ namespace Passivesandskills2
 
         }
 
+      
 
         public void OnPlayerHurt(PlayerHurtEvent ev)
         {
@@ -122,7 +124,7 @@ namespace Passivesandskills2
 			//SCP 939-53 / Teemo//
 			if (ev.Attacker.TeamRole.Role == Role.SCP_939_53)
 			{
-                if(ev.Attacker.GetHealth() <= 1650) {  Vmortal[ev.Attacker] = true;}
+                if((ev.Attacker.GetHealth() <= 1550)&&(Vmortal[ev.Attacker] ==false)) {  Vmortal[ev.Attacker] = true;}
                 if (ev.Player.TeamRole.Role != Role.TUTORIAL)
                 {
                     if (mordido.ContainsKey(ev.Player)) { mordido[ev.Player] += 4; atacant[ev.Player] = ev.Attacker; }
@@ -146,5 +148,12 @@ namespace Passivesandskills2
                 ev.Player.PersonalBroadcast(10, " [Mejora Titanio]: dañas a tus atacantes con 12 de daño por bala. ", true);
             }
 		}
-	}
+
+        public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
+        {
+            mordido.Clear();
+            atacant.Clear();
+            Vmortal.Clear();
+        }
+    }
 }
