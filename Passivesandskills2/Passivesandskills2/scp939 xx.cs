@@ -122,7 +122,7 @@ namespace Passivesandskills2
             } 
             
 			//SCP 939-53 / Teemo//
-			if (ev.Attacker.TeamRole.Role == Role.SCP_939_53)
+			if (ev.Attacker.TeamRole.Role == Role.SCP_939_53) 
 			{
                 if((ev.Attacker.GetHealth() <= 1550)&&(Vmortal[ev.Attacker] ==false)) {  Vmortal[ev.Attacker] = true;}
                 if (ev.Player.TeamRole.Role != Role.TUTORIAL)
