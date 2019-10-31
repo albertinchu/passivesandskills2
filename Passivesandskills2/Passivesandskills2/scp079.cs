@@ -32,7 +32,7 @@ namespace Passivesandskills2
 			yield return 5f;
 			PluginManager.Manager.Server.Map.DetonateWarhead();
 		
-			PluginManager.Manager.Server.Map.DetonateWarhead();
+			
             yield return 60f;
             if (Boom)
             {
