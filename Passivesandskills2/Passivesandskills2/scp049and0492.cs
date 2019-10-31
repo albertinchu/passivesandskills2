@@ -75,12 +75,12 @@ namespace Passivesandskills2
 			int numero = proba.Next(0, 100);
 			yield return 5f;
 
-			if ((numero >= 5))
+			if ((numero <= 5))
 			{
                 player.ChangeRole(Role.SCP_106, false);
                 player.SetHealth(325);
             }
-            if ((numero >= 10) && (numero <= 6))
+            if ((numero <= 10) && (numero >= 6))
             {
                 player.ChangeRole(Role.SCP_049, false);
                 player.SetHealth(1000);
