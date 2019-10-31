@@ -5,6 +5,7 @@ using Smod2.EventHandlers;
 using scp4aiur;
 using Smod2.Events;
 using Smod2.API;
+
 namespace Passivesandskills2
 {
 	partial class Ntfteam : IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerDisconnect, IEventHandlerThrowGrenade, IEventHandlerPlayerDie
@@ -20,16 +21,7 @@ namespace Passivesandskills2
         public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
 			// COMANDANTE //
-			if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN))
-			{
-                if(ev.Player.TeamRole.Team == Team.NINETAILFOX) { ev.Damage = 0; }
-                
-                if ((ev.Player.TeamRole.Role == Role.NTF_CADET)&& (ev.Player.GetHealth() <= 150)) { ev.Player.AddHealth(5); }
-                if ((ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT)&&(ev.Player.GetHealth() <= 180)){ ev.Player.AddHealth(8); }
-                if ((ev.Player.TeamRole.Role == Role.NTF_SCIENTIST) && (ev.Player.GetHealth() <= 180)) { ev.Player.AddHealth(8); }
-                
-
-            }
+		
             if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER)&&((ev.Player.TeamRole.Team == Team.SCP)||(ev.Player.TeamRole.Team == Team.CLASSD) || (ev.Player.TeamRole.Team == Team.CHAOS_INSURGENCY))) 
             {
                 ev.Damage += 15;
@@ -40,11 +32,7 @@ namespace Passivesandskills2
             }
 
 
-            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Team.NINETAILFOX) && (ev.DamageType == DamageType.FRAG))
-			{
-				ev.Damage = 0;
-				ev.Player.SetHealth(200, DamageType.FRAG);
-			}
+            
 		
 			// CADETES //
 			if ((ev.Player.TeamRole.Role == Role.NTF_CADET) && (ev.DamageType == DamageType.FRAG))

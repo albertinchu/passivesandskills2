@@ -13,15 +13,13 @@ using Smod2.API;
 namespace Passivesandskills2
 {
     partial class scp939_xx : IEventHandlerPlayerHurt, IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerPlayerDie, IEventHandlerCallCommand, IEventHandlerCheckRoundEnd, IEventHandlerPlayerPickupItem
-        ,IEventHandlerDoorAccess
+        ,IEventHandlerDoorAccess, IEventHandlerMedkitUse
     {
         // En este codigo se supone que lo que hace es que un perro tenga reduccion de daño cuando esta a poca vida y además quién le dispare recivirá daño
         // y el otro perro causa daño por veneno el cual es mortal y mas dañino cuando el perro esta a poca vida.
 
-       
-        static Dictionary<Player, int> mordido = new Dictionary<Player, int>();
-        static Dictionary<Player, bool> Vmortal = new Dictionary<Player, bool>();
-        static Dictionary<Player, Player> atacant = new Dictionary<Player, Player>();
+        static Dictionary<Player, int> Mordido = new Dictionary<Player, int>();
+        
         static Dictionary<string, bool> Habilidad = new Dictionary<string, bool>();
         static bool end = false;
         int health = 0;
@@ -38,78 +36,7 @@ namespace Passivesandskills2
             if (Habilidad.ContainsKey(player.SteamId)) { Habilidad[player.SteamId] = true; }
             
         }
-        public static IEnumerable<float> Veneno()
-        {
-            
-            while (true)
-            {
-                if(end == true) { break; }
-               foreach(KeyValuePair<Player,int> pair in mordido) 
-               {
-                    if (!PluginManager.Manager.Server.GetPlayers().Contains(pair.Key)) { mordido.Remove(pair.Key); atacant.Remove(pair.Key); }
-                    if(pair.Value >= 17) 
-                    {
-                        pair.Key.AddHealth(-4); mordido[pair.Key] -= 1; 
-                        atacant[pair.Key].AddHealth(4);
-                        if (Vmortal[atacant[pair.Key]]) 
-                        {
-                                pair.Key.AddHealth(-8);
-                                atacant[pair.Key].AddHealth(5);
-
-                        }                          
-                    }
-                    if (pair.Value >= 13)
-                    {
-                        pair.Key.AddHealth(-4); mordido[pair.Key] -= 1;
-                        atacant[pair.Key].AddHealth(4);
-                        if (Vmortal[atacant[pair.Key]])
-                        {
-                            pair.Key.AddHealth(-8);
-                            atacant[pair.Key].AddHealth(5);
-
-                        }
-                    }
-                    if (pair.Value >= 9)
-                    {
-                        pair.Key.AddHealth(-4); mordido[pair.Key] -= 1;
-                        atacant[pair.Key].AddHealth(4);
-                        if (Vmortal[atacant[pair.Key]])
-                        {
-                            pair.Key.AddHealth(-8);
-                            atacant[pair.Key].AddHealth(5);
-
-                        }
-                    }
-                    if (pair.Value >= 5)
-                    {
-                        pair.Key.AddHealth(-4); mordido[pair.Key] -= 1;
-                        atacant[pair.Key].AddHealth(4);
-                        if (Vmortal[atacant[pair.Key]])
-                        {
-                            pair.Key.AddHealth(-8);
-                            atacant[pair.Key].AddHealth(5);
-
-                        }
-                    }
-                    if (pair.Value >= 1)
-                    {
-                        pair.Key.AddHealth(-4); mordido[pair.Key] -= 1;
-                        atacant[pair.Key].AddHealth(4);
-                        if (Vmortal[atacant[pair.Key]])
-                        {
-                            pair.Key.AddHealth(-8);
-                            atacant[pair.Key].AddHealth(5);
-
-                        }
-                    }
-                }
-                
-                
-                yield return 3f;
-            }
-
-
-        }
+        
 
      
 
@@ -129,6 +56,7 @@ namespace Passivesandskills2
                 if(contador <= 0) { contador = 0; end = true; }
                 Habilidad.Remove(ev.Player.SteamId);
             }
+            if (Mordido.ContainsKey(ev.Player)) { Mordido.Remove(ev.Player); }
         }
 
         public void OnPlayerHurt(PlayerHurtEvent ev)
@@ -160,12 +88,19 @@ namespace Passivesandskills2
 			//SCP 939-53 / Teemo//
 			if (ev.Attacker.TeamRole.Role == Role.SCP_939_53) 
 			{
-                if((ev.Attacker.GetHealth() <= 1550)&&(Vmortal[ev.Attacker] ==false)) {  Vmortal[ev.Attacker] = true;}
-                if (ev.Player.TeamRole.Role != Role.TUTORIAL)
+                if (!Mordido.ContainsKey(ev.Player)) { Mordido.Add(ev.Player, (ev.Player.TeamRole.MaxHP - 20)); }
+                if (Mordido.ContainsKey(ev.Player)) 
                 {
-                    if (mordido.ContainsKey(ev.Player)) { mordido[ev.Player] += 4; atacant[ev.Player] = ev.Attacker; }
-                    if (!mordido.ContainsKey(ev.Player)) { mordido.Add(ev.Player, 4); ; atacant.Add(ev.Player, ev.Attacker); }
+                    ev.Attacker.AddHealth(20);
+                    Mordido[ev.Player] -= 20; 
+                if(ev.Attacker.GetHealth() <= 1450) 
+                    {
+                        Mordido[ev.Player] -= 15;
+                        ev.Attacker.AddHealth(30);
+                    }
+                
                 }
+                
 			}
             if((Habilidad.ContainsKey(ev.Attacker.SteamId))&&(ev.Attacker.TeamRole.Role != Role.SCP_939_53)) 
             {
@@ -177,15 +112,50 @@ namespace Passivesandskills2
                     ev.Player.ChangeRole(Role.SCP_939_53, false, false, false);
                 ev.Player.SetHealth(health);
             }
+            //anticomandante
+            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN)&&(Mordido.ContainsKey(ev.Player)))
+            {
+                if (ev.Player.TeamRole.Team == Team.NINETAILFOX) { ev.Damage = 0; }
 
-		}
+                if ((ev.Player.TeamRole.Role == Role.NTF_CADET) && (ev.Player.GetHealth() <= Mordido[ev.Player])) { ev.Player.AddHealth(5); }
+                if ((ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) && (ev.Player.GetHealth() <= Mordido[ev.Player])) { ev.Player.AddHealth(8); }
+                if ((ev.Player.TeamRole.Role == Role.NTF_SCIENTIST) && (ev.Player.GetHealth() <= Mordido[ev.Player])) { ev.Player.AddHealth(8); }
+
+
+
+
+            }
+            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Team.NINETAILFOX) && (ev.DamageType == DamageType.FRAG))
+            {
+                ev.Damage = 0;
+                ev.Player.SetHealth(Mordido[ev.Player], DamageType.FRAG);
+            }
+            //comandante
+            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN)&&(!Mordido.ContainsKey(ev.Player)))
+            {
+                if (ev.Player.TeamRole.Team == Team.NINETAILFOX) { ev.Damage = 0; }
+
+                if ((ev.Player.TeamRole.Role == Role.NTF_CADET) && (ev.Player.GetHealth() <= 150)) { ev.Player.AddHealth(5); }
+                if ((ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) && (ev.Player.GetHealth() <= 180)) { ev.Player.AddHealth(8); }
+                if ((ev.Player.TeamRole.Role == Role.NTF_SCIENTIST) && (ev.Player.GetHealth() <= 180)) { ev.Player.AddHealth(8); }
+
+
+
+
+            }
+            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Team.NINETAILFOX) && (ev.DamageType == DamageType.FRAG))
+            {
+                ev.Damage = 0;
+                ev.Player.SetHealth(200, DamageType.FRAG);
+            }
+        }
 
 		public void OnSetRole(PlayerSetRoleEvent ev)
 		{
 			if (ev.Player.TeamRole.Role == Role.SCP_939_53)
 			{
-                if(end == true) { Timing.Run(Veneno()); end = false; }
-                if (!Vmortal.ContainsKey(ev.Player)) { Vmortal.Add(ev.Player, false);  }
+              
+          
                 if (!Habilidad.ContainsKey(ev.Player.SteamId)) { Habilidad.Add(ev.Player.SteamId, true); }
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es[Fauces Venenosas]: al morder a alguien le inyectas veneno no letal. [Veneno Letal]: cuando estas a poca vida este veneno es mas letal de forma que puede incluso matar ", false);
 			}
@@ -199,9 +169,7 @@ namespace Passivesandskills2
 
         public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
         {
-            mordido.Clear();
-            atacant.Clear();
-            Vmortal.Clear();
+            Mordido.Clear();
             Habilidad.Clear();
             health = 0;
             end = false;
@@ -315,6 +283,11 @@ namespace Passivesandskills2
             {
                 if (ev.Door.Permission.Contains("CHCKPOINT_ACC")) { ev.Allow = true; ev.Door.Open = true; }
             }
+        }
+
+        public void OnMedkitUse(PlayerMedkitUseEvent ev)
+        {
+            if (Mordido.ContainsKey(ev.Player)) { if((ev.Player.GetHealth() + ev.RecoverHealth) >= Mordido[ev.Player]) { ev.Player.SetHealth(Mordido[ev.Player]); } }
         }
     }
 
