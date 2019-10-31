@@ -13,6 +13,7 @@ using Smod2.API;
 namespace Passivesandskills2
 {
     partial class scp939_xx : IEventHandlerPlayerHurt, IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerPlayerDie, IEventHandlerCallCommand, IEventHandlerCheckRoundEnd, IEventHandlerPlayerPickupItem
+        ,IEventHandlerDoorAccess
     {
         // En este codigo se supone que lo que hace es que un perro tenga reduccion de daño cuando esta a poca vida y además quién le dispare recivirá daño
         // y el otro perro causa daño por veneno el cual es mortal y mas dañino cuando el perro esta a poca vida.
@@ -172,8 +173,8 @@ namespace Passivesandskills2
             }
             if((Habilidad.ContainsKey(ev.Player.SteamId))&&(ev.Player.TeamRole.Role != Role.SCP_939_53)) 
             {
-
-                ev.Player.ChangeRole(Role.SCP_939_53, false, false, false);
+                if(ev.Attacker.TeamRole.Team == Team.SCP) { ev.Damage = 0; }
+                    ev.Player.ChangeRole(Role.SCP_939_53, false, false, false);
                 ev.Player.SetHealth(health);
             }
 
@@ -305,6 +306,14 @@ namespace Passivesandskills2
             if (Habilidad.ContainsKey(ev.Player.SteamId)) 
             {
                 ev.Allow = false;
+            }
+        }
+
+        public void OnDoorAccess(PlayerDoorAccessEvent ev)
+        {
+            if (Habilidad.ContainsKey(ev.Player.SteamId)) 
+            {
+                if (ev.Door.Permission.Contains("CHCKPOINT_ACC")) { ev.Allow = true; ev.Door.Open = true; }
             }
         }
     }
