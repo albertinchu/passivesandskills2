@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Smod2.EventHandlers;
-using scp4aiur;
+
 using Smod2.Events;
 using Smod2.API;
+using MEC;
 
 namespace Passivesandskills2
 {
@@ -14,25 +15,8 @@ namespace Passivesandskills2
         static Dictionary<string, int> cooldownn = new Dictionary<string, int>();
         // Los clases d roban munición si su rival tiene munición, ganan salud = al daño que hacen cuando estan a poca vida el cual se duplica si estan a muy poca vida
         // tienen la habilidad de hacerse invisible por 35 de salud durante 10 segundos , disparar desactiva la habilidad
-        public static IEnumerable<float> ClassdTimer(Player player)
-		{
-			player.SetGhostMode(true, false, false);
-			yield return 10f;
-			player.SetGhostMode(false);
-            while (cooldownn[player.SteamId] <= 50)
-            {
-                yield return 1f;
-                cooldownn[player.SteamId] += 1;
-            }
-            if ((player.TeamRole.Role == Role.CLASSD)&&(cooldownn[player.SteamId] >= 50))
-            {
-                player.GiveItem(ItemType.FLASHLIGHT);
-                Classdh[player.SteamId] = true;
-            }
-            
-            
-            
-		}
+    
+		
         
 		
 		public void OnPlayerHurt(PlayerHurtEvent ev)
@@ -98,15 +82,38 @@ namespace Passivesandskills2
 				{
 					Classdh[ev.Player.SteamId] = false;
 					ev.Player.AddHealth(-35);
-					Timing.Run(ClassdTimer(ev.Player));
+
+                    MEC.Timing.RunCoroutine(Classd(ev.Player));
 				}
                
 			}
 		}
 
-		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
+        public IEnumerator<float> Classd(Player player)
+        {
+            
+            player.SetGhostMode(true, false, false);
+            yield return MEC.Timing.WaitForSeconds(10f);
+            player.SetGhostMode(false);
+            while (cooldownn[player.SteamId] <= 50)
+            {
+               yield return MEC.Timing.WaitForSeconds(1f);
+                cooldownn[player.SteamId] += 1;
+            }
+            if ((player.TeamRole.Role == Role.CLASSD) && (cooldownn[player.SteamId] >= 50))
+            {
+                player.GiveItem(ItemType.FLASHLIGHT);
+                Classdh[player.SteamId] = true;
+            }
+            
+            
+        }
+
+        public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
-			Classdh.Clear();
+           
+           
+            Classdh.Clear();
             cooldownn.Clear();
 		}
        

@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\..\..\..\..\Downloads\plugins y codigo\referencias\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
     <Reference Include="GamemodeManager">
       <HintPath>..\..\..\..\..\Downloads\plugins y codigo\referencias\GamemodeManager.dll</HintPath>
     </Reference>

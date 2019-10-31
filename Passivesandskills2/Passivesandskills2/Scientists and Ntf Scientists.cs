@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using Smod2.EventHandlers;
-using scp4aiur;
+using MEC;
 using Smod2.Events;
 using Smod2.API;
+using System;
 
 namespace Passivesandskills2
 {
@@ -17,32 +18,9 @@ namespace Passivesandskills2
         // los NTF scientist se curan el doble con los botiquines
 
 
-        public static IEnumerable<float> ScientistTimer(Player player)
-		{
-			player.SetGodmode(true);
-			yield return 5f;
-			player.SetGodmode(false);
-			yield return 55f;
-            if (player.TeamRole.Role == Role.SCIENTIST)
-            {
-                player.GiveItem(ItemType.CUP);
-            }
-			Scientisth[player.SteamId] = true;
-
-		}
-
-		public static IEnumerable<float> Coffe(Player player)
-		{
-			yield return 5f;
-			player.GiveItem(ItemType.CUP);
-		}
-        public static IEnumerable<float> Itemstimer(Player player)
-        {
-            Items[player.SteamId] = false;
-            yield return 180f;
-            Items[player.SteamId] = true;
-
-        }
+        
+		
+      
 
         public void OnMedkitUse(PlayerMedkitUseEvent ev)
 		{
@@ -62,11 +40,25 @@ namespace Passivesandskills2
 				{
 					ev.Player.AddHealth(25);
 				}
-				Timing.Run(ScientistTimer(ev.Player));
+				MEC.Timing.RunCoroutine(ScientistTimer(ev.Player));
 			}
 		}
 
-		public void OnPlayerHurt(PlayerHurtEvent ev)
+        private IEnumerator<float> ScientistTimer(Player player)
+        {
+
+            player.SetGodmode(true);
+            yield return MEC.Timing.WaitForSeconds(5f);
+            player.SetGodmode(false);
+            yield return MEC.Timing.WaitForSeconds(55f);
+            if (player.TeamRole.Role == Role.SCIENTIST)
+            {
+                player.GiveItem(ItemType.CUP);
+            }
+            Scientisth[player.SteamId] = true;
+        }
+
+        public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
 			// [Conocimiento SCP] + Conocimiento SCP Avanzado] //
 			//Scientists - Vayne early game//
@@ -107,7 +99,7 @@ namespace Passivesandskills2
 			if ((ev.Player.TeamRole.Role == Role.SCIENTIST && (!Scientisth.ContainsKey(ev.Player.SteamId))))
 			{
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Conocimientos SCP]: robas 1 de vida y inflinges mas daño a los Scps 0.5% de su vida maxima, tu habilidad es [el cafe mañanero]: te hace invulnerable drurante 5 segundos y te cura .", false);
-				Timing.Run(Coffe(ev.Player));
+				MEC.Timing.RunCoroutine(coffe(ev.Player));
 				Scientisth.Add(ev.Player.SteamId, true);
 			}
 			// NTF SCIENTIST //
@@ -118,7 +110,13 @@ namespace Passivesandskills2
 			}
 		}
 
-		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
+        private IEnumerator<float> coffe(Player player)
+        {
+            yield return MEC.Timing.WaitForSeconds(5f);
+            player.GiveItem(ItemType.CUP);
+        }
+
+        public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
 			Scientisth.Clear();
             Items.Clear();
@@ -137,14 +135,21 @@ namespace Passivesandskills2
                 if((Items[ev.Player.SteamId])&&(ev.Player.TeamRole.Role == Role.CLASSD))
                 {
                     ev.Player.GiveItem(ItemType.FLASHLIGHT);
-                    Timing.Run(Itemstimer(ev.Player));
+                    MEC.Timing.RunCoroutine(Itemtimer(ev.Player));
                 }
                 if ((Items[ev.Player.SteamId]) && (ev.Player.TeamRole.Role == Role.SCIENTIST))
                 {
-                    Timing.Run(Itemstimer(ev.Player));
+                    MEC.Timing.RunCoroutine(Itemtimer(ev.Player));
                     ev.Player.GiveItem(ItemType.CUP);
                 }
             }
+        }
+
+        private IEnumerator<float> Itemtimer(Player player)
+        {
+            Items[player.SteamId] = false;
+            yield return 180f;
+            Items[player.SteamId] = true;
         }
     }
 }

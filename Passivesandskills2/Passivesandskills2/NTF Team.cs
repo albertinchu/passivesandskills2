@@ -22,7 +22,7 @@ namespace Passivesandskills2
 			// COMANDANTE //
 			if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN))
 			{
-                if(ev.Player.TeamRole.Role != Role.NTF_COMMANDER) { ev.Damage = 0; }
+                if(ev.Player.TeamRole.Team == Team.NINETAILFOX) { ev.Damage = 0; }
                 
                 if ((ev.Player.TeamRole.Role == Role.NTF_CADET)&& (ev.Player.GetHealth() <= 150)) { ev.Player.AddHealth(5); }
                 if ((ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT)&&(ev.Player.GetHealth() <= 180)){ ev.Player.AddHealth(8); }
