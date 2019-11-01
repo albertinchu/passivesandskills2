@@ -6,7 +6,7 @@ using Smod2.API;
 
 namespace Passivesandskills2
 {
-	partial class chaos : IEventHandlerPlayerDie, IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerSetConfig
+	partial class chaos : IEventHandlerPlayerDie, IEventHandlerSetRole, IEventHandlerPlayerHurt
 		{ 
 	
         //  hacen daño adicional = a la vida que les falta/2 y al matar NTF obtienen botiquines 
@@ -35,17 +35,7 @@ namespace Passivesandskills2
             }
 		}
 
-        public void OnSetConfig(SetConfigEvent ev)
-        {
-            switch (ev.Key) 
-            {
-                case "auto_warhead_start_lock":
-                    ev.Value = false;
-                    break;
-            
-            
-            }
-        }
+    
 
         public void OnSetRole(PlayerSetRoleEvent ev)
 		{

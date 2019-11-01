@@ -11,7 +11,7 @@ namespace Passivesandskills2
 		static Dictionary<string, bool> Scp173 = new Dictionary<string, bool>();
 		
         static Dictionary<string, bool> Scp173deads = new Dictionary<string, bool>();
-
+        // a los 60s de morir, el scp 173 respawnea con intervalos de invisibilidad 
         public static IEnumerable<float> Scp173timer(Player player, Vector pos)
 		{
 
@@ -45,6 +45,7 @@ namespace Passivesandskills2
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
 		{
+            //pasiva del 173 cuando muere causa una gran explosión
             
 			if (ev.Player.TeamRole.Role == Role.SCP_173)
 			{
@@ -81,6 +82,7 @@ namespace Passivesandskills2
 
         public void OnPlayerHurt(PlayerHurtEvent ev)
         {
+            // por si se produce algun fall en la asignación de variables.
             if((!Scp173.ContainsKey(ev.Player.SteamId))&&(ev.Player.TeamRole.Role == Role.SCP_173))
             {
                 Scp173deads.Add(ev.Player.SteamId, true);

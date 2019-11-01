@@ -17,7 +17,7 @@ namespace Passivesandskills2
 		int conta049 = 0;
 
         // El 049 cura instantaneo a los clases d y scientist y cada 6 clases d 1 puede mutar con un 35% en otro scp
-        // Los zombies cuanto mas tiempo vivan mas daño hacen
+        // Los zombies cuanto mas tiempo vivan mas daño hacen y reciben  150 de vida 5 veces
 
 		public void OnSetRole(PlayerSetRoleEvent ev)
 		{
@@ -47,7 +47,7 @@ namespace Passivesandskills2
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Manipulador de cuerpos]: Curas de forma instantanea a clasesd/scientists [Mutar]: Cada 6 bajas una tiene posibilidades de mutar (mas info en la consola)  .", false);
 			}
 		}
-
+        //registra los minutos con vida del zombie
 		public static IEnumerable<float> Zombielive(Player player)
 		{
 			while (player.TeamRole.Role == Role.SCP_049_2)
@@ -61,6 +61,7 @@ namespace Passivesandskills2
 			}
 			
 		}
+        // revive a un zombie
 		public static IEnumerable<float> Resurrec(Player player, Vector posdead)
 		{
 			yield return 3f;
@@ -68,6 +69,7 @@ namespace Passivesandskills2
 			yield return 0.2f;
 			player.Teleport(posdead);
 		}
+        // muta a un zombie en un scp
 		public static IEnumerable<float> Mutar(Player player)
 		{
 			System.Random proba = new Random();
@@ -115,6 +117,7 @@ namespace Passivesandskills2
 		public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
 			//[Pasiva zombie Cuerpo errante]//
+            //si el zombie tiene 5 minutos de vida instakillea
 			if (ev.Attacker.TeamRole.Role == Role.SCP_049_2)
 			{
 				ev.Damage += (ev.Damage / 100) * 20 * Zombie[ev.Attacker.SteamId];
@@ -129,8 +132,9 @@ namespace Passivesandskills2
 		}
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
-		{
+		{// cancela la pasiva del zombie
             if (Zombie.ContainsKey(ev.Player.SteamId)) { Zombie[ev.Player.SteamId]= -1; }
+            // revive a clases d y cientificos al instante
 			if (ev.Killer.TeamRole.Role == Smod2.API.Role.SCP_049)
 			{
 

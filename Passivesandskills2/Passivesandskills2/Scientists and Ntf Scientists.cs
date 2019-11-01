@@ -43,7 +43,7 @@ namespace Passivesandskills2
 				MEC.Timing.RunCoroutine(ScientistTimer(ev.Player));
 			}
 		}
-
+        // 5 segundos de god mode para el cientifico y a los 60s le da un cafe y resetea su habilidad
         private IEnumerator<float> ScientistTimer(Player player)
         {
 
@@ -124,6 +124,7 @@ namespace Passivesandskills2
 
         public void OnCallCommand(PlayerCallCommandEvent ev)
         {
+            // en el caso de que un clase d o un cientifico pierda el objeto de su habilidad por la 914 pueden recuperarlo de esta forma
             if (ev.Command.StartsWith("habilidad"))
             {
                 ev.ReturnMessage = "comando ejecutado";

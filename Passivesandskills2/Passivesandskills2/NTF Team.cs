@@ -8,20 +8,20 @@ using Smod2.API;
 
 namespace Passivesandskills2
 {
-	partial class Ntfteam : IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerDisconnect, IEventHandlerThrowGrenade, IEventHandlerPlayerDie
+	partial class Ntfteam : IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerThrowGrenade, IEventHandlerPlayerDie
 	{
 		
 		static Dictionary<string, bool> NTFli = new Dictionary<string, bool>();
         
 
 
-        // el comandante hace mas daño segun los jugadores NTF vivos y sus granadas aplican 200 de salud ademas de curar a sus aliados cuando disparan a aliados
+       
         // el Teniente tiene la habilidad de teletransportar a un enemigo no scp a una sala aleatoria , funciona con los zombies.
         // cadetes resisten mejor el daño de explosiones y las flash agregan 30 de salud
         public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
 			// COMANDANTE //
-		
+		// daño adicional al comandante
             if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER)&&((ev.Player.TeamRole.Team == Team.SCP)||(ev.Player.TeamRole.Team == Team.CLASSD) || (ev.Player.TeamRole.Team == Team.CHAOS_INSURGENCY))) 
             {
                 ev.Damage += 15;
@@ -98,6 +98,8 @@ namespace Passivesandskills2
 			NTFli[player.SteamId] = true;
 		}
 		// TENEINETE HABILIDAD //
+        //Con este fragmento el teniente teleporta a cualquier sujeto que no se Scientist al light con un 90%
+        // a los Scientists los teleporta de otra forma
 		public static IEnumerable<float> Intimidacion(Player player)
 		{
             System.Random sala = new System.Random();
@@ -154,6 +156,7 @@ namespace Passivesandskills2
 		public void OnSetRole(PlayerSetRoleEvent ev)
 		{
 			// TENIENTE //
+      
             
 			if (ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT)
 			{
@@ -161,8 +164,8 @@ namespace Passivesandskills2
 				{
 					NTFli.Add(ev.Player.SteamId, true);
                     ev.Player.SendConsoleMessage("[cambiar las tornas]: Cambiar las tornas es una pasiva Tactica con 40s de cooldown  la cual teletransporta al enemigo cuando este esta a menos del 50% de vida . (Esta habilidad no se aplica a SCPS pero si a Zombies y tampoco se aplica a aliados)", "blue");
-                    ev.Player.PersonalBroadcast(10, "Tu pasiva es [cambiar las tornas]: Cambias la posición del enemigo de forma aleatoria cuando esta por debajo de 50% atrapandolo (mas info en la consola), cuando has usado tu habilidad durante 40s tienes la pasiva", false);
-                    ev.Player.PersonalBroadcast(10, "De servicio que aumenta tu daño en 15 a todos los objetivos y es el doble de daño contra chaos, con SCPS 1% de la vida actual del SCP", false);
+                    ev.Player.PersonalBroadcast(10, "Tu pasiva es [cambiar las tornas]: Cambias la posición del enemigo de forma aleatoria cuando esta por debajo de 50%  (mas info en la consola), cuando has usado tu habilidad durante 40s tienes la pasiva", false);
+                    ev.Player.PersonalBroadcast(10, "[De servicio] que aumenta tu daño en 15 a todos los objetivos y es el doble de daño contra chaos, con SCPS 1% de la vida actual del SCP", false);
                 }
 				
 				
@@ -179,8 +182,8 @@ namespace Passivesandskills2
 			if ((ev.Player.TeamRole.Role == Role.NTF_COMMANDER))
 			{
 				
-				ev.Player.SendConsoleMessage("[Preocupación por los tuyos]: Tus disparos hacen como cura la mitad del daño que causarían a tus aliados y las granadas Instacuran 200 de salud (¡OJO!: No se aplica a guardias ni científicos", "blue");
-				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Lider del Escudrón]: Inflinges daño adicional a secas (15)[Preocupación por los tuyos]: tus ataques curan aliados (mas info en la consola)", false);
+				ev.Player.SendConsoleMessage("[Preocupación por los tuyos]: Tus disparos hacen como cura parte del daño que causarían a tus aliados y las granadas Instacuran 200 de salud (¡OJO!: No se aplica a guardias ni científicos", "blue");
+				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Lider del Escudrón]: Inflinges daño adicional a secas (15) el doble contra sujetos a mitad de vida.[Preocupación por los tuyos]: tus ataques curan aliados (mas info en la consola)", false);
 			}
 		}
 
@@ -192,6 +195,7 @@ namespace Passivesandskills2
 
 		public void OnThrowGrenade(PlayerThrowGrenadeEvent ev)
 		{
+            //La pasiva de los cadetes de que cuando lanzan granadas flash o granadas ganan salud y con las frag ganan una flash
             if((ev.Player.TeamRole.Role == Role.NTF_CADET)&&(ev.GrenadeType == GrenadeType.FRAG_GRENADE))
             {
                 ev.Player.AddHealth(20);
@@ -202,20 +206,11 @@ namespace Passivesandskills2
 				ev.Player.AddHealth(30);
 			}
 		}
-		public void OnDisconnect(DisconnectEvent ev)
-		{
-			
-			foreach (Player player in PluginManager.Manager.Server.GetPlayers())
-			{
-				if((player.TeamRole.Team == Team.NINETAILFOX)&&(player.TeamRole.Role != Role.FACILITY_GUARD))
-				{
-					
-				}
-			}
-		}
+	
 
         public void OnPlayerDie(PlayerDeathEvent ev)
         {
+            //Pasiva del comandante [Justicia] mata al asesino del comandante si es un ntf.
             if((ev.Player.TeamRole.Role == Role.NTF_COMMANDER)&&(ev.Killer.TeamRole.Team == Team.NINETAILFOX)&&(ev.Killer.TeamRole.Role != Role.FACILITY_GUARD))
             { ev.Killer.Kill(DamageType.LURE); }
 

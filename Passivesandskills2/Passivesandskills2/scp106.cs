@@ -12,7 +12,7 @@ namespace Passivesandskills2
 	{
 	
 		static Dictionary<string, int> Scp106 = new Dictionary<string, int>();
-
+        // elimina cuerpos pero no objetos
         public void OnPlayerDie(PlayerDeathEvent ev)
         {
             if(ev.DamageTypeVar == DamageType.POCKET )
@@ -24,9 +24,9 @@ namespace Passivesandskills2
 
         public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
-            //[Presencia Espectral]
+            //[Presencia Espectral] elimina ghost mode al atacar a un jugador en estado de invisibilidad
             if((ev.Attacker.GetGhostMode() == true)&&(ev.Attacker.TeamRole.Role == Role.SCP_106)) { ev.Attacker.SetGhostMode(false); }
-			//[Golpe Crítico]//
+			//[Golpe Crítico]// ejecuta a un jugador
 			if ((ev.Attacker.TeamRole.Role == Role.SCP_106))
 			{
 				Scp106[ev.Attacker.SteamId] += 1;
@@ -41,7 +41,7 @@ namespace Passivesandskills2
 
 		public void OnPocketDimensionDie(PlayerPocketDimensionDieEvent ev)
 		{
-            
+         //cura a todos los SCP 106 30 de salud cuando un jugador muere en la pocket   
             foreach (Player player in PluginManager.Manager.Server.GetPlayers())
             {
                 if (player.TeamRole.Role == Role.SCP_106) { player.AddHealth(30); }

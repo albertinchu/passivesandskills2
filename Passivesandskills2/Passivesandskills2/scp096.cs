@@ -15,13 +15,13 @@ namespace Passivesandskills2
 
 		int bajasllorona = 0;
 		Vector llorondead;
-
+        // evita errores de respawn doble
         public static IEnumerable<float> Lloron2()
         {
             yield return 0.3f;
             Llorona = false;
         }
-
+        // revive al 096 cuando muere y lo va matando poco a poco
         public static IEnumerable<float> LLORON(Player player, Vector pos)
 		{
             
@@ -58,6 +58,7 @@ namespace Passivesandskills2
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
 		{
+            // cura a todos los scps cuando asesina a alguien 
 			if (ev.Killer.TeamRole.Role == Role.SCP_096)
 			{
 				bajasllorona += 1;
@@ -76,6 +77,7 @@ namespace Passivesandskills2
 
 				}
 			}
+            //revive al 096
 			if ((ev.Player.TeamRole.Role == Role.SCP_096)&&(Llorona == true))
 			{
                     ev.SpawnRagdoll = false;
@@ -113,6 +115,7 @@ namespace Passivesandskills2
 		}
 		public void OnScp096Panic(Scp096PanicEvent ev)
 		{
+            // cuando scp 096 se enfada se cura 25 por el numero de bajas en el rage anterior
 			ev.Player.AddHealth(25 * bajasllorona);
 			bajasllorona = 0;
 		}

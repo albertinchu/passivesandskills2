@@ -16,14 +16,15 @@ namespace Passivesandskills2
         ,IEventHandlerDoorAccess, IEventHandlerMedkitUse
     {
         // En este codigo se supone que lo que hace es que un perro tenga reduccion de daño cuando esta a poca vida y además quién le dispare recivirá daño
-        // y el otro perro causa daño por veneno el cual es mortal y mas dañino cuando el perro esta a poca vida.
+        // y el otro perro causa daño por veneno el cual es mortal y mas dañino cuando el perro esta a poca vida, este veneno reduce la vida maxima del jugador de
+        //forma permanente hasta que muera.
 
         static Dictionary<Player, int> Mordido = new Dictionary<Player, int>();
         
         static Dictionary<string, bool> Habilidad = new Dictionary<string, bool>();
         static bool end = false;
         int health = 0;
-
+        //camuflaje
         public static IEnumerable<float> Skill(Player player, Role role,int salud) 
         {
             player.ChangeRole(role, false, false, false);
@@ -42,6 +43,7 @@ namespace Passivesandskills2
 
         public void OnPlayerDie(PlayerDeathEvent ev)
         {
+            //permite al scp 939-53 recoger objetos si murió y respawnea como otro role
             int contador = 0;
             if (ev.Player.TeamRole.Role == Role.SCP_939_53)
             {
@@ -112,7 +114,10 @@ namespace Passivesandskills2
                     ev.Player.ChangeRole(Role.SCP_939_53, false, false, false);
                 ev.Player.SetHealth(health);
             }
+            // el comandante hace mas daño segun los jugadores NTF vivos y sus granadas aplican 200 de salud ademas de curar a sus aliados cuando disparan a aliados
+            //El codigo del comandante se encuentra aquí para ajustarse mejor a la pasiva del 939-53
             //anticomandante
+            //en este caso la cura del comandante esta limitada a el SCP-939-53
             if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN)&&(Mordido.ContainsKey(ev.Player)))
             {
                 if (ev.Player.TeamRole.Team == Team.NINETAILFOX) { ev.Damage = 0; }
@@ -176,6 +181,8 @@ namespace Passivesandskills2
         }
         public void OnCallCommand(PlayerCallCommandEvent ev)
         {
+            //Esta habilidad transforma al 939-53 en un role a eleccion del 939-53
+            //guarda la salud del 939-53 y si recibe daño trasnforma vuelve a su forma original con la salud registrada cuando se usó el comando
             if (ev.Command.StartsWith("skill"))
             {
                 if (ev.Player.TeamRole.Role != Role.SCP_939_53) { ev.ReturnMessage = "nice try"; }
@@ -263,6 +270,7 @@ namespace Passivesandskills2
 
         public void OnCheckRoundEnd(CheckRoundEndEvent ev)
         {
+            //por si se transforma en un role y es el ultimo scp que no termine la ronda
             foreach(KeyValuePair<string,bool> pair in Habilidad) 
             { 
             if(Habilidad[pair.Key] == false) { ev.Status = ROUND_END_STATUS.ON_GOING; }
@@ -271,6 +279,7 @@ namespace Passivesandskills2
 
         public void OnPlayerPickupItem(PlayerPickupItemEvent ev)
         {
+            //no permite al SCP-939-53 tomar objetos
             if (Habilidad.ContainsKey(ev.Player.SteamId)) 
             {
                 ev.Allow = false;
@@ -278,7 +287,7 @@ namespace Passivesandskills2
         }
 
         public void OnDoorAccess(PlayerDoorAccessEvent ev)
-        {
+        {//le permite abrir puertas del checkpoint en su estado de camuflaje
             if (Habilidad.ContainsKey(ev.Player.SteamId)) 
             {
                 if (ev.Door.Permission.Contains("CHCKPOINT_ACC")) { ev.Allow = true; ev.Door.Open = true; }
@@ -287,6 +296,7 @@ namespace Passivesandskills2
 
         public void OnMedkitUse(PlayerMedkitUseEvent ev)
         {
+            //limita la cura según el scp 939-53
             if (Mordido.ContainsKey(ev.Player)) { if((ev.Player.GetHealth() + ev.RecoverHealth) >= Mordido[ev.Player]) { ev.Player.SetHealth(Mordido[ev.Player]); } }
         }
     }

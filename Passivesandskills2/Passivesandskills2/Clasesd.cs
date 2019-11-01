@@ -24,6 +24,7 @@ namespace Passivesandskills2
 			//Class D - [Astucia] //
 			if (ev.Attacker.TeamRole.Role == Role.CLASSD)
 			{
+                // detecta si la habilidad del clase d esta en cooldown y suma 3 segundos al diccionario restandole asi tiempo a la habilidad.
                 if(Classdh[ev.Player.SteamId] == false) { cooldownn[ev.Attacker.SteamId] += 3; }
                 
                 if (ev.Attacker.GetGhostMode() == true) { ev.Attacker.SetGhostMode(false); }
@@ -88,7 +89,7 @@ namespace Passivesandskills2
                
 			}
 		}
-
+        // registra en un diccionario los segundos de coldown hasta recuperar la habilidad y la linterna
         public IEnumerator<float> Classd(Player player)
         {
             

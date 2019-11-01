@@ -33,7 +33,7 @@ namespace Passivesandskills2
 
 		public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
-            
+            // sitema de ganancia de xp de los guardias 
             if ((ev.Attacker.TeamRole.Role == Role.FACILITY_GUARD))
             {
                
@@ -93,6 +93,7 @@ namespace Passivesandskills2
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
 		{
+            //xp ganada por asesinar un scp
             if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && ((ev.Player.TeamRole.Role == Role.SCP_939_53)||(ev.Player.TeamRole.Role == Role.SCP_939_89))) { Guardias[ev.Killer.SteamId] += 80; }
             if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_096)) { Guardias[ev.Killer.SteamId] += 75; }
             if ((ev.Killer.TeamRole.Role == Role.FACILITY_GUARD) && (ev.Player.TeamRole.Role == Role.SCP_173)) { Guardias[ev.Killer.SteamId] += 75; }
@@ -114,6 +115,7 @@ namespace Passivesandskills2
 
         public void OnCallCommand(PlayerCallCommandEvent ev)
         {
+            // muestra la xp de los guardias y su nivel
             if (ev.Command.StartsWith("passivesandskillslevel"))
             {
                 if ((Guardias.ContainsKey(ev.Player.SteamId))&& (ev.Player.TeamRole.Role == Role.FACILITY_GUARD))

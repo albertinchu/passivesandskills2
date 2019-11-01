@@ -13,7 +13,7 @@ namespace Passivesandskills2
 
     public void OnCallCommand(PlayerCallCommandEvent ev)
 		{
-            
+            // solo proporciona información
 			if (ev.Command.StartsWith("passivesandskillsinfo"))
 			{
 				ev.Player.SendConsoleMessage("Passives and skills es un modo de juego que aporta nuevas habilidades a todos los roles Excepto tutorial, Para información sobre cada role usa .passivesandskills [role en ingles] (classd,scientist,ntfscientist,ntfcadet,ntfliuternant,ntfcomander,guard,scp-xxx,chaos)", "blue");
@@ -67,7 +67,7 @@ namespace Passivesandskills2
 							ev.Player.SendConsoleMessage("La pasiva es [Digestion] cada vez que alguien muere en la dimensión de bolsillo SCP 106 se cura 30 de salud que se puede acumular como escudo permanente y su habilidad es [Golpe Crítico] Cada 5 víctimas la 5 muere al instante al ser capturada por SCP 106 Tu Habilidad es [Presencia Espectral]: Cuando ejecuta a una persona por Golpe crítico se hace invisible hasta que ataque a otra persona ", "red");
 							break;
 						case "scp-939":
-							ev.Player.SendConsoleMessage("Dependiendo de la variante del SCP 939 puede tener 1º variante: [Fauces venenosa] la cual hace que sus mordiscos apliquen veneno y cuando este esta a poca vida se activa su pasiva [Veneno Letal] de forma que puedes morir por el veneno y hace mas daño. [Chupavidas] parte del daño por veneno la recibes como curación. 2º variante [Espinas] los ataques contra el reflejan daño, [Mejora de acero] Recive menos daño y refleja mas daño [mejora de titanio]: refleja 12 de daño de espinas y el perro solo recibe 3 de daño por bala, las granada pueden hacer como máximo 100 de daño cuando la pasiva esta activa (esta pasiva es ignorada por granadas y daño eléctrico)", "red");
+							ev.Player.SendConsoleMessage("Dependiendo de la variante del SCP 939 puede tener 1º variante: [Fauces venenosa] la cual hace que sus mordiscos apliquen veneno que resta vida máxima de forma permanente y cuando este esta a poca vida se activa su pasiva [Veneno Letal] que el veneno hace mas daño y ejecuta a jugadores con vida máxima menor o igual a 60. [Chupavidas] parte del daño por veneno la recibes como curación Habilidad [Cambiaformas] se puede transformar en diferentes roles con el comando .skill. 2º variante [Espinas] los ataques contra él reflejan daño, [Mejora de acero] Recive menos daño y refleja mas daño [mejora de titanio]: refleja 12 de daño de espinas y el perro solo recibe 3 de daño por bala, las granada pueden hacer como máximo 100 de daño cuando la pasiva esta activa (esta pasiva es ignorada por granadas y daño eléctrico)", "red");
 							break;
 						case "scp-049":
 							ev.Player.SendConsoleMessage("La pasiva es [Manipulador de cuerpos] puede curar a clases d y científicos al instante, [Mutar] cada 6 bajas la 6 puede mutar en un SCP con un 40% (no puede mutar en 096 o 079), Pasiva del 049-2 es [Cuerpo errante]: Cuanto mas tiempo permanezcas con vida mas daño haces (15% + de daño cada 1 minuto de vida), a los 5 minutos ejecutas. [Cuerpo creciente]: recibes 150 de vida cada minuto hasta 5 veces (se acumula como escudo).", "red");

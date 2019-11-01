@@ -10,7 +10,7 @@ namespace Passivesandskills2
 {
 	partial class scp079 : IEventHandler079AddExp, IEventHandler079LevelUp,IEventHandlerCallCommand,
 		IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerWarheadDetonate, IEventHandler079TeslaGate
-        ,IEventHandlerElevatorUse, IEventHandlerCheckRoundEnd
+        ,IEventHandlerElevatorUse, IEventHandlerCheckRoundEnd, IEventHandlerSetConfig
 	{
 		static bool elevatoss = false;
 		
@@ -18,15 +18,15 @@ namespace Passivesandskills2
 		
 		int level = 0;
 		
-		string computerchan;
+		
 		
 		static Dictionary<string, bool> Pasivaa = new Dictionary<string, bool>();
         static bool habilidad079 = true;
         private List<Smod2.API.TeslaGate> teslas;
 
-        // Este codigo ace que cuando la nuke sea activada el pc pueda robar el cuerpo de quien muera en el tesla y usarlo como quiera
+        
         // Ademas de que ganas ap infinito al nivel 5 en funcion de la xp que ganes
-
+        // detona la nuke 2 veces
         public static IEnumerable<float> Secondboom()
 		{
 			yield return 5f;
@@ -40,6 +40,7 @@ namespace Passivesandskills2
             }
                
         }
+        // aumenta el rango de los teslas en 2 y los activa durante 10 s
         public IEnumerable<float> Teslass()
         {
             
@@ -61,6 +62,7 @@ namespace Passivesandskills2
                 contador += 1;
             }
         }
+        //libera de forma aleatoria clases d, cientificos o un perro de espinas
         public static IEnumerable<float> liberar()
         {
             int contador = 0;
@@ -125,7 +127,7 @@ namespace Passivesandskills2
 
 
         }
-
+        // cooldown de habilidad
         public static IEnumerable<float> Cooldown079(Player player)
         {
             
@@ -133,6 +135,7 @@ namespace Passivesandskills2
             Pasivaa[player.SteamId] = true;
 
         }
+        // cooldown de habilidad
         public static IEnumerable<float> Cooldown0792(Player player)
         {
 
@@ -140,6 +143,7 @@ namespace Passivesandskills2
             Pasivaa[player.SteamId] = true;
 
         }
+        // cooldown de habilidad
         public static IEnumerable<float> Cooldown0793(Player player)
         {
 
@@ -147,6 +151,7 @@ namespace Passivesandskills2
             Pasivaa[player.SteamId] = true;
 
         }
+        // detiene el funcionamiento de los ascensores
         public static IEnumerable<float> elevators()
         {
             elevatoss = true;
@@ -158,7 +163,7 @@ namespace Passivesandskills2
 
 
        
-
+        //en tier 5 la xp se acumula como xp adicional y velocidad en la regeneración de la xp
 		public void On079AddExp(Player079AddExpEvent ev)
 		{
 			float Xp;
@@ -171,7 +176,7 @@ namespace Passivesandskills2
 			}
             
 		}
-
+        // aplica una mejora en el tier IV y alerta de que el SCP 079 es tier V
 		public void On079LevelUp(Player079LevelUpEvent ev)
 		{
 			level = ev.Player.Scp079Data.Level;
@@ -192,12 +197,9 @@ namespace Passivesandskills2
 
 		public void OnSetRole(PlayerSetRoleEvent ev)
 		{
+            // asigna la pasiva al 079
 			if (!Pasivaa.ContainsKey(ev.Player.SteamId)) { Pasivaa.Add(ev.Player.SteamId, true); }
-			if ((ev.Role == Role.SCP_079) && (computerchan != ev.Player.SteamId) )
-			{
-				computerchan = ev.Player.SteamId;
-				
-			}
+			
             if(ev.Player.TeamRole.Role == Role.SCP_079) { ev.Player.PersonalBroadcast(10, "Tu habilidad es [control absoluto]: puedes usar los comandos .nukeoff .cellsopen .nukenow .nanobots y .elevatorsoff", false); }
 		}
 
@@ -207,12 +209,12 @@ namespace Passivesandskills2
 			Boom = false;
             Pasivaa.Clear();
 			level = 0;
-			computerchan = "0";
+			
             
            
             elevatoss = false;
 		}
-
+        // registra si la boma explotó para activar el timer 
 		public void OnDetonate()
 		{
 			if (Boom == false)
@@ -223,7 +225,7 @@ namespace Passivesandskills2
 		}
 
 	
-
+        // segun el ap del ordenador los teslas cuestan menos
         public void On079TeslaGate(Player079TeslaGateEvent ev)
         {
             if(level >= 3)
@@ -241,6 +243,7 @@ namespace Passivesandskills2
 
         public void OnCallCommand(PlayerCallCommandEvent ev)
         {
+            // cancela la nuke
             if (ev.Command.StartsWith("nukeoff"))
             {
                 if(ev.Player.TeamRole.Role != Role.SCP_079) { ev.ReturnMessage = "Tu no eres SCP-079, pero buen inteneto ;)"; }
@@ -268,6 +271,8 @@ namespace Passivesandskills2
                     
                 }
             }
+
+            //libera clases d o cientificos o 1 scp
             if (ev.Command.StartsWith("cellsopen"))
             {
                 if (ev.Player.TeamRole.Role != Role.SCP_079) { ev.ReturnMessage = "Tu no eres SCP-079, pero buen inteneto ;)"; }
@@ -294,6 +299,7 @@ namespace Passivesandskills2
 
                 }
             }
+            // instadetona la nuke
             if (ev.Command.StartsWith("nukenow"))
             {
                 if (ev.Player.TeamRole.Role != Role.SCP_079) { ev.ReturnMessage = "Tu no eres SCP-079, pero buen inteneto ;)"; }
@@ -310,6 +316,7 @@ namespace Passivesandskills2
                 }
                 
             }
+            //cancela ascensores
             if (ev.Command.StartsWith("elevatorsoff"))
             {
                 if (ev.Player.TeamRole.Role != Role.SCP_079) { ev.ReturnMessage = "Tu no eres SCP-079, pero buen inteneto ;)"; }
@@ -331,6 +338,8 @@ namespace Passivesandskills2
                 }
 
             }
+            // lanza una mini armada de nanobots que dañan a humanos y curan a scps, cuando el pc es tier IV esta armada sufre una mejora de daño y en tier V
+            // una reducción en el cooldown a la mitad en tier IV solo hacen mas daño los nanobots y dan mas xp
             if (ev.Command.StartsWith("nanobots"))
             {
                 if (ev.Player.TeamRole.Role != Role.SCP_079) { ev.ReturnMessage = "Tu no eres SCP-079, pero buen inteneto ;)"; }
@@ -383,6 +392,7 @@ namespace Passivesandskills2
                         }
                         if (Pasivaa[ev.Player.SteamId] == false) { ev.ReturnMessage = "habilidad en cooldown"; }
                     }
+                    /////////////////////////////////////////////////////////////////////////////////////////////////////////
                     if (ev.Player.Scp079Data.Level >= 3)
                     {
                         if (ev.Player.Scp079Data.AP < 50) { ev.ReturnMessage = "Necesitas mas Energía (50)"; }
@@ -425,6 +435,7 @@ namespace Passivesandskills2
 
                 }
             }
+            // aumenta el rango en el que los teslas se activan
             if (ev.Command.StartsWith("teslas"))
             {
                 if (ev.Player.TeamRole.Role != Role.SCP_079) { ev.ReturnMessage = "Tu no eres SCP-079, pero buen inteneto ;)"; }
@@ -450,6 +461,7 @@ namespace Passivesandskills2
 
         public void OnElevatorUse(PlayerElevatorUseEvent ev)
         {
+            //cancela ascensores
             if (elevatoss)
             {
                 if(ev.Player.TeamRole.Team != Team.SCP) { ev.AllowUse = false; }
@@ -462,10 +474,23 @@ namespace Passivesandskills2
         {
             Pasivaa.Clear();
             level = 0;
-            computerchan = "0";
+           
 
 
             elevatoss = false;
+        }
+
+        public void OnSetConfig(SetConfigEvent ev)
+        {
+            // cancela la nuke , puesto que el 079 puede destruir la instalación al instante
+            switch (ev.Key)
+            {
+                case "auto_warhead_start_lock":
+                    ev.Value = false;
+                    break;
+
+
+            }
         }
     }
 }
