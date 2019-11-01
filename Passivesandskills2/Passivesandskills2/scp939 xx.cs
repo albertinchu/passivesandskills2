@@ -90,16 +90,18 @@ namespace Passivesandskills2
 			//SCP 939-53 / Teemo//
 			if (ev.Attacker.TeamRole.Role == Role.SCP_939_53) 
 			{
+                if(ev.Damage >= 40) { ev.Damage = 40; }
                 if (!Mordido.ContainsKey(ev.Player)) { Mordido.Add(ev.Player, (ev.Player.TeamRole.MaxHP - 20)); }
                 if (Mordido.ContainsKey(ev.Player)) 
                 {
-                    ev.Attacker.AddHealth(20);
+                    if (Mordido[ev.Player] <= 60) { ev.Player.Kill(DamageType.CONTAIN); }
+                    ev.Attacker.AddHealth(25);
                     Mordido[ev.Player] -= 20; 
-                if(ev.Attacker.GetHealth() <= 1450) 
+                    if(ev.Attacker.GetHealth() <= 1450) 
                     {
                         Mordido[ev.Player] -= 15;
-                        ev.Attacker.AddHealth(30);
-                        if(Mordido[ev.Player] <= 60) { ev.Player.Kill(DamageType.CONTAIN); }
+                        ev.Attacker.AddHealth(35);
+                        
                     }
                 
                 }
