@@ -12,7 +12,7 @@ namespace Passivesandskills2
 	{
 		
 		static Dictionary<string, int> Zombie = new Dictionary<string, int>();
-        static Dictionary<string, Role> Roles = new Dictionary<string, Role>();
+       
         Vector posmuertee;
 		int conta049 = 0;
 
@@ -21,8 +21,7 @@ namespace Passivesandskills2
 
 		public void OnSetRole(PlayerSetRoleEvent ev)
 		{
-            if (!Roles.ContainsKey(ev.Player.SteamId)) { Roles.Add(ev.Player.SteamId, ev.Player.TeamRole.Role); }
-            Roles[ev.Player.SteamId] = ev.Player.TeamRole.Role;
+            
             if ((ev.Player.TeamRole.Role == Role.SCP_049_2))
 			{
                 conta049 += 1;
@@ -146,5 +145,7 @@ namespace Passivesandskills2
 
 			}
 		}
-	}
+
+      
+    }
 }

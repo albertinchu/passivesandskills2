@@ -117,9 +117,9 @@ namespace Passivesandskills2
             {
                 if (ev.Player.TeamRole.Team == Team.NINETAILFOX) { ev.Damage = 0; }
 
-                if ((ev.Player.TeamRole.Role == Role.NTF_CADET) && (ev.Player.GetHealth() <= Mordido[ev.Player])) { ev.Player.AddHealth(5); }
-                if ((ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) && (ev.Player.GetHealth() <= Mordido[ev.Player])) { ev.Player.AddHealth(8); }
-                if ((ev.Player.TeamRole.Role == Role.NTF_SCIENTIST) && (ev.Player.GetHealth() <= Mordido[ev.Player])) { ev.Player.AddHealth(8); }
+                if ((ev.Player.TeamRole.Role == Role.NTF_CADET) && (ev.Player.GetHealth() < Mordido[ev.Player])) { ev.Player.AddHealth(5); }
+                if ((ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) && (ev.Player.GetHealth() < Mordido[ev.Player])) { ev.Player.AddHealth(8); }
+                if ((ev.Player.TeamRole.Role == Role.NTF_SCIENTIST) && (ev.Player.GetHealth() < Mordido[ev.Player])) { ev.Player.AddHealth(8); }
 
 
 

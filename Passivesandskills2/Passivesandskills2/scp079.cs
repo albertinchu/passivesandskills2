@@ -10,7 +10,7 @@ namespace Passivesandskills2
 {
 	partial class scp079 : IEventHandler079AddExp, IEventHandler079LevelUp,IEventHandlerCallCommand,
 		IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerWarheadDetonate, IEventHandler079TeslaGate
-        ,IEventHandlerElevatorUse
+        ,IEventHandlerElevatorUse, IEventHandlerCheckRoundEnd
 	{
 		static bool elevatoss = false;
 		
@@ -208,7 +208,7 @@ namespace Passivesandskills2
             Pasivaa.Clear();
 			level = 0;
 			computerchan = "0";
-			         
+            
            
             elevatoss = false;
 		}
@@ -456,6 +456,16 @@ namespace Passivesandskills2
                
                 
             }
+        }
+
+        public void OnCheckRoundEnd(CheckRoundEndEvent ev)
+        {
+            Pasivaa.Clear();
+            level = 0;
+            computerchan = "0";
+
+
+            elevatoss = false;
         }
     }
 }

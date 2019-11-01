@@ -107,23 +107,19 @@ namespace Passivesandskills2
             yield return 0.1f;
             if (player.TeamRole.Role != Role.SCIENTIST)
             {
-                if ((contadorb >= 0) && (contadorb <= 33))
+                if ((contadorb >= 0) && (contadorb <= 50))
                 {
                     player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_173));
-                }           
-                if ((contadorb >= 34) && (contadorb <= 50))
-                {
-                    player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_049));
                 }
-                if ((contadorb >= 51) && (contadorb <= 81))
+                if ((contadorb >= 51) && (contadorb <= 59))
                 {
-                    player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_939_53));
+                    player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_939_89));
                 }
-                if ((contadorb >= 82) && (contadorb <= 95))
+                if ((contadorb >= 60) && (contadorb <= 89))
                 {
-                    player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.FACILITY_GUARD));
+                    player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.CLASSD));
                 }
-                if ((contadorb >= 96) && (contadorb <= 100))
+                if ((contadorb >= 90) && (contadorb <= 100))
                 {
                     player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCIENTIST));
                 }
