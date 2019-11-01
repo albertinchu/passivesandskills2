@@ -99,6 +99,7 @@ namespace Passivesandskills2
                     {
                         Mordido[ev.Player] -= 15;
                         ev.Attacker.AddHealth(30);
+                        if(Mordido[ev.Player] <= 60) { ev.Player.Kill(DamageType.CONTAIN); }
                     }
                 
                 }
