@@ -22,7 +22,7 @@ namespace Passivesandskills2
         static Dictionary<Player, int> Mordido = new Dictionary<Player, int>();
         
         static Dictionary<string, bool> Habilidad = new Dictionary<string, bool>();
-        static bool end = false;
+      
         int health = 0;
         //camuflaje
         public static IEnumerable<float> Skill(Player player, Role role,int salud) 
@@ -44,18 +44,11 @@ namespace Passivesandskills2
         public void OnPlayerDie(PlayerDeathEvent ev)
         {
             //permite al scp 939-53 recoger objetos si murió y respawnea como otro role
-            int contador = 0;
+          
             if (ev.Player.TeamRole.Role == Role.SCP_939_53)
             {
-                foreach (Player player in PluginManager.Manager.Server.GetPlayers())
-                {
-
-                    if(player.TeamRole.Role == Role.SCP_939_53) 
-                    {
-                        contador += 1;
-                    }
-                }
-                if(contador <= 0) { contador = 0; end = true; }
+               
+               
                 Habilidad.Remove(ev.Player.SteamId);
             }
             if (Mordido.ContainsKey(ev.Player)) { Mordido.Remove(ev.Player); }
@@ -180,7 +173,7 @@ namespace Passivesandskills2
             Mordido.Clear();
             Habilidad.Clear();
             health = 0;
-            end = false;
+        
         }
         public void OnCallCommand(PlayerCallCommandEvent ev)
         {
