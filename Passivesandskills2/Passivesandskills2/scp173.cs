@@ -5,7 +5,7 @@ using Smod2.API;
 using scp4aiur;
 namespace Passivesandskills2
 {
-	partial class scp173 : IEventHandlerPlayerDie, IEventHandlerSetRole, IEventHandlerWaitingForPlayers
+	partial class scp173 : IEventHandlerPlayerDie, IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerPlayerHurt
 	{
 	
 		static Dictionary<string, bool> Scp173 = new Dictionary<string, bool>();
@@ -70,8 +70,8 @@ namespace Passivesandskills2
 					Timing.Run(Scp173timer(ev.Player, posd));
                     
                 }
-				else
-				{
+                if (Scp173[ev.Player.SteamId] == false)
+                {
 					Scp173[ev.Player.SteamId] = true;
                     Scp173deads[ev.Player.SteamId] = false;
                 }
@@ -79,7 +79,16 @@ namespace Passivesandskills2
 
 		}
 
-		public void OnSetRole(PlayerSetRoleEvent ev)
+        public void OnPlayerHurt(PlayerHurtEvent ev)
+        {
+            if((!Scp173.ContainsKey(ev.Player.SteamId))&&(ev.Player.TeamRole.Role == Role.SCP_173))
+            {
+                Scp173deads.Add(ev.Player.SteamId, true);
+                Scp173.Add(ev.Player.SteamId, true);
+            }
+        }
+
+        public void OnSetRole(PlayerSetRoleEvent ev)
 		{
 
 			if ((ev.Player.TeamRole.Role == Smod2.API.Role.SCP_173) && (!Scp173.ContainsKey(ev.Player.SteamId)))
