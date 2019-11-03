@@ -2,7 +2,7 @@
 using Smod2.EventHandlers;
 using Smod2.Events;
 using Smod2.API;
-using scp4aiur;
+using MEC;
 namespace Passivesandskills2
 {
 	partial class scp173 : IEventHandlerPlayerDie, IEventHandlerSetRole, IEventHandlerWaitingForPlayers, IEventHandlerPlayerHurt
@@ -12,17 +12,17 @@ namespace Passivesandskills2
 		
         static Dictionary<string, bool> Scp173deads = new Dictionary<string, bool>();
         // a los 60s de morir, el scp 173 respawnea con intervalos de invisibilidad 
-        public static IEnumerable<float> Scp173timer(Player player, Vector pos)
+        private IEnumerator<float> Scp173timer(Player player, Vector pos)
 		{
 
-			yield return 60f;
+            yield return MEC.Timing.WaitForSeconds(60f);
 
 
-			Scp173[player.SteamId] = false;
+            Scp173[player.SteamId] = false;
 			player.ChangeRole(Role.SCP_173);
-            
-			yield return 0.2f;
-			player.Teleport(pos);
+
+            yield return MEC.Timing.WaitForSeconds(0.2f);
+            player.Teleport(pos);
             player.SetHealth((player.GetHealth() / 3)*2);
 
 			while (Scp173deads[player.SteamId])
@@ -30,10 +30,10 @@ namespace Passivesandskills2
 				if (player.TeamRole.Role == Role.SCP_173)
 				{
 					player.SetGhostMode(true, false, false);
-					yield return 5f;
-					player.SetGhostMode(false);
-                    yield return 5f;
-				}
+                    yield return MEC.Timing.WaitForSeconds(5f);
+                    player.SetGhostMode(false);
+                    yield return MEC.Timing.WaitForSeconds(5f);
+                }
 				else
 				{
 					break;
@@ -68,7 +68,7 @@ namespace Passivesandskills2
                     ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true,posd, true, 0, true);
                     ev.Player.GiveItem(ItemType.FRAG_GRENADE);
                     ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true,new Vector(0,4,0), true, posd, true, 0, false);
-					Timing.Run(Scp173timer(ev.Player, posd));
+					MEC.Timing.RunCoroutine(Scp173timer(ev.Player, posd), MEC.Segment.Update);
                     
                 }
                 if (Scp173[ev.Player.SteamId] == false)

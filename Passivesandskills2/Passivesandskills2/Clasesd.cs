@@ -84,7 +84,7 @@ namespace Passivesandskills2
 					Classdh[ev.Player.SteamId] = false;
 					ev.Player.AddHealth(-35);
 
-                    MEC.Timing.RunCoroutine(Classd(ev.Player));
+                    MEC.Timing.RunCoroutine(Classd(ev.Player), MEC.Segment.Update);
 				}
                
 			}

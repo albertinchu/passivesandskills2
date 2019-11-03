@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using Smod2;
 using Smod2.EventHandlers;
-using scp4aiur;
+
 using Smod2.Events;
 using Smod2.API;
+using MEC;
 
 namespace Passivesandskills2
 {
@@ -49,8 +50,8 @@ namespace Passivesandskills2
                     if ((ev.Player.GetHealth() <= 50) && (NTFli[ev.Attacker.SteamId] == true))
                     {
                         NTFli[ev.Attacker.SteamId] = false;
-                        Timing.Run(Intimidacion(ev.Player));
-                        Timing.Run(Cooldown(ev.Attacker));
+                        MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.Update);
+                        MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.Update);
 
                     }
                 }
@@ -74,39 +75,44 @@ namespace Passivesandskills2
 					if ((ev.Player.GetHealth() <= 85) && (NTFli[ev.Attacker.SteamId] == true))
 					{
 						NTFli[ev.Attacker.SteamId] = false;
-						Timing.Run(Intimidacion(ev.Player));
-						Timing.Run(Cooldown(ev.Attacker));
-						
-					}
+                        MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.Update);
+                        MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.Update);
+
+                    }
 				}
 				if(ev.Player.TeamRole.Role == Role.SCP_049_2)
 				{
 					if ((ev.Player.GetHealth() <= (ev.Player.TeamRole.MaxHP/2)) && (NTFli[ev.Attacker.SteamId] == true))
 					{
 						NTFli[ev.Attacker.SteamId] = false;
-						Timing.Run(Intimidacion(ev.Player));
-						Timing.Run(Cooldown(ev.Attacker));
-						
-					}
+                        MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.Update);
+                        MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.Update);
+
+                    }
 				}
 			}
 		}
-		// Teniente //
-		public static IEnumerable<float> Cooldown(Player player)
-		{
-			yield return 40f;
-			NTFli[player.SteamId] = true;
-		}
+
+    
+
+        private IEnumerator<float> Cooldown(Player attacker)
+        {
+            yield return MEC.Timing.WaitForSeconds(40f);
+            NTFli[attacker.SteamId] = true;
+        }
+
+        // Teniente //
+      
 		// TENEINETE HABILIDAD //
         //Con este fragmento el teniente teleporta a cualquier sujeto que no se Scientist al light con un 90%
         // a los Scientists los teleporta de otra forma
-		public static IEnumerable<float> Intimidacion(Player player)
+		private IEnumerator<float> Intimidacion(Player player)
 		{
             System.Random sala = new System.Random();
 
 			int contadorb = sala.Next(0,100);
-            
-            yield return 0.1f;
+
+            yield return MEC.Timing.WaitForSeconds(0.25f);
             if (player.TeamRole.Role != Role.SCIENTIST)
             {
                 if ((contadorb >= 0) && (contadorb <= 50))
@@ -147,8 +153,8 @@ namespace Passivesandskills2
                 }
                 
             }
-            yield return 1f;
-            if(player.TeamRole.Role == Role.SCIENTIST) { player.AddHealth(25); }
+            yield return MEC.Timing.WaitForSeconds(1f);
+            if (player.TeamRole.Role == Role.SCIENTIST) { player.AddHealth(25); }
         }
 
 

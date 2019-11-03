@@ -1,6 +1,6 @@
 ﻿using Smod2;
 using Smod2.Attributes;
-using scp4aiur;
+
 namespace Passivesandskills2
 {
 	[PluginDetails(
@@ -29,7 +29,7 @@ public class Passivesandskills : Plugin
 	public override void Register()
 	{
             
-			Timing.Init(this);
+			
             this.AddEventHandlers(new chaos(this));
             this.AddEventHandlers(new classd(this));
             this.AddEventHandlers(new guards(this));

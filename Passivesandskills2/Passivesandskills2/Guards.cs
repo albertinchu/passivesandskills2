@@ -1,11 +1,10 @@
 ﻿
 using Smod2;
 using Smod2.EventHandlers;
-using scp4aiur;
 using Smod2.Events;
 using Smod2.API;
 using System.Collections.Generic;
-
+using MEC;
 namespace Passivesandskills2
 {
 	partial class guards : IEventHandlerPlayerHurt, IEventHandlerThrowGrenade, IEventHandlerPlayerDie, IEventHandlerWaitingForPlayers, IEventHandlerCallCommand, IEventHandlerSetRole
@@ -14,14 +13,14 @@ namespace Passivesandskills2
 		static Dictionary<string, int> Guardias = new Dictionary<string, int>();
         // Los guardias tienen un sistema de xp con el que suben de nivel y desbloquean distintas habilidades
         // esta explicado en .info todo lo que hace este codigo.
-		public static IEnumerable<float> Venenoguardias(Player player)
+		private IEnumerator<float> Venenoguardias(Player player)
 		{
 			int cantidad = 0;
             if (player.TeamRole.Role != Role.TUTORIAL)
             {
                 while (cantidad != 4)
                 {
-                    yield return 2f;
+                    yield return MEC.Timing.WaitForSeconds(2f);
                     player.AddHealth(-3);
                     cantidad += 1;
                 }
@@ -52,7 +51,7 @@ namespace Passivesandskills2
                     {
                         ev.Attacker.PersonalBroadcast(3, "<color=#FF0500> Nivel 3 </color>", false);
                     }
-                    if (Guardias[ev.Attacker.SteamId] >= 150) { Timing.Run(Venenoguardias(ev.Player)); }
+                    if (Guardias[ev.Attacker.SteamId] >= 150) { MEC.Timing.RunCoroutine(Venenoguardias(ev.Player), MEC.Segment.Update); }
                     if (Guardias[ev.Attacker.SteamId] == 300)
                     {
                         ev.Attacker.PersonalBroadcast(3, "<color=#C50000> Nivel 4 </color>", false);

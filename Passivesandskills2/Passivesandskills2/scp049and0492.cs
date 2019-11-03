@@ -5,6 +5,7 @@ using scp4aiur;
 using Smod2.Events;
 using Smod2.API;
 using Smod2.Attributes;
+using MEC;
 
 namespace Passivesandskills2
 {
@@ -31,10 +32,10 @@ namespace Passivesandskills2
                     ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cuerpo Creciente]: Cada minuto ganas 150 de salud de forma permanente hasta 5 veces a no ser que te quedes quieto, (perderas la vida extra)", false);
                     Zombie.Add(ev.Player.SteamId, 0);	            
 				}
-                Timing.Run(Zombielive(ev.Player));
+                MEC.Timing.RunCoroutine(Zombielive(ev.Player), MEC.Segment.Update);
                 if (conta049 >= 6)
                 {
-                    Timing.Run(Mutar(ev.Player));
+                    MEC.Timing.RunCoroutine(Mutar(ev.Player), MEC.Segment.Update);
                     conta049 = 0;
                 }
                 Zombie[ev.Player.SteamId] = 0;
@@ -48,12 +49,12 @@ namespace Passivesandskills2
 			}
 		}
         //registra los minutos con vida del zombie
-		public static IEnumerable<float> Zombielive(Player player)
+		private IEnumerator<float> Zombielive(Player player)
 		{
 			while (player.TeamRole.Role == Role.SCP_049_2)
 			{
-				yield return 60f;
-				Zombie[player.SteamId] += 1;
+                yield return MEC.Timing.WaitForSeconds(60f);
+                Zombie[player.SteamId] += 1;
                 player.AddHealth(150);
                 if(Zombie[player.SteamId] >= 5) { break; }
                 if(Zombie[player.SteamId] > 0) { break; }
@@ -62,21 +63,21 @@ namespace Passivesandskills2
 			
 		}
         // revive a un zombie
-		public static IEnumerable<float> Resurrec(Player player, Vector posdead)
+		private IEnumerator<float> Resurrec(Player player, Vector posdead)
 		{
-			yield return 3f;
-			player.ChangeRole(Role.SCP_049_2);
-			yield return 0.2f;
-			player.Teleport(posdead);
+            yield return MEC.Timing.WaitForSeconds(3f);
+            player.ChangeRole(Role.SCP_049_2);
+            yield return MEC.Timing.WaitForSeconds(0.2f);
+            player.Teleport(posdead);
 		}
         // muta a un zombie en un scp
-		public static IEnumerable<float> Mutar(Player player)
+		private IEnumerator<float> Mutar(Player player)
 		{
 			System.Random proba = new Random();
 			int numero = proba.Next(0, 100);
-			yield return 5f;
+            yield return MEC.Timing.WaitForSeconds(5f);
 
-			if ((numero <= 5))
+            if ((numero <= 5))
 			{
                 player.ChangeRole(Role.SCP_106, false);
                 player.SetHealth(325);
@@ -142,7 +143,7 @@ namespace Passivesandskills2
 				if ((ev.Player.TeamRole.Team == Team.SCIENTIST) || (ev.Player.TeamRole.Team == Team.CLASSD))
 				{
                     ev.SpawnRagdoll = false;
-					Timing.Run(Resurrec(ev.Player, posmuertee));
+					MEC.Timing.RunCoroutine(Resurrec(ev.Player, posmuertee), MEC.Segment.Update);
 					
 					
 				}

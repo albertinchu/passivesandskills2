@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Smod2.EventHandlers;
-using scp4aiur;
 using Smod2.Events;
 using Smod2.API;
 using Smod2;
+using MEC;
 
 namespace Passivesandskills2
 {
@@ -16,19 +16,19 @@ namespace Passivesandskills2
 		int bajasllorona = 0;
 		Vector llorondead;
         // evita errores de respawn doble
-        public static IEnumerable<float> Lloron2()
+        private IEnumerator<float> Lloron2()
         {
-            yield return 0.3f;
+            yield return MEC.Timing.WaitForSeconds(0.3f);
             Llorona = false;
         }
         // revive al 096 cuando muere y lo va matando poco a poco
-        public static IEnumerable<float> LLORON(Player player, Vector pos)
+        private IEnumerator<float> LLORON(Player player, Vector pos)
 		{
-            
-			yield return 1f;
-			player.ChangeRole(Role.SCP_096);
-			yield return 0.2f;
-			player.Teleport(pos);
+
+            yield return MEC.Timing.WaitForSeconds(1f);
+            player.ChangeRole(Role.SCP_096);
+            yield return MEC.Timing.WaitForSeconds(0.2f);
+            player.Teleport(pos);
 
 			while (muertes == 0)
 			{
@@ -45,9 +45,9 @@ namespace Passivesandskills2
                         break;
                     
                     }
-					yield return 3f;
+                    yield return MEC.Timing.WaitForSeconds(3f);
 
-				}
+                }
 				
 
 			}
@@ -82,8 +82,8 @@ namespace Passivesandskills2
 			{
                     ev.SpawnRagdoll = false;
 					llorondead = ev.Player.GetPosition();
-					Timing.Run(LLORON(ev.Player, llorondead));
-                    Timing.Run(Lloron2());
+					MEC.Timing.RunCoroutine(LLORON(ev.Player, llorondead), MEC.Segment.Update);
+                    MEC.Timing.RunCoroutine(Lloron2(), MEC.Segment.Update);
 
 
             }

@@ -40,7 +40,7 @@ namespace Passivesandskills2
 				{
 					ev.Player.AddHealth(25);
 				}
-				MEC.Timing.RunCoroutine(ScientistTimer(ev.Player));
+				MEC.Timing.RunCoroutine(ScientistTimer(ev.Player), MEC.Segment.Update);
 			}
 		}
         // 5 segundos de god mode para el cientifico y a los 60s le da un cafe y resetea su habilidad
@@ -99,7 +99,7 @@ namespace Passivesandskills2
 			if ((ev.Player.TeamRole.Role == Role.SCIENTIST && (!Scientisth.ContainsKey(ev.Player.SteamId))))
 			{
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Conocimientos SCP]: robas 1 de vida y inflinges mas daño a los Scps 0.5% de su vida maxima, tu habilidad es [el cafe mañanero]: te hace invulnerable drurante 5 segundos y te cura .", false);
-				MEC.Timing.RunCoroutine(coffe(ev.Player));
+				MEC.Timing.RunCoroutine(coffe(ev.Player), MEC.Segment.Update);
 				Scientisth.Add(ev.Player.SteamId, true);
 			}
 			// NTF SCIENTIST //
@@ -136,11 +136,11 @@ namespace Passivesandskills2
                 if((Items[ev.Player.SteamId])&&(ev.Player.TeamRole.Role == Role.CLASSD))
                 {
                     ev.Player.GiveItem(ItemType.FLASHLIGHT);
-                    MEC.Timing.RunCoroutine(Itemtimer(ev.Player));
+                    MEC.Timing.RunCoroutine(Itemtimer(ev.Player), MEC.Segment.Update);
                 }
                 if ((Items[ev.Player.SteamId]) && (ev.Player.TeamRole.Role == Role.SCIENTIST))
                 {
-                    MEC.Timing.RunCoroutine(Itemtimer(ev.Player));
+                    MEC.Timing.RunCoroutine(Itemtimer(ev.Player), MEC.Segment.Update);
                     ev.Player.GiveItem(ItemType.CUP);
                 }
             }

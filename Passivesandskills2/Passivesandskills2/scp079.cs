@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Smod2;
 using Smod2.EventHandlers;
-using scp4aiur;
+using MEC;
 using Smod2.Events;
 using Smod2.API;
 
@@ -27,13 +26,13 @@ namespace Passivesandskills2
         
         // Ademas de que ganas ap infinito al nivel 5 en funcion de la xp que ganes
         // detona la nuke 2 veces
-        public static IEnumerable<float> Secondboom()
+        private IEnumerator<float> Secondboom()
 		{
-			yield return 5f;
-			PluginManager.Manager.Server.Map.DetonateWarhead();
-		
-			
-            yield return 60f;
+            yield return MEC.Timing.WaitForSeconds(5f);
+            PluginManager.Manager.Server.Map.DetonateWarhead();
+
+
+            yield return MEC.Timing.WaitForSeconds(60f);
             if (Boom)
             {
                 PluginManager.Manager.Server.Map.DetonateWarhead();
@@ -41,7 +40,7 @@ namespace Passivesandskills2
                
         }
         // aumenta el rango de los teslas en 2 y los activa durante 10 s
-        public IEnumerable<float> Teslass()
+        private IEnumerator<float> Teslass()
         {
             
             int contador = 0;
@@ -58,15 +57,15 @@ namespace Passivesandskills2
                     }
 
 
-                yield return 1f;
+                yield return MEC.Timing.WaitForSeconds(1f);
                 contador += 1;
             }
         }
         //libera de forma aleatoria clases d, cientificos o un perro de espinas
-        public static IEnumerable<float> liberar()
+        private IEnumerator<float> liberar()
         {
             int contador = 0;
-            yield return 5f;
+            yield return MEC.Timing.WaitForSeconds(5f);
             System.Random Number = new System.Random();
             int proba = Number.Next(0, 100);
             if (proba <= 20)
@@ -96,8 +95,8 @@ namespace Passivesandskills2
                         {
                             contador += 1;
                             player.ChangeRole(Role.SCIENTIST);
-                            yield return 0.2f;
-                            if(contador == 1) { player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_049)); }
+                            yield return MEC.Timing.WaitForSeconds(0.2f);
+                            if (contador == 1) { player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_049)); }
                             if (contador == 2) { player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_096)); }
                             if (contador == 3) { player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_939_53)); }
                         }
@@ -116,7 +115,7 @@ namespace Passivesandskills2
                         {
                             contador += 1;
                             player.ChangeRole(Role.CLASSD);
-                            yield return 0.2f;
+                            yield return MEC.Timing.WaitForSeconds(0.2f);
                             if (contador == 1) { player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_049)); }
                             if (contador == 2) { player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_096)); }
                             if (contador == 3) { player.Teleport(PluginManager.Manager.Server.Map.GetRandomSpawnPoint(Role.SCP_939_53)); }
@@ -128,34 +127,34 @@ namespace Passivesandskills2
 
         }
         // cooldown de habilidad
-        public static IEnumerable<float> Cooldown079(Player player)
+        private IEnumerator<float> Cooldown079(Player player)
         {
-            
-            yield return 120f;
+
+            yield return MEC.Timing.WaitForSeconds(120f);
             Pasivaa[player.SteamId] = true;
 
         }
         // cooldown de habilidad
-        public static IEnumerable<float> Cooldown0792(Player player)
+        private IEnumerator<float> Cooldown0792(Player player)
         {
 
-            yield return 60f;
+            yield return MEC.Timing.WaitForSeconds(60f);
             Pasivaa[player.SteamId] = true;
 
         }
         // cooldown de habilidad
-        public static IEnumerable<float> Cooldown0793(Player player)
+        private IEnumerator<float> Cooldown0793(Player player)
         {
 
-            yield return 60f;
+            yield return MEC.Timing.WaitForSeconds(60f);
             Pasivaa[player.SteamId] = true;
 
         }
         // detiene el funcionamiento de los ascensores
-        public static IEnumerable<float> elevators()
+        private IEnumerator<float> elevators()
         {
             elevatoss = true;
-            yield return 20f;
+            yield return MEC.Timing.WaitForSeconds(20f);
             elevatoss = false;
 
         }
@@ -219,7 +218,7 @@ namespace Passivesandskills2
 		{
 			if (Boom == false)
 			{
-				Timing.Run(Secondboom());
+				MEC.Timing.RunCoroutine(Secondboom(), MEC.Segment.Update);
 				Boom = true;
 			}
 		}
@@ -261,7 +260,7 @@ namespace Passivesandskills2
                             ev.Player.SendConsoleMessage("Procedimiento 70726F746F636F6C6F206465206175746F646573747275636369F36E Cancelado.", "blue");
                             ev.ReturnMessage = "Procedimiento 70726F746F636F6C6F206465206175746F646573747275636369F36E Cancelado. ";
                             Pasivaa[ev.Player.SteamId] = false;
-                            Timing.Run(Cooldown079(ev.Player));
+                            MEC.Timing.RunCoroutine(Cooldown079(ev.Player), MEC.Segment.Update);
                             PluginManager.Manager.Server.Map.StopWarhead();
                             ev.Player.Scp079Data.Exp += 100;
                             if(ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 10; }
@@ -289,8 +288,8 @@ namespace Passivesandskills2
                         ev.Player.SendConsoleMessage("Procedimiento 50726F746F636F6C6F20646520456D657267656E63696120416374697661646F2070756572746173206162696572746173 ejecutado.", "blue");
                         ev.ReturnMessage = "Procedimiento 50726F746F636F6C6F20646520456D657267656E63696120416374697661646F2070756572746173206162696572746173 ejecutado. ";
                         Pasivaa[ev.Player.SteamId] = false;
-                            Timing.Run(Cooldown079(ev.Player));
-                            Timing.Run(liberar());
+                            MEC.Timing.RunCoroutine(Cooldown079(ev.Player), MEC.Segment.Update);
+                            MEC.Timing.RunCoroutine(liberar(), MEC.Segment.Update);
                             ev.Player.Scp079Data.Exp += 350;
                             if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 35; }
                         }
@@ -331,8 +330,8 @@ namespace Passivesandskills2
                         if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 7; }
                         ev.Player.SendConsoleMessage("Protocolo 496E63656E64696F2064657465637461646F2C20616E756C616E646F20617363656E736F72657320 ejecutado", "blue");
                         ev.ReturnMessage = "Protocolo 496E63656E64696F2064657465637461646F2C20616E756C616E646F20617363656E736F72657320 ejecutado";
-                        Timing.Run(Cooldown0792(ev.Player));
-                        Timing.Run(elevators());
+                        MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), MEC.Segment.Update);
+                        MEC.Timing.RunCoroutine(elevators(), MEC.Segment.Update);
                         Pasivaa[ev.Player.SteamId] = false;
                     }
                 }
@@ -359,7 +358,7 @@ namespace Passivesandskills2
                             ev.Player.SendConsoleMessage("Enviando nanobots al ataque.", "blue");
                             ev.ReturnMessage = "Enviando nanobots al ataque .";
                             Pasivaa[ev.Player.SteamId] = false;
-                            Timing.Run(Cooldown0792(ev.Player));
+                            MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), MEC.Segment.Update);
                             System.Random playrs = new System.Random();
                             int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
                             while ((PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SPECTATOR) || (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role == Role.SCP_079)) 
@@ -405,7 +404,7 @@ namespace Passivesandskills2
                             ev.Player.SendConsoleMessage("Enviando nanobots mejorados al ataque.", "red");
                             ev.ReturnMessage = "Enviando nanobots mejorados al ataque .";
                             Pasivaa[ev.Player.SteamId] = false;
-                            if(ev.Player.Scp079Data.Level <= 3) { Timing.Run(Cooldown0792(ev.Player)); } else { Timing.Run(Cooldown0793(ev.Player)); }
+                            if(ev.Player.Scp079Data.Level <= 3) { MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), MEC.Segment.Update); } else { MEC.Timing.RunCoroutine(Cooldown0793(ev.Player), MEC.Segment.Update); }
                             
                             System.Random playrs = new System.Random();
                             int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
@@ -450,8 +449,8 @@ namespace Passivesandskills2
                         if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 7; }
                         ev.Player.SendConsoleMessage("Sobrecargando Teslas", "blue");
                         ev.ReturnMessage = "Protocolo Sobrecarga ejecutado";
-                        Timing.Run(Cooldown0792(ev.Player));
-                        Timing.Run(Teslass());
+                        MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), MEC.Segment.Update);
+                        Timing.RunCoroutine(Teslass(), MEC.Segment.Update);
                         Pasivaa[ev.Player.SteamId] = false;
                     }
                 }

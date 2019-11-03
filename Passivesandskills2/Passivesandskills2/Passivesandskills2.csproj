@@ -73,7 +73,6 @@
     <Compile Include="scp106.cs" />
     <Compile Include="scp173.cs" />
     <Compile Include="scp939 xx.cs" />
-    <Compile Include="Timing.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

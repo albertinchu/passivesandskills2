@@ -4,7 +4,7 @@ using Smod2;
 using Smod2.EventHandlers;
 using Smod2.Events;
 using Smod2.API;
-using scp4aiur;
+
 
 namespace Passivesandskills2
 {
