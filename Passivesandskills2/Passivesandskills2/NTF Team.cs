@@ -50,8 +50,8 @@ namespace Passivesandskills2
                     if ((ev.Player.GetHealth() <= 50) && (NTFli[ev.Attacker.SteamId] == true))
                     {
                         NTFli[ev.Attacker.SteamId] = false;
-                        MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.Update);
-                        MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.Update);
+                        MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.FixedUpdate);
+                        MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.FixedUpdate);
 
                     }
                 }
@@ -75,8 +75,8 @@ namespace Passivesandskills2
 					if ((ev.Player.GetHealth() <= 85) && (NTFli[ev.Attacker.SteamId] == true))
 					{
 						NTFli[ev.Attacker.SteamId] = false;
-                        MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.Update);
-                        MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.Update);
+                        MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.FixedUpdate);
+                        MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.FixedUpdate);
 
                     }
 				}
@@ -85,8 +85,8 @@ namespace Passivesandskills2
 					if ((ev.Player.GetHealth() <= (ev.Player.TeamRole.MaxHP/2)) && (NTFli[ev.Attacker.SteamId] == true))
 					{
 						NTFli[ev.Attacker.SteamId] = false;
-                        MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.Update);
-                        MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.Update);
+                        MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.FixedUpdate);
+                        MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.FixedUpdate);
 
                     }
 				}

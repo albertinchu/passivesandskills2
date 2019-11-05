@@ -82,8 +82,8 @@ namespace Passivesandskills2
 			{
                     ev.SpawnRagdoll = false;
 					llorondead = ev.Player.GetPosition();
-					MEC.Timing.RunCoroutine(LLORON(ev.Player, llorondead), MEC.Segment.Update);
-                    MEC.Timing.RunCoroutine(Lloron2(), MEC.Segment.Update);
+					MEC.Timing.RunCoroutine(LLORON(ev.Player, llorondead), MEC.Segment.FixedUpdate);
+                    MEC.Timing.RunCoroutine(Lloron2(), MEC.Segment.FixedUpdate);
 
 
             }

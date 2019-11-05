@@ -211,47 +211,47 @@ namespace Passivesandskills2
                         {
                             case "1":
                                 role = Role.CLASSD;
-                                MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.Update);
+                                MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
                                 break;
                             case "2":
                                 role = Role.SCIENTIST;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.Update);
+                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
                                     break;
                             case "3":
                                 role = Role.CHAOS_INSURGENCY;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.Update);
+                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
                                     break;
                             case "4":
                                 role = Role.FACILITY_GUARD;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.Update);
+                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
                                     break;
                             case "5":
                                 role = Role.NTF_COMMANDER;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.Update);
+                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
                                     break;
                             case "6":
                                 role = Role.NTF_LIEUTENANT;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.Update);
+                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
                                     break;
                             case "7":
                                 role = Role.NTF_SCIENTIST;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.Update);
+                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
                                     break;
                             case "8":
                                 role = Role.NTF_CADET;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.Update);
+                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
                                     break;
                             case "9":
                                 role = Role.SCP_173;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.Update);
+                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
                                     break;
                             case "10":
                                 role = Role.SCP_049;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.Update);
+                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
                                     break;
                             case "11":
                                 role = Role.ZOMBIE;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.Update);
+                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
                                     break;
                         }
                     }
