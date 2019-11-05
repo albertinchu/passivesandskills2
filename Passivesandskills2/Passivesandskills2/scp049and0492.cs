@@ -32,10 +32,22 @@ namespace Passivesandskills2
                     ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cuerpo Creciente]: Cada minuto ganas 150 de salud de forma permanente hasta 5 veces a no ser que te quedes quieto, (perderas la vida extra)", false);
                     Zombie.Add(ev.Player.SteamId, 0);	            
 				}
-                MEC.Timing.RunCoroutine(Zombielive(ev.Player), MEC.Segment.FixedUpdate);
+                int p = (int)System.Environment.OSVersion.Platform;
+                if ((p == 4) || (p == 6) || (p == 128))
+                {
+                    MEC.Timing.RunCoroutine(Zombielive(ev.Player), MEC.Segment.FixedUpdate);
+
+                }
+                else { MEC.Timing.RunCoroutine(Zombielive(ev.Player), 1); }
                 if (conta049 >= 6)
                 {
-                    MEC.Timing.RunCoroutine(Mutar(ev.Player), MEC.Segment.FixedUpdate);
+                  
+                    if ((p == 4) || (p == 6) || (p == 128))
+                    {
+                        MEC.Timing.RunCoroutine(Mutar(ev.Player), MEC.Segment.FixedUpdate);
+
+                    }
+                    else { MEC.Timing.RunCoroutine(Mutar(ev.Player), 1); }
                     conta049 = 0;
                 }
                 Zombie[ev.Player.SteamId] = 0;
@@ -143,10 +155,16 @@ namespace Passivesandskills2
 				if ((ev.Player.TeamRole.Team == Team.SCIENTIST) || (ev.Player.TeamRole.Team == Team.CLASSD))
 				{
                     ev.SpawnRagdoll = false;
-					MEC.Timing.RunCoroutine(Resurrec(ev.Player, posmuertee), MEC.Segment.FixedUpdate);
-					
-					
-				}
+                    int p = (int)System.Environment.OSVersion.Platform;
+                    if ((p == 4) || (p == 6) || (p == 128))
+                    {
+                        MEC.Timing.RunCoroutine(Resurrec(ev.Player,posmuertee), MEC.Segment.FixedUpdate);
+
+                    }
+                    else { MEC.Timing.RunCoroutine(Resurrec(ev.Player,posmuertee), 1); }
+
+
+                }
 
 			}
 		}

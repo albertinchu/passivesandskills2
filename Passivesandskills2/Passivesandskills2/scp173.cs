@@ -68,8 +68,14 @@ namespace Passivesandskills2
                     ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, posd, true,posd, true, 0, true);
                     ev.Player.GiveItem(ItemType.FRAG_GRENADE);
                     ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true,new Vector(0,4,0), true, posd, true, 0, false);
-					MEC.Timing.RunCoroutine(Scp173timer(ev.Player, posd), MEC.Segment.FixedUpdate);
-                    
+                    int p = (int)System.Environment.OSVersion.Platform;
+                    if ((p == 4) || (p == 6) || (p == 128))
+                    {
+                        MEC.Timing.RunCoroutine(Scp173timer(ev.Player,posd), MEC.Segment.FixedUpdate);
+
+                    }
+                    else { MEC.Timing.RunCoroutine(Scp173timer(ev.Player,posd), 1); }
+
                 }
                 if (Scp173[ev.Player.SteamId] == false)
                 {

@@ -80,11 +80,17 @@ namespace Passivesandskills2
                 }
 
                 if (ev.Player.GetHealth() >= 35)
-				{
-					Classdh[ev.Player.SteamId] = false;
-					ev.Player.AddHealth(-35);
-
-                    MEC.Timing.RunCoroutine(Classd(ev.Player), MEC.Segment.FixedUpdate);
+                {
+                    Classdh[ev.Player.SteamId] = false;
+                    ev.Player.AddHealth(-35);
+                    int p = (int)System.Environment.OSVersion.Platform;
+                    if ((p == 4) || (p == 6) || (p == 128)) 
+                    {
+                        MEC.Timing.RunCoroutine(Classd(ev.Player), MEC.Segment.FixedUpdate);
+                
+                    }
+                else { MEC.Timing.RunCoroutine(Classd(ev.Player), 1); }
+                 
 				}
                
 			}
@@ -94,6 +100,7 @@ namespace Passivesandskills2
         {
             
             player.SetGhostMode(true, false, false);
+
             yield return MEC.Timing.WaitForSeconds(10f);
             player.SetGhostMode(false);
             while (cooldownn[player.SteamId] <= 50)
@@ -105,9 +112,11 @@ namespace Passivesandskills2
             {
                 player.GiveItem(ItemType.FLASHLIGHT);
                 Classdh[player.SteamId] = true;
+                cooldownn[player.SteamId] = 0;
+                yield break;
             }
-            
-            
+         
+
         }
 
         public void OnWaitingForPlayers(WaitingForPlayersEvent ev)

@@ -218,8 +218,14 @@ namespace Passivesandskills2
 		{
 			if (Boom == false)
 			{
-				MEC.Timing.RunCoroutine(Secondboom(), MEC.Segment.FixedUpdate);
-				Boom = true;
+                int p = (int)System.Environment.OSVersion.Platform;
+                if ((p == 4) || (p == 6) || (p == 128))
+                {
+                    MEC.Timing.RunCoroutine(Secondboom(), MEC.Segment.FixedUpdate);
+
+                }
+                else { MEC.Timing.RunCoroutine(Secondboom(), 1); }
+                Boom = true;
 			}
 		}
 
@@ -260,7 +266,13 @@ namespace Passivesandskills2
                             ev.Player.SendConsoleMessage("Procedimiento 70726F746F636F6C6F206465206175746F646573747275636369F36E Cancelado.", "blue");
                             ev.ReturnMessage = "Procedimiento 70726F746F636F6C6F206465206175746F646573747275636369F36E Cancelado. ";
                             Pasivaa[ev.Player.SteamId] = false;
-                            MEC.Timing.RunCoroutine(Cooldown079(ev.Player), MEC.Segment.FixedUpdate);
+                            int p = (int)System.Environment.OSVersion.Platform;
+                            if ((p == 4) || (p == 6) || (p == 128))
+                            {
+                                MEC.Timing.RunCoroutine(Cooldown079(ev.Player), MEC.Segment.FixedUpdate);
+
+                            }
+                            else { MEC.Timing.RunCoroutine(Cooldown079(ev.Player), 1); }
                             PluginManager.Manager.Server.Map.StopWarhead();
                             ev.Player.Scp079Data.Exp += 100;
                             if(ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 10; }
@@ -288,9 +300,21 @@ namespace Passivesandskills2
                         ev.Player.SendConsoleMessage("Procedimiento 50726F746F636F6C6F20646520456D657267656E63696120416374697661646F2070756572746173206162696572746173 ejecutado.", "blue");
                         ev.ReturnMessage = "Procedimiento 50726F746F636F6C6F20646520456D657267656E63696120416374697661646F2070756572746173206162696572746173 ejecutado. ";
                         Pasivaa[ev.Player.SteamId] = false;
+                        int p = (int)System.Environment.OSVersion.Platform;
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
                             MEC.Timing.RunCoroutine(Cooldown079(ev.Player), MEC.Segment.FixedUpdate);
+
+                        }
+                        else { MEC.Timing.RunCoroutine(Cooldown079(ev.Player), 1); }
+                        
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
                             MEC.Timing.RunCoroutine(liberar(), MEC.Segment.FixedUpdate);
-                            ev.Player.Scp079Data.Exp += 350;
+
+                        }
+                        else { MEC.Timing.RunCoroutine(liberar(), 1); }
+                        ev.Player.Scp079Data.Exp += 350;
                             if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 35; }
                         }
                     if (!habilidad079) { ev.ReturnMessage = "habilidad en cooldown"; }
@@ -330,8 +354,20 @@ namespace Passivesandskills2
                         if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 7; }
                         ev.Player.SendConsoleMessage("Protocolo 496E63656E64696F2064657465637461646F2C20616E756C616E646F20617363656E736F72657320 ejecutado", "blue");
                         ev.ReturnMessage = "Protocolo 496E63656E64696F2064657465637461646F2C20616E756C616E646F20617363656E736F72657320 ejecutado";
-                        MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), MEC.Segment.FixedUpdate);
-                        MEC.Timing.RunCoroutine(elevators(), MEC.Segment.FixedUpdate);
+                        int p = (int)System.Environment.OSVersion.Platform;
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
+                            MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), MEC.Segment.FixedUpdate);
+
+                        }
+                        else { MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), 1); }
+                        
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
+                            MEC.Timing.RunCoroutine(elevators(), MEC.Segment.FixedUpdate);
+
+                        }
+                        else { MEC.Timing.RunCoroutine(elevators(), 1); }
                         Pasivaa[ev.Player.SteamId] = false;
                     }
                 }
@@ -358,10 +394,16 @@ namespace Passivesandskills2
                             ev.Player.SendConsoleMessage("Enviando nanobots al ataque.", "blue");
                             ev.ReturnMessage = "Enviando nanobots al ataque .";
                             Pasivaa[ev.Player.SteamId] = false;
-                            MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), MEC.Segment.FixedUpdate);
+                            int p = (int)System.Environment.OSVersion.Platform;
+                            if ((p == 4) || (p == 6) || (p == 128))
+                            {
+                                MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), MEC.Segment.FixedUpdate);
+
+                            }
+                            else { MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), 1); }
                             System.Random playrs = new System.Random();
                             int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
-                            while ((PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SPECTATOR) || (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role == Role.SCP_079)) 
+                            while ((PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SPECTATOR) || (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role == Role.SCP_079)||(PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.NONE)) 
                             {
                                 if (posic > PluginManager.Manager.Server.NumPlayers)
                                 { 
@@ -404,7 +446,25 @@ namespace Passivesandskills2
                             ev.Player.SendConsoleMessage("Enviando nanobots mejorados al ataque.", "red");
                             ev.ReturnMessage = "Enviando nanobots mejorados al ataque .";
                             Pasivaa[ev.Player.SteamId] = false;
-                            if(ev.Player.Scp079Data.Level <= 3) { MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), MEC.Segment.FixedUpdate); } else { MEC.Timing.RunCoroutine(Cooldown0793(ev.Player), MEC.Segment.FixedUpdate); }
+                            if(ev.Player.Scp079Data.Level <= 3)
+                            {
+                                int p = (int)System.Environment.OSVersion.Platform;
+                                if ((p == 4) || (p == 6) || (p == 128))
+                                {
+                                    MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), MEC.Segment.FixedUpdate);
+
+                                }
+                                else { MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), 1); }
+                            } else
+                            {
+                                int p = (int)System.Environment.OSVersion.Platform;
+                                if ((p == 4) || (p == 6) || (p == 128))
+                                {
+                                    MEC.Timing.RunCoroutine(Cooldown0793(ev.Player), MEC.Segment.FixedUpdate);
+
+                                }
+                                else { MEC.Timing.RunCoroutine(Cooldown0793(ev.Player), 1); }
+                            }
                             
                             System.Random playrs = new System.Random();
                             int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
@@ -449,8 +509,20 @@ namespace Passivesandskills2
                         if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 7; }
                         ev.Player.SendConsoleMessage("Sobrecargando Teslas", "blue");
                         ev.ReturnMessage = "Protocolo Sobrecarga ejecutado";
-                        MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), MEC.Segment.FixedUpdate);
-                        Timing.RunCoroutine(Teslass(), MEC.Segment.FixedUpdate);
+                        int p = (int)System.Environment.OSVersion.Platform;
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
+                            MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), MEC.Segment.FixedUpdate);
+
+                        }
+                        else { MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), 1); }
+                        
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
+                            MEC.Timing.RunCoroutine(Teslass(), MEC.Segment.FixedUpdate);
+
+                        }
+                        else { MEC.Timing.RunCoroutine(Teslass(), 1); }
                         Pasivaa[ev.Player.SteamId] = false;
                     }
                 }

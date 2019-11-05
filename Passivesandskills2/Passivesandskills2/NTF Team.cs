@@ -50,9 +50,21 @@ namespace Passivesandskills2
                     if ((ev.Player.GetHealth() <= 50) && (NTFli[ev.Attacker.SteamId] == true))
                     {
                         NTFli[ev.Attacker.SteamId] = false;
-                        MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.FixedUpdate);
-                        MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.FixedUpdate);
+                      
+                        int p = (int)System.Environment.OSVersion.Platform;
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
+                            MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.FixedUpdate);
 
+                        }
+                        else { MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), 1); }
+                     
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
+                            MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.FixedUpdate);
+
+                        }
+                        else { MEC.Timing.RunCoroutine(Intimidacion(ev.Player), 1); }
                     }
                 }
                     if(NTFli[ev.Attacker.SteamId] == false)
@@ -75,8 +87,20 @@ namespace Passivesandskills2
 					if ((ev.Player.GetHealth() <= 85) && (NTFli[ev.Attacker.SteamId] == true))
 					{
 						NTFli[ev.Attacker.SteamId] = false;
-                        MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.FixedUpdate);
-                        MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.FixedUpdate);
+                        int p = (int)System.Environment.OSVersion.Platform;
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
+                            MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.FixedUpdate);
+
+                        }
+                        else { MEC.Timing.RunCoroutine(Intimidacion(ev.Player), 1); }
+                        
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
+                            MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.FixedUpdate);
+
+                        }
+                        else { MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), 1); }
 
                     }
 				}
@@ -85,8 +109,20 @@ namespace Passivesandskills2
 					if ((ev.Player.GetHealth() <= (ev.Player.TeamRole.MaxHP/2)) && (NTFli[ev.Attacker.SteamId] == true))
 					{
 						NTFli[ev.Attacker.SteamId] = false;
-                        MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.FixedUpdate);
-                        MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.FixedUpdate);
+                        int p = (int)System.Environment.OSVersion.Platform;
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
+                            MEC.Timing.RunCoroutine(Intimidacion(ev.Player), MEC.Segment.FixedUpdate);
+
+                        }
+                        else { MEC.Timing.RunCoroutine(Intimidacion(ev.Player), 1); }
+                        
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
+                            MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), MEC.Segment.FixedUpdate);
+
+                        }
+                        else { MEC.Timing.RunCoroutine(Cooldown(ev.Attacker), 1); }
 
                     }
 				}

@@ -51,7 +51,15 @@ namespace Passivesandskills2
                     {
                         ev.Attacker.PersonalBroadcast(3, "<color=#FF0500> Nivel 3 </color>", false);
                     }
-                    if (Guardias[ev.Attacker.SteamId] >= 150) { MEC.Timing.RunCoroutine(Venenoguardias(ev.Player), MEC.Segment.FixedUpdate); }
+                    if (Guardias[ev.Attacker.SteamId] >= 150) {
+                        int p = (int)System.Environment.OSVersion.Platform;
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
+                            MEC.Timing.RunCoroutine(Venenoguardias(ev.Player), MEC.Segment.FixedUpdate);
+
+                        }
+                        else { MEC.Timing.RunCoroutine(Venenoguardias(ev.Player), 1); }
+                    }
                     if (Guardias[ev.Attacker.SteamId] == 300)
                     {
                         ev.Attacker.PersonalBroadcast(3, "<color=#C50000> Nivel 4 </color>", false);

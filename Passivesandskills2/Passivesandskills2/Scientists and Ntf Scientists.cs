@@ -40,8 +40,14 @@ namespace Passivesandskills2
 				{
 					ev.Player.AddHealth(25);
 				}
-				MEC.Timing.RunCoroutine(ScientistTimer(ev.Player), MEC.Segment.FixedUpdate);
-			}
+                int p = (int)System.Environment.OSVersion.Platform;
+                if ((p == 4) || (p == 6) || (p == 128))
+                {
+                    MEC.Timing.RunCoroutine(ScientistTimer(ev.Player), MEC.Segment.FixedUpdate);
+
+                }
+                else { MEC.Timing.RunCoroutine(ScientistTimer(ev.Player), 1); }
+            }
 		}
         // 5 segundos de god mode para el cientifico y a los 60s le da un cafe y resetea su habilidad
         private IEnumerator<float> ScientistTimer(Player player)
@@ -136,11 +142,23 @@ namespace Passivesandskills2
                 if((Items[ev.Player.SteamId])&&(ev.Player.TeamRole.Role == Role.CLASSD))
                 {
                     ev.Player.GiveItem(ItemType.FLASHLIGHT);
-                    MEC.Timing.RunCoroutine(Itemtimer(ev.Player), MEC.Segment.FixedUpdate);
+                    int p = (int)System.Environment.OSVersion.Platform;
+                    if ((p == 4) || (p == 6) || (p == 128))
+                    {
+                        MEC.Timing.RunCoroutine(Itemtimer(ev.Player), MEC.Segment.FixedUpdate);
+
+                    }
+                    else { MEC.Timing.RunCoroutine(Itemtimer(ev.Player), 1); }
                 }
                 if ((Items[ev.Player.SteamId]) && (ev.Player.TeamRole.Role == Role.SCIENTIST))
                 {
-                    MEC.Timing.RunCoroutine(Itemtimer(ev.Player), MEC.Segment.FixedUpdate);
+                    int p = (int)System.Environment.OSVersion.Platform;
+                    if ((p == 4) || (p == 6) || (p == 128))
+                    {
+                        MEC.Timing.RunCoroutine(Itemtimer(ev.Player), MEC.Segment.FixedUpdate);
+
+                    }
+                    else { MEC.Timing.RunCoroutine(Itemtimer(ev.Player), 1); }
                     ev.Player.GiveItem(ItemType.CUP);
                 }
             }

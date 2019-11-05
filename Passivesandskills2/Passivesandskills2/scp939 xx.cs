@@ -207,51 +207,110 @@ namespace Passivesandskills2
                     }
                     if (argsal.Length == 1)
                     {
-                        switch (argsal[0])
+                            int p = (int)System.Environment.OSVersion.Platform;
+                            switch (argsal[0])
                         {
+
                             case "1":
                                 role = Role.CLASSD;
-                                MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
-                                break;
+                                 
+                                    if ((p == 4) || (p == 6) || (p == 128))
+                                    {
+                                        MEC.Timing.RunCoroutine(Skill(ev.Player,role,ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+
+                                    }
+                                    else { MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), 1); }
+                                    break;
                             case "2":
                                 role = Role.SCIENTIST;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+                                  
+                                    if ((p == 4) || (p == 6) || (p == 128))
+                                    {
+                                        MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+
+                                    }
+                                    else { MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), 1); }
                                     break;
                             case "3":
                                 role = Role.CHAOS_INSURGENCY;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+                                    if ((p == 4) || (p == 6) || (p == 128))
+                                    {
+                                        MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+
+                                    }
+                                    else { MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), 1); }
                                     break;
                             case "4":
                                 role = Role.FACILITY_GUARD;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+                                    if ((p == 4) || (p == 6) || (p == 128))
+                                    {
+                                        MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+
+                                    }
+                                    else { MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), 1); }
                                     break;
                             case "5":
                                 role = Role.NTF_COMMANDER;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+                                    if ((p == 4) || (p == 6) || (p == 128))
+                                    {
+                                        MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+
+                                    }
+                                    else { MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), 1); }
                                     break;
                             case "6":
                                 role = Role.NTF_LIEUTENANT;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+                                    if ((p == 4) || (p == 6) || (p == 128))
+                                    {
+                                        MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+
+                                    }
+                                    else { MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), 1); }
                                     break;
                             case "7":
                                 role = Role.NTF_SCIENTIST;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+                                    if ((p == 4) || (p == 6) || (p == 128))
+                                    {
+                                        MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+
+                                    }
+                                    else { MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), 1); }
                                     break;
                             case "8":
                                 role = Role.NTF_CADET;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+                                    if ((p == 4) || (p == 6) || (p == 128))
+                                    {
+                                        MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+
+                                    }
+                                    else { MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), 1); }
                                     break;
                             case "9":
                                 role = Role.SCP_173;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+                                    if ((p == 4) || (p == 6) || (p == 128))
+                                    {
+                                        MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+
+                                    }
+                                    else { MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), 1); }
                                     break;
                             case "10":
                                 role = Role.SCP_049;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+                                    if ((p == 4) || (p == 6) || (p == 128))
+                                    {
+                                        MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+
+                                    }
+                                    else { MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), 1); }
                                     break;
                             case "11":
                                 role = Role.ZOMBIE;
-                                    MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+                                    if ((p == 4) || (p == 6) || (p == 128))
+                                    {
+                                        MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), MEC.Segment.FixedUpdate);
+
+                                    }
+                                    else { MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), 1); }
                                     break;
                         }
                     }
