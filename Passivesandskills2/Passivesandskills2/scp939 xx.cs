@@ -26,8 +26,10 @@ namespace Passivesandskills2
             player.ChangeRole(role, false, false, false);
             Habilidad[player.SteamId] = false;
             yield return MEC.Timing.WaitForSeconds(20f);
-            player.ChangeRole(Role.SCP_939_53);
-            yield return MEC.Timing.WaitForSeconds(0.2f);
+            Vector pos = player.GetPosition();
+
+            player.ChangeRole(Role.SCP_939_53, false, false, false, false);
+           
             player.SetHealth(salud);
             yield return MEC.Timing.WaitForSeconds(40f);
             if (Habilidad.ContainsKey(player.SteamId)) { Habilidad[player.SteamId] = true; }
@@ -79,23 +81,39 @@ namespace Passivesandskills2
 			//SCP 939-53 / Teemo//
 			if (ev.Attacker.TeamRole.Role == Role.SCP_939_53) 
 			{
-                if(ev.Damage >= 40) { ev.Damage = 40; }
-                if (!Mordido.ContainsKey(ev.Player)) { Mordido.Add(ev.Player, (ev.Player.TeamRole.MaxHP - 20)); }
+               
                 if (Mordido.ContainsKey(ev.Player)) 
                 {
-                    if (Mordido[ev.Player] <= 60) { ev.Player.Kill(DamageType.CONTAIN); }
                     ev.Attacker.AddHealth(25);
-                    Mordido[ev.Player] -= 20; 
-                    if(ev.Attacker.GetHealth() <= 1450) 
+                    
+                    if (ev.Attacker.GetHealth() <= 1450) { ev.Attacker.AddHealth(35); }
+
+                    if (Mordido[ev.Player] <= 60) { ev.Player.Kill(DamageType.CONTAIN); }
+                    else
                     {
-                        Mordido[ev.Player] -= 15;
-                        ev.Attacker.AddHealth(35);
-                        
-                    }
+
+
+                        Mordido[ev.Player] -= 20;
+                        if (ev.Attacker.GetHealth() <= 1450)
+                        {
+                            Mordido[ev.Player] -= 15;
+
+
+                        }
+                    }   
                 
                 }
-                
-			}
+                if (ev.Damage >= 40) { ev.Damage = 40; }
+                if (!Mordido.ContainsKey(ev.Player))
+                {
+                    if ((ev.Player.TeamRole.Role == Role.CLASSD) || (ev.Player.TeamRole.Role == Role.SCIENTIST)) { Mordido.Add(ev.Player, (100 - 20)); }
+                    if ((ev.Player.TeamRole.Role == Role.FACILITY_GUARD) || (ev.Player.TeamRole.Role == Role.NTF_CADET)) { Mordido.Add(ev.Player, (100 - 20)); }
+                    if ((ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) || (ev.Player.TeamRole.Role == Role.NTF_SCIENTIST) || (ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY)) { Mordido.Add(ev.Player, (120 - 20)); }
+                    if ((ev.Player.TeamRole.Role == Role.NTF_COMMANDER)) { Mordido.Add(ev.Player, (150 - 20)); }
+
+                }
+
+            }
             if((Habilidad.ContainsKey(ev.Attacker.SteamId))&&(ev.Attacker.TeamRole.Role != Role.SCP_939_53)) 
             {
                 ev.Damage = 0;
@@ -110,7 +128,7 @@ namespace Passivesandskills2
             //El codigo del comandante se encuentra aquí para ajustarse mejor a la pasiva del 939-53
             //anticomandante
             //en este caso la cura del comandante esta limitada a el SCP-939-53
-            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN)&&(Mordido.ContainsKey(ev.Player)))
+            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) &&(ev.DamageType !=DamageType.POCKET) &&(ev.DamageType != DamageType.FALLDOWN)&&(Mordido.ContainsKey(ev.Player)))
             {
                 if (ev.Player.TeamRole.Team == Team.NINETAILFOX) { ev.Damage = 0; }
 
@@ -128,7 +146,7 @@ namespace Passivesandskills2
                 ev.Player.SetHealth(Mordido[ev.Player], DamageType.FRAG);
             }
             //comandante
-            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN)&&(!Mordido.ContainsKey(ev.Player)))
+            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.POCKET) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN)&&(!Mordido.ContainsKey(ev.Player)))
             {
                 if (ev.Player.TeamRole.Team == Team.NINETAILFOX) { ev.Damage = 0; }
 
@@ -180,7 +198,8 @@ namespace Passivesandskills2
                 if (ev.Player.TeamRole.Role != Role.SCP_939_53) { ev.ReturnMessage = "nice try"; }
                 if (ev.Player.TeamRole.Role == Role.SCP_939_53)
                 {
-                    if(Habilidad[ev.Player.SteamId]== false) { ev.Player.SendConsoleMessage("habilidad en cooldown", "red"); }
+                    if(Habilidad[ev.Player.SteamId]== false) {
+                        if (ev.Player.TeamRole.Role == Role.SCP_939_53) { ev.Player.SendConsoleMessage("habilidad en cooldown", "red"); } else { ev.Player.ChangeRole(Role.SCP_939_53, false, false, false, false); } }
                     if (Habilidad[ev.Player.SteamId] == true) 
                     { 
                     ev.Player.SendConsoleMessage("usa skill [un numero] pra transformarte en algo 1 = clasd 2 = scientist 3 = Chaos 4 = guard 5 = NTF Commander" +
@@ -312,7 +331,11 @@ namespace Passivesandskills2
                                     }
                                     else { MEC.Timing.RunCoroutine(Skill(ev.Player, role, ev.Player.GetHealth()), 1); }
                                     break;
-                        }
+                                case "0":
+                                    ev.Player.ChangeRole(Role.SCP_939_53,false,false,false,false);
+                                    ev.Player.SetHealth(health);
+                                    break;
+                            }
                     }
                 }
             }

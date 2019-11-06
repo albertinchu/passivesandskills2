@@ -54,7 +54,9 @@ namespace Passivesandskills2
         {
 
             player.SetGodmode(true);
+            player.PersonalBroadcast(5, "Eres invencible", false);
             yield return MEC.Timing.WaitForSeconds(5f);
+            player.PersonalClearBroadcasts();
             player.SetGodmode(false);
             yield return MEC.Timing.WaitForSeconds(55f);
             if (player.TeamRole.Role == Role.SCIENTIST)

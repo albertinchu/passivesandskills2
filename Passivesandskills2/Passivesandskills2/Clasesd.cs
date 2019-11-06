@@ -25,6 +25,7 @@ namespace Passivesandskills2
 			if (ev.Attacker.TeamRole.Role == Role.CLASSD)
 			{
                 // detecta si la habilidad del clase d esta en cooldown y suma 3 segundos al diccionario restandole asi tiempo a la habilidad.
+                ev.Player.PersonalClearBroadcasts();
                 if(Classdh[ev.Player.SteamId] == false) { cooldownn[ev.Attacker.SteamId] += 3; }
                 
                 if (ev.Attacker.GetGhostMode() == true) { ev.Attacker.SetGhostMode(false); }
@@ -46,7 +47,7 @@ namespace Passivesandskills2
 					ev.Player.SetAmmo(AmmoType.DROPPED_9, ev.Player.GetAmmo(AmmoType.DROPPED_9) - 3);
 				}
 				// [Dboys rules] //
-				if ((ev.Attacker.GetHealth() <= 45) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA)&&(ev.DamageType != DamageType.FALLDOWN))
+				if ((ev.Attacker.GetHealth() <= 45) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA)&&(ev.DamageType != DamageType.FALLDOWN)&&(ev.DamageType != DamageType.POCKET))
 				{
 					ev.Attacker.SetHealth(ev.Attacker.GetHealth() + Convert.ToInt32(ev.Damage));
 					if (ev.Attacker.GetHealth() <= 25)
@@ -100,9 +101,11 @@ namespace Passivesandskills2
         {
             
             player.SetGhostMode(true, false, false);
-
+            player.PersonalBroadcast(10, "Estas en sigilo", true);
             yield return MEC.Timing.WaitForSeconds(10f);
             player.SetGhostMode(false);
+            player.PersonalClearBroadcasts();
+            player.PersonalBroadcast(3, "Ya no estas en sigilo", true);
             while (cooldownn[player.SteamId] <= 50)
             {
                yield return MEC.Timing.WaitForSeconds(1f);
