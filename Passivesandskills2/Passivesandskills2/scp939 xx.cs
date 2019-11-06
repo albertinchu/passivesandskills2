@@ -27,10 +27,12 @@ namespace Passivesandskills2
             Habilidad[player.SteamId] = false;
             yield return MEC.Timing.WaitForSeconds(20f);
             Vector pos = player.GetPosition();
+            if (player.TeamRole.Role != Role.SCP_939_53)
+            {
+                player.ChangeRole(Role.SCP_939_53, false, false, false, false);
 
-            player.ChangeRole(Role.SCP_939_53, false, false, false, false);
-           
-            player.SetHealth(salud);
+                player.SetHealth(salud);
+            }
             yield return MEC.Timing.WaitForSeconds(40f);
             if (Habilidad.ContainsKey(player.SteamId)) { Habilidad[player.SteamId] = true; }
             
@@ -120,7 +122,11 @@ namespace Passivesandskills2
             }
             if((Habilidad.ContainsKey(ev.Player.SteamId))&&(ev.Player.TeamRole.Role != Role.SCP_939_53)) 
             {
-                if(ev.Attacker.TeamRole.Team == Team.SCP) { ev.Damage = 0; }
+                if(ev.Attacker.TeamRole.Team == Team.SCP) 
+                {
+                    ev.Damage = 0;
+                
+                }
                     ev.Player.ChangeRole(Role.SCP_939_53, false, false, false);
                 ev.Player.SetHealth(health);
             }
