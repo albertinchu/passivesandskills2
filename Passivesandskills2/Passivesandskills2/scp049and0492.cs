@@ -9,11 +9,11 @@ using MEC;
 
 namespace Passivesandskills2
 {
-	partial class scp049and0492 : IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerPlayerDie
+	partial class scp049and0492 : IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerPlayerDie, IEventHandlerWarheadDetonate
 	{
 		
 		static Dictionary<string, int> Zombie = new Dictionary<string, int>();
-       
+        static bool nuke = false;
         Vector posmuertee;
 		int conta049 = 0;
 
@@ -85,6 +85,7 @@ namespace Passivesandskills2
         // muta a un zombie en un scp
 		private IEnumerator<float> Mutar(Player player)
 		{
+            if(nuke) { yield break; }
 			System.Random proba = new Random();
 			int numero = proba.Next(0, 100);
             yield return MEC.Timing.WaitForSeconds(5f);
@@ -142,6 +143,7 @@ namespace Passivesandskills2
 		{
 			Zombie.Clear();
 			conta049 = 0;
+            nuke = false;
 		}
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
@@ -169,6 +171,9 @@ namespace Passivesandskills2
 			}
 		}
 
-      
+        public void OnDetonate()
+        {
+            nuke = true;
+        }
     }
 }

@@ -107,7 +107,8 @@ namespace Passivesandskills2
 			if ((ev.Player.TeamRole.Role == Role.SCIENTIST && (!Scientisth.ContainsKey(ev.Player.SteamId))))
 			{
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Conocimientos SCP]: robas 1 de vida y inflinges mas daño a los Scps 0.5% de su vida maxima, tu habilidad es [el cafe mañanero]: te hace invulnerable drurante 5 segundos y te cura .", false);
-				MEC.Timing.RunCoroutine(coffe(ev.Player), MEC.Segment.FixedUpdate);
+                ev.Player.PersonalBroadcast(10, "Para activar tu habilidad TIRA EL OBJETO AL SUELO.", false);
+                MEC.Timing.RunCoroutine(coffe(ev.Player), MEC.Segment.FixedUpdate);
 				Scientisth.Add(ev.Player.SteamId, true);
 			}
 			// NTF SCIENTIST //

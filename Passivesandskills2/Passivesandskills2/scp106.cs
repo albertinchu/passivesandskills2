@@ -21,7 +21,7 @@ namespace Passivesandskills2
                 
             }
         }
-
+        scp939_xx scp;
         public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
             //[Presencia Espectral] elimina ghost mode al atacar a un jugador en estado de invisibilidad
@@ -29,7 +29,8 @@ namespace Passivesandskills2
 			//[Golpe Crítico]// ejecuta a un jugador
 			if ((ev.Attacker.TeamRole.Role == Role.SCP_106))
 			{
-				Scp106[ev.Attacker.SteamId] += 1;
+                
+                Scp106[ev.Attacker.SteamId] += 1;
 				if (Scp106[ev.Attacker.SteamId] >= 5)
 				{
                     ev.Attacker.SetGhostMode(true);

@@ -1,22 +1,30 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Smod2;
 using Smod2.EventHandlers;
-
+using Unity;
 using Smod2.Events;
 using Smod2.API;
 using MEC;
+using UnityEngine;
+using UnityEditor;
+using UnityStandardAssets;
+using UnityEngineInternal;
+
 
 namespace Passivesandskills2
 {
-	partial class Ntfteam : IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerThrowGrenade, IEventHandlerPlayerDie
+	partial class Ntfteam : IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerThrowGrenade, IEventHandlerPlayerDie, IEventHandlerCallCommand
 	{
 		
 		static Dictionary<string, bool> NTFli = new Dictionary<string, bool>();
-        
+
+        static Dictionary<string, bool> NTFlic4 = new Dictionary<string, bool>();
 
 
-       
+
+
         // el Teniente tiene la habilidad de teletransportar a un enemigo no scp a una sala aleatoria , funciona con los zombies.
         // cadetes resisten mejor el daño de explosiones y las flash agregan 30 de salud
         public void OnPlayerHurt(PlayerHurtEvent ev)
@@ -204,6 +212,7 @@ namespace Passivesandskills2
 			{
 				if (!NTFli.ContainsKey(ev.Player.SteamId))
 				{
+                    NTFlic4.Add(ev.Player.SteamId, false);
 					NTFli.Add(ev.Player.SteamId, true);
                     ev.Player.SendConsoleMessage("[cambiar las tornas]: Cambiar las tornas es una pasiva Tactica con 40s de cooldown  la cual teletransporta al enemigo cuando este esta a menos del 50% de vida . (Esta habilidad no se aplica a SCPS pero si a Zombies y tampoco se aplica a aliados)", "blue");
                     ev.Player.PersonalBroadcast(10, "Tu pasiva es [cambiar las tornas]: Cambias la posición del enemigo de forma aleatoria cuando esta por debajo de 50%  (mas info en la consola), cuando has usado tu habilidad durante 40s tienes la pasiva", false);
@@ -225,14 +234,14 @@ namespace Passivesandskills2
 			{
 				
 				ev.Player.SendConsoleMessage("[Preocupación por los tuyos]: Tus disparos hacen como cura parte del daño que causarían a tus aliados y las granadas Instacuran 200 de salud (¡OJO!: No se aplica a guardias ni científicos", "blue");
-				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Lider del Escudrón]: Inflinges daño adicional a secas (15) el doble contra sujetos a mitad de vida.[Preocupación por los tuyos]: tus ataques curan aliados (mas info en la consola)", false);
+				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Lider del Escudrón]: Causas daño adicional a secas (15) el doble contra sujetos a mitad de vida.[Preocupación por los tuyos]: tus ataques curan aliados (mas info en la consola)", false);
 			}
 		}
 
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
 			NTFli.Clear();
-			
+            NTFlic4.Clear();
 		}
 
 		public void OnThrowGrenade(PlayerThrowGrenadeEvent ev)
@@ -247,6 +256,13 @@ namespace Passivesandskills2
 			{
 				ev.Player.AddHealth(30);
 			}
+
+            if(ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) 
+            {
+
+          
+
+            }
 		}
 	
 
@@ -257,6 +273,20 @@ namespace Passivesandskills2
             { ev.Killer.Kill(DamageType.LURE); }
 
 
+        }
+
+       
+
+        public void OnCallCommand(PlayerCallCommandEvent ev)
+        {
+            if (ev.Command.StartsWith("c4mode")) 
+            {
+                if ((NTFlic4.ContainsKey(ev.Player.SteamId)) && (ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) && (NTFlic4[ev.Player.SteamId] ==false)) { NTFlic4[ev.Player.SteamId] = true; ev.ReturnMessage = "C4 activados"; }
+                if ((NTFlic4.ContainsKey(ev.Player.SteamId)) && (ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) && (NTFlic4[ev.Player.SteamId] == true)) { NTFlic4[ev.Player.SteamId] = false; ev.ReturnMessage = "C4 desactivados"; }
+                if(ev.Player.TeamRole.Role != Role.NTF_LIEUTENANT) { ev.ReturnMessage = "Tu no eres Teniente"; }
+
+           
+            }
         }
     }
 }

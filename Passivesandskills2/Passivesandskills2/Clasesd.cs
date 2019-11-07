@@ -65,7 +65,7 @@ namespace Passivesandskills2
                 cooldownn.Add(ev.Player.SteamId, 0);
 				Classdh.Add(ev.Player.SteamId, true);
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Astucia] robas munición al disparar. [Dboy rules]: cuando estas a poca vida robas vida. Tu Habilidad es [Sigilo de doble filo]tirar tu linterna te hace invisible por 35 de salud (puedes morir si tienes menos de 36 de salud). ", false);
-				ev.Player.PersonalBroadcast(10, " [Sigilo de doble filo]: (puedes morir si tienes menos de 36 de salud). ", false);
+				ev.Player.PersonalBroadcast(10, " [Sigilo de doble filo]: (puedes morir si tienes menos de 36 de salud), y para hacerte invisible TIRA LA LINTERNA AL SUELO. ", false);
 			}
 		}
 
