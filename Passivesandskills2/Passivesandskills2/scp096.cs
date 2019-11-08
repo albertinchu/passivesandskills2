@@ -128,7 +128,7 @@ namespace Passivesandskills2
 		public void OnScp096Panic(Scp096PanicEvent ev)
 		{
             // cuando scp 096 se enfada se cura 25 por el numero de bajas en el rage anterior
-			ev.Player.AddHealth(25 * bajasllorona);
+			ev.Player.AddHealth(30 * bajasllorona);
 			bajasllorona = 0;
 		}
 	}

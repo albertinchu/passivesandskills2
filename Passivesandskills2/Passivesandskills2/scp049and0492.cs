@@ -69,7 +69,7 @@ namespace Passivesandskills2
                 Zombie[player.SteamId] += 1;
                 player.AddHealth(150);
                 if(Zombie[player.SteamId] >= 5) { break; }
-                if(Zombie[player.SteamId] > 0) { break; }
+                if(Zombie[player.SteamId] < 0) { break; }
                 
 			}
 			

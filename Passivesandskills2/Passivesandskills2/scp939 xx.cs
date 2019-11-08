@@ -31,8 +31,9 @@ namespace Passivesandskills2
             {
                 player.ChangeRole(Role.SCP_939_53, false, false, false, false);
 
-                player.SetHealth(salud);
+               
             }
+            player.SetHealth(salud);
             yield return MEC.Timing.WaitForSeconds(40f);
             if (Habilidad.ContainsKey(player.SteamId)) { Habilidad[player.SteamId] = true; }
             
@@ -105,7 +106,7 @@ namespace Passivesandskills2
                     }   
                 
                 }
-                if (ev.Damage >= 40) { ev.Damage = 40; }
+                if (ev.Damage >= 44) { ev.Damage = 44; }
                 if (!Mordido.ContainsKey(ev.Player))
                 {
                     if ((ev.Player.TeamRole.Role == Role.CLASSD) || (ev.Player.TeamRole.Role == Role.SCIENTIST)) { Mordido.Add(ev.Player, (100 - 20)); }

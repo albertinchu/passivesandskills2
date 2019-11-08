@@ -11,6 +11,8 @@ using UnityEngine;
 using UnityEditor;
 using UnityStandardAssets;
 using UnityEngineInternal;
+using UnityEngine.Networking;
+
 
 
 namespace Passivesandskills2
@@ -257,12 +259,7 @@ namespace Passivesandskills2
 				ev.Player.AddHealth(30);
 			}
 
-            if(ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) 
-            {
-
-          
-
-            }
+           
 		}
 	
 
@@ -288,5 +285,6 @@ namespace Passivesandskills2
            
             }
         }
+
     }
 }
