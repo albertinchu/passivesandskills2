@@ -403,7 +403,7 @@ namespace Passivesandskills2
                             else { MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), 1); }
                             System.Random playrs = new System.Random();
                             int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
-                            while ((PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SPECTATOR) || (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role == Role.SCP_079)||(PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.NONE)) 
+                            while ((PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Smod2.API.Team.SPECTATOR) || (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role == Role.SCP_079)||(PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Smod2.API.Team.NONE)) 
                             {
                                 if (posic > PluginManager.Manager.Server.NumPlayers)
                                 { 
@@ -411,9 +411,9 @@ namespace Passivesandskills2
                                 }
                                 posic = posic + 1; 
                             }
-                            if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }
+                            if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Smod2.API.Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }
 
-                            if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team != Team.SCP)
+                            if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team != Smod2.API.Team.SCP)
                             {
                                 if (PluginManager.Manager.Server.GetPlayers()[posic].GetHealth() <= 50)
                                 {
@@ -468,10 +468,10 @@ namespace Passivesandskills2
                             
                             System.Random playrs = new System.Random();
                             int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
-                            while ((PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SPECTATOR)||(PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role == Role.SCP_079)) { if (posic > PluginManager.Manager.Server.NumPlayers) { posic = 0; } posic = posic + 1; }
-                            if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }
+                            while ((PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Smod2.API.Team.SPECTATOR)||(PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role == Role.SCP_079) || (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Smod2.API.Team.NONE)) { if (posic > PluginManager.Manager.Server.NumPlayers) { posic = 0; } posic = posic + 1; }
+                            if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Smod2.API.Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }
 
-                            if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team != Team.SCP)
+                            if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team != Smod2.API.Team.SCP)
                             {
                                 if (PluginManager.Manager.Server.GetPlayers()[posic].GetHealth() <= 75)
                                 {
@@ -535,7 +535,7 @@ namespace Passivesandskills2
             //cancela ascensores
             if (elevatoss)
             {
-                if(ev.Player.TeamRole.Team != Team.SCP) { ev.AllowUse = false; }
+                if(ev.Player.TeamRole.Team != Smod2.API.Team.SCP) { ev.AllowUse = false; }
                
                 
             }

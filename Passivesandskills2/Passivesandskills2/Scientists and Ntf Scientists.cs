@@ -70,7 +70,7 @@ namespace Passivesandskills2
 		{
 			// [Conocimiento SCP] + Conocimiento SCP Avanzado] //
 			//Scientists - Vayne early game//
-			if ((ev.Attacker.TeamRole.Role == Role.SCIENTIST) && (ev.Player.TeamRole.Team == Team.SCP))
+			if ((ev.Attacker.TeamRole.Role == Role.SCIENTIST) && (ev.Player.TeamRole.Team == Smod2.API.Team.SCP))
 			{
 				if (ev.Attacker.GetHealth() <= 125)
 				{
@@ -85,7 +85,7 @@ namespace Passivesandskills2
 				if (ev.Player.TeamRole.Role == Role.SCP_939_89) { ev.Damage = ev.Damage + 13; }
 			}
 			//NTF Scientist - Vayne Late game//
-			if ((ev.Attacker.TeamRole.Role == Role.SCIENTIST) && (ev.Player.TeamRole.Team == Team.SCP))
+			if ((ev.Attacker.TeamRole.Role == Role.SCIENTIST) && (ev.Player.TeamRole.Team == Smod2.API.Team.SCP))
 			{
 				if (ev.Attacker.GetHealth() <= 150)
 				{

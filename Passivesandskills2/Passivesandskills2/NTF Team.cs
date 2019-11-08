@@ -17,7 +17,7 @@ using UnityEngine.Networking;
 
 namespace Passivesandskills2
 {
-	partial class Ntfteam : IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerThrowGrenade, IEventHandlerPlayerDie, IEventHandlerCallCommand
+	partial class Ntfteam : IEventHandlerSetRole, IEventHandlerPlayerHurt, IEventHandlerWaitingForPlayers, IEventHandlerThrowGrenade, IEventHandlerPlayerDie, IEventHandlerCallCommand, IEventHandlerPlayerDropItem
 	{
 		
 		static Dictionary<string, bool> NTFli = new Dictionary<string, bool>();
@@ -33,7 +33,7 @@ namespace Passivesandskills2
 		{
 			// COMANDANTE //
 		// daño adicional al comandante
-            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER)&&((ev.Player.TeamRole.Team == Team.SCP)||(ev.Player.TeamRole.Team == Team.CLASSD) || (ev.Player.TeamRole.Team == Team.CHAOS_INSURGENCY))) 
+            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER)&&((ev.Player.TeamRole.Team == Smod2.API.Team.SCP)||(ev.Player.TeamRole.Team == Smod2.API.Team.CLASSD) || (ev.Player.TeamRole.Team == Smod2.API.Team.CHAOS_INSURGENCY))) 
             {
                 ev.Damage += 15;
                 if(ev.Player.GetHealth() <= ev.Player.TeamRole.MaxHP / 2) 
@@ -79,9 +79,9 @@ namespace Passivesandskills2
                 }
                     if(NTFli[ev.Attacker.SteamId] == false)
                     {
-                        if(ev.Player.TeamRole.Team == Team.SCP)
+                        if(ev.Player.TeamRole.Team == Smod2.API.Team.SCP)
                         ev.Damage += ev.Player.GetHealth()/100;
-                        if(ev.Player.TeamRole.Team != Team.SCP)
+                        if(ev.Player.TeamRole.Team != Smod2.API.Team.SCP)
                         {
                             ev.Damage += 15;
                             if(ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY)
@@ -258,6 +258,37 @@ namespace Passivesandskills2
 			{
 				ev.Player.AddHealth(30);
 			}
+            if(ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) 
+            {
+                if (NTFlic4.ContainsKey(ev.Player.SteamId)) 
+                { 
+                
+                    if(NTFlic4[ev.Player.SteamId] == true)                   
+                    {
+                        
+
+
+                        GrenadeManager grenadeManager = ((GameObject)ev.Player.GetGameObject()).GetComponent<GrenadeManager>();
+                        foreach (GrenadeSettings grenade in grenadeManager.availableGrenades)
+                        {
+                            grenade.timeUnitilDetonation = 120f;
+                        }
+                    }
+
+                }
+                else 
+                {
+
+                    GrenadeManager grenadeManager = ((GameObject)ev.Player.GetGameObject()).GetComponent<GrenadeManager>();
+                    foreach (GrenadeSettings grenade in grenadeManager.availableGrenades)
+                    {
+                        grenade.timeUnitilDetonation = 8f;
+                    }
+
+                }
+            
+            
+            }
 
            
 		}
@@ -266,7 +297,7 @@ namespace Passivesandskills2
         public void OnPlayerDie(PlayerDeathEvent ev)
         {
             //Pasiva del comandante [Justicia] mata al asesino del comandante si es un ntf.
-            if((ev.Player.TeamRole.Role == Role.NTF_COMMANDER)&&(ev.Killer.TeamRole.Team == Team.NINETAILFOX)&&(ev.Killer.TeamRole.Role != Role.FACILITY_GUARD))
+            if((ev.Player.TeamRole.Role == Role.NTF_COMMANDER)&&(ev.Killer.TeamRole.Team == Smod2.API.Team.NINETAILFOX)&&(ev.Killer.TeamRole.Role != Role.FACILITY_GUARD))
             { ev.Killer.Kill(DamageType.LURE); }
 
 
@@ -286,5 +317,39 @@ namespace Passivesandskills2
             }
         }
 
+        public void OnPlayerDropItem(PlayerDropItemEvent ev)
+        {
+           if((ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) &&(ev.Item.ItemType == ItemType.WEAPON_MANAGER_TABLET))
+            {
+                if (NTFlic4.ContainsKey(ev.Player.SteamId)) 
+                {
+                    if (NTFlic4[ev.Player.SteamId]) 
+                    {
+                        GrenadeManager grenadeManager = ((GameObject)ev.Player.GetGameObject()).GetComponent<GrenadeManager>();
+                        foreach (GrenadeSettings grenade in grenadeManager.availableGrenades)
+                        {
+                            grenade.timeUnitilDetonation = 0.2f;
+                        }
+                        int p = (int)System.Environment.OSVersion.Platform;
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
+                            MEC.Timing.RunCoroutine(C4s(ev.Player), MEC.Segment.FixedUpdate);
+
+                        }
+                        else { MEC.Timing.RunCoroutine(C4s(ev.Player), 1); }
+                    }
+                }
+            }
+        }
+
+        private IEnumerator<float> C4s(Player attacker)
+        {
+            yield return MEC.Timing.WaitForSeconds(1f);
+            GrenadeManager grenadeManager = ((GameObject)attacker.GetGameObject()).GetComponent<GrenadeManager>();
+            foreach (GrenadeSettings grenade in grenadeManager.availableGrenades)
+            {
+                grenade.timeUnitilDetonation = 120f;
+            }
+        }
     }
 }

@@ -36,7 +36,7 @@ namespace Passivesandskills2
             if ((ev.Attacker.TeamRole.Role == Role.FACILITY_GUARD))
             {
                
-                if ((ev.Attacker.TeamRole.Role == Role.CHAOS_INSURGENCY) || (ev.Player.TeamRole.Team == Team.SCP))
+                if ((ev.Attacker.TeamRole.Role == Role.CHAOS_INSURGENCY)||(ev.Player.TeamRole.Team == Smod2.API.Team.SCP))
                 {
                     Guardias[ev.Attacker.SteamId] += 1;
                     if (Guardias[ev.Attacker.SteamId] == 50)

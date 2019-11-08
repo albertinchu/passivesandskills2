@@ -123,7 +123,7 @@ namespace Passivesandskills2
             }
             if((Habilidad.ContainsKey(ev.Player.SteamId))&&(ev.Player.TeamRole.Role != Role.SCP_939_53)) 
             {
-                if(ev.Attacker.TeamRole.Team == Team.SCP) 
+                if(ev.Attacker.TeamRole.Team == Smod2.API.Team.SCP) 
                 {
                     ev.Damage = 0;
                 
@@ -137,7 +137,7 @@ namespace Passivesandskills2
             //en este caso la cura del comandante esta limitada a el SCP-939-53
             if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.TESLA) &&(ev.DamageType !=DamageType.POCKET) &&(ev.DamageType != DamageType.FALLDOWN)&&(Mordido.ContainsKey(ev.Player)))
             {
-                if (ev.Player.TeamRole.Team == Team.NINETAILFOX) { ev.Damage = 0; }
+                if (ev.Player.TeamRole.Team == Smod2.API.Team.NINETAILFOX) { ev.Damage = 0; }
 
                 if ((ev.Player.TeamRole.Role == Role.NTF_CADET) && (ev.Player.GetHealth() < Mordido[ev.Player])) { ev.Player.AddHealth(5); }
                 if ((ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) && (ev.Player.GetHealth() < Mordido[ev.Player])) { ev.Player.AddHealth(8); }
@@ -147,7 +147,7 @@ namespace Passivesandskills2
 
 
             }
-            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Team.NINETAILFOX) && (ev.DamageType == DamageType.FRAG))
+            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Smod2.API.Team.NINETAILFOX) && (ev.DamageType == DamageType.FRAG))
             {
                 ev.Damage = 0;
                 ev.Player.SetHealth(Mordido[ev.Player], DamageType.FRAG);
@@ -155,7 +155,7 @@ namespace Passivesandskills2
             //comandante
             if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.DamageType != DamageType.FRAG) && (ev.DamageType != DamageType.POCKET) && (ev.DamageType != DamageType.TESLA) && (ev.DamageType != DamageType.FALLDOWN)&&(!Mordido.ContainsKey(ev.Player)))
             {
-                if (ev.Player.TeamRole.Team == Team.NINETAILFOX) { ev.Damage = 0; }
+                if (ev.Player.TeamRole.Team == Smod2.API.Team.NINETAILFOX) { ev.Damage = 0; }
 
                 if ((ev.Player.TeamRole.Role == Role.NTF_CADET) && (ev.Player.GetHealth() <= 150)) { ev.Player.AddHealth(5); }
                 if ((ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) && (ev.Player.GetHealth() <= 180)) { ev.Player.AddHealth(8); }
@@ -165,7 +165,7 @@ namespace Passivesandskills2
 
 
             }
-            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Team.NINETAILFOX) && (ev.DamageType == DamageType.FRAG))
+            if ((ev.Attacker.TeamRole.Role == Role.NTF_COMMANDER) && (ev.Player.TeamRole.Team == Smod2.API.Team.NINETAILFOX) && (ev.DamageType == DamageType.FRAG))
             {
                 ev.Damage = 0;
                 ev.Player.SetHealth(200, DamageType.FRAG);

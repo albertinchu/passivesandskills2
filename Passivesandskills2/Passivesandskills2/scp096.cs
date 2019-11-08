@@ -64,7 +64,7 @@ namespace Passivesandskills2
 				bajasllorona += 1;
 				foreach (Player player in PluginManager.Manager.Server.GetPlayers())
 				{
-					if ((player.TeamRole.Team == Team.SCP) && (player.TeamRole.Role != Role.SCP_079))
+					if ((player.TeamRole.Team == Smod2.API.Team.SCP) && (player.TeamRole.Role != Role.SCP_079))
 					{
 						if (player.TeamRole.Role == Role.SCP_096) { player.AddHealth(20); }
 						if (player.TeamRole.Role == Role.SCP_049) { player.AddHealth(20); }

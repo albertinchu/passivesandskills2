@@ -154,7 +154,7 @@ namespace Passivesandskills2
 			{
 
 				posmuertee = ev.Player.GetPosition();
-				if ((ev.Player.TeamRole.Team == Team.SCIENTIST) || (ev.Player.TeamRole.Team == Team.CLASSD))
+				if ((ev.Player.TeamRole.Team == Smod2.API.Team.SCIENTIST) || (ev.Player.TeamRole.Team == Smod2.API.Team.CLASSD))
 				{
                     ev.SpawnRagdoll = false;
                     int p = (int)System.Environment.OSVersion.Platform;
