@@ -274,21 +274,22 @@ namespace Passivesandskills2
                             grenade.timeUnitilDetonation = 120f;
                         }
                     }
-
-                }
-                else 
-                {
-
-                    GrenadeManager grenadeManager = ((GameObject)ev.Player.GetGameObject()).GetComponent<GrenadeManager>();
-                    foreach (GrenadeSettings grenade in grenadeManager.availableGrenades)
+                    else
                     {
-                        grenade.timeUnitilDetonation = 8f;
+
+                        GrenadeManager grenadeManager = ((GameObject)ev.Player.GetGameObject()).GetComponent<GrenadeManager>();
+                        foreach (GrenadeSettings grenade in grenadeManager.availableGrenades)
+                        {
+                            grenade.timeUnitilDetonation = 8f;
+                        }
+
                     }
 
+
                 }
-            
-            
+
             }
+               
 
            
 		}
