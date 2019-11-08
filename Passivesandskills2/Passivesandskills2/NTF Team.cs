@@ -307,13 +307,20 @@ namespace Passivesandskills2
 
         public void OnCallCommand(PlayerCallCommandEvent ev)
         {
-            if (ev.Command.StartsWith("c4mode")) 
+            if (ev.Command.StartsWith("c4modeon")) 
             {
-                if ((NTFlic4.ContainsKey(ev.Player.SteamId)) && (ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) && (NTFlic4[ev.Player.SteamId] ==false)) { NTFlic4[ev.Player.SteamId] = true; ev.ReturnMessage = "C4 activados"; }
-                if ((NTFlic4.ContainsKey(ev.Player.SteamId)) && (ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) && (NTFlic4[ev.Player.SteamId] == true)) { NTFlic4[ev.Player.SteamId] = false; ev.ReturnMessage = "C4 desactivados"; }
+                if ((NTFlic4.ContainsKey(ev.Player.SteamId)) && (ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) && (NTFlic4[ev.Player.SteamId] == true)) { ev.Player.SendConsoleMessage("Ya estan activados", "blue"); }
+                    if ((NTFlic4.ContainsKey(ev.Player.SteamId)) && (ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) && (NTFlic4[ev.Player.SteamId] ==false)) { NTFlic4[ev.Player.SteamId] = true; ev.ReturnMessage = "C4 activados"; }
+                
                 if(ev.Player.TeamRole.Role != Role.NTF_LIEUTENANT) { ev.ReturnMessage = "Tu no eres Teniente"; }
 
            
+            }
+            if (ev.Command.StartsWith("c4modeoff")) 
+            {
+                if ((NTFlic4.ContainsKey(ev.Player.SteamId)) && (ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) && (NTFlic4[ev.Player.SteamId] == false)) { ev.Player.SendConsoleMessage("Ya estan desactivados", "blue"); }
+                if ((NTFlic4.ContainsKey(ev.Player.SteamId)) && (ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT) && (NTFlic4[ev.Player.SteamId] == true)) { NTFlic4[ev.Player.SteamId] = false; ev.ReturnMessage = "C4 desactivados"; }
+                if (ev.Player.TeamRole.Role != Role.NTF_LIEUTENANT) { ev.ReturnMessage = "Tu no eres Teniente"; }
             }
         }
 
