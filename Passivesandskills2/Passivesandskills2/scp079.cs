@@ -385,53 +385,59 @@ namespace Passivesandskills2
                     if (ev.Player.Scp079Data.Level < 3)
                     {
                         if (ev.Player.Scp079Data.AP < 100) { ev.ReturnMessage = "Necesitas mas Energía (100)"; }
-
-                        if ((Pasivaa[ev.Player.SteamId] == false) && (ev.Player.Scp079Data.AP >= 100)) { ev.ReturnMessage = "Habilidad en cooldown"; }
-
-                        if ((ev.Player.Scp079Data.AP >= 100) && (Pasivaa[ev.Player.SteamId] == true))
+                        if ((ev.Player.Scp079Data.AP >= 100))
                         {
-                            ev.Player.Scp079Data.AP -= 100;
-                            ev.Player.SendConsoleMessage("Enviando nanobots al ataque.", "blue");
-                            ev.ReturnMessage = "Enviando nanobots al ataque .";
-                            Pasivaa[ev.Player.SteamId] = false;
-                            int p = (int)System.Environment.OSVersion.Platform;
-                            if ((p == 4) || (p == 6) || (p == 128))
-                            {
-                                MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), MEC.Segment.FixedUpdate);
+                            if ((Pasivaa[ev.Player.SteamId] == false) ) { ev.ReturnMessage = "Habilidad en cooldown"; }
 
-                            }
-                            else { MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), 1); }
-                            System.Random playrs = new System.Random();
-                            int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
-                            while ((PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Smod2.API.Team.SPECTATOR) || (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role == Role.SCP_079)||(PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Smod2.API.Team.NONE)) 
+                            if ((Pasivaa[ev.Player.SteamId] == true))
                             {
-                                if (posic > PluginManager.Manager.Server.NumPlayers)
-                                { 
-                                    posic = 0; 
-                                }
-                                posic = posic + 1; 
-                            }
-                            if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Smod2.API.Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }
-
-                            if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team != Smod2.API.Team.SCP)
-                            {
-                                if (PluginManager.Manager.Server.GetPlayers()[posic].GetHealth() <= 50)
+                                ev.Player.Scp079Data.AP -= 100;
+                                ev.Player.SendConsoleMessage("Enviando nanobots al ataque.", "blue");
+                                ev.ReturnMessage = "Enviando nanobots al ataque .";
+                                Pasivaa[ev.Player.SteamId] = false;
+                                int p = (int)System.Environment.OSVersion.Platform;
+                                if ((p == 4) || (p == 6) || (p == 128))
                                 {
-                                    PluginManager.Manager.Server.GetPlayers()[posic].Kill(DamageType.TESLA);
-                                    ev.Player.Scp079Data.Exp += 30;
-                                    if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 3; }
+                                    MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), MEC.Segment.FixedUpdate);
+
                                 }
-                                if (PluginManager.Manager.Server.GetPlayers()[posic].GetHealth() > 50)
+                                else { MEC.Timing.RunCoroutine(Cooldown0792(ev.Player), 1); }
+                                System.Random playrs = new System.Random();
+                                int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
+                                Smod2.API.Team role = Smod2.PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team;
+                                Smod2.API.Role role2 = Smod2.PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role;
+                                while ((role == Smod2.API.Team.SPECTATOR) || (role2 == Smod2.API.Role.SCP_079) || (role == Smod2.API.Team.NONE))
                                 {
-                                    PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(-50);
+                                    if (posic > PluginManager.Manager.Server.NumPlayers)
+                                    {
+                                        posic = 0;
+                                    }
+                                    posic = posic + 1;
+                                   role = PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team;
+                                   role2 = PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role;
                                 }
+                                if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Smod2.API.Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }
+
+                                if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team != Smod2.API.Team.SCP)
+                                {
+                                    if (PluginManager.Manager.Server.GetPlayers()[posic].GetHealth() <= 50)
+                                    {
+                                        PluginManager.Manager.Server.GetPlayers()[posic].Kill(DamageType.TESLA);
+                                        ev.Player.Scp079Data.Exp += 30;
+                                        if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 3; }
+                                    }
+                                    if (PluginManager.Manager.Server.GetPlayers()[posic].GetHealth() > 50)
+                                    {
+                                        PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(-50);
+                                    }
 
 
+                                }
+                                ev.Player.Scp079Data.Exp += 30;
+                                if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 10; }
                             }
-                            ev.Player.Scp079Data.Exp += 30;
-                            if (ev.Player.Scp079Data.Level >= 4) { ev.Player.Scp079Data.MaxAP += 10; }
+                            if (Pasivaa[ev.Player.SteamId] == false) { ev.ReturnMessage = "habilidad en cooldown"; }
                         }
-                        if (Pasivaa[ev.Player.SteamId] == false) { ev.ReturnMessage = "habilidad en cooldown"; }
                     }
                     /////////////////////////////////////////////////////////////////////////////////////////////////////////
                     if (ev.Player.Scp079Data.Level >= 3)
@@ -468,7 +474,15 @@ namespace Passivesandskills2
                             
                             System.Random playrs = new System.Random();
                             int posic = playrs.Next(0, PluginManager.Manager.Server.GetPlayers().Count);
-                            while ((PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Smod2.API.Team.SPECTATOR)||(PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role == Role.SCP_079) || (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Smod2.API.Team.NONE)) { if (posic > PluginManager.Manager.Server.NumPlayers) { posic = 0; } posic = posic + 1; }
+                            Smod2.API.Team role = PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team;
+                            Smod2.API.Role role2 = PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role;
+                            while ((role == Smod2.API.Team.SPECTATOR) || (role2 == Role.SCP_079) || (role == Smod2.API.Team.NONE))
+                            {
+                                if (posic > PluginManager.Manager.Server.NumPlayers) { posic = 0; }
+                                posic = posic + 1; role = PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team;
+                               role2 = PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Role;
+                            }
+                            
                             if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team == Smod2.API.Team.SCP) { PluginManager.Manager.Server.GetPlayers()[posic].AddHealth(50); }
 
                             if (PluginManager.Manager.Server.GetPlayers()[posic].TeamRole.Team != Smod2.API.Team.SCP)

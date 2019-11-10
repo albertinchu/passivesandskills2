@@ -48,6 +48,10 @@ namespace Passivesandskills2
                     yield return MEC.Timing.WaitForSeconds(3f);
 
                 }
+                else 
+                {
+                    break;
+                }
 				
 
 			}

@@ -26,19 +26,40 @@ namespace Passivesandskills2
             if ((ev.Player.TeamRole.Role == Role.SCP_049_2))
 			{
                 conta049 += 1;
-                if (!Zombie.ContainsKey(ev.Player.SteamId))
-				{
-                    ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cuerpo errante]: Cuanto mas tiempo permanezcas con vida mas daño haces (15% + de daño cada 1 minuto de vida).", false);
-                    ev.Player.PersonalBroadcast(10, "Tu pasiva es [Cuerpo Creciente]: Cada minuto ganas 150 de salud de forma permanente hasta 5 veces a no ser que te quedes quieto, (perderas la vida extra)", false);
-                    Zombie.Add(ev.Player.SteamId, 0);	            
-				}
+              
+				
+                    ev.Player.PersonalBroadcast(10, "Tu pasiva es [Recuerdos]:Recibes efectos según tu role anterior, si eras clase D: eres invisible cada 5s.", false);
+                    ev.Player.PersonalBroadcast(10, "Cientifico: inmortalidad cada 5s, cadete resistencia a disparos x/2 ", false);
+                    ev.Player.PersonalBroadcast(10, "Comandante: todos los efectos menos el clase d, cientifico NTF: dañar te cura 700 de vida", false);
+                    ev.Player.PersonalBroadcast(10, "Chaos: matas de un hit, Guardia: reflejas daño/10, Teniente: al morir explotas sin causar daño a aliados", false);
                 int p = (int)System.Environment.OSVersion.Platform;
-                if ((p == 4) || (p == 6) || (p == 128))
+                if (Zombie.ContainsKey(ev.Player.SteamId)) 
                 {
-                    MEC.Timing.RunCoroutine(Zombielive(ev.Player), MEC.Segment.FixedUpdate);
+                   
+                    if (Zombie[ev.Player.SteamId] == 0)
+                    {
+
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
+                            MEC.Timing.RunCoroutine(Zombie0(ev.Player), MEC.Segment.FixedUpdate);
+
+                        }
+                        else { MEC.Timing.RunCoroutine(Zombie0(ev.Player), 1); }
+                    }
+                    if ((Zombie[ev.Player.SteamId] == 1)||(Zombie[ev.Player.SteamId ]== 7))
+                    {
+
+                        if ((p == 4) || (p == 6) || (p == 128))
+                        {
+                            MEC.Timing.RunCoroutine(Zombie1(ev.Player), MEC.Segment.FixedUpdate);
+
+                        }
+                        else { MEC.Timing.RunCoroutine(Zombie1(ev.Player), 1); }
+                    }
 
                 }
-                else { MEC.Timing.RunCoroutine(Zombielive(ev.Player), 1); }
+				
+             
                 if (conta049 >= 6)
                 {
                   
@@ -50,7 +71,7 @@ namespace Passivesandskills2
                     else { MEC.Timing.RunCoroutine(Mutar(ev.Player), 1); }
                     conta049 = 0;
                 }
-                Zombie[ev.Player.SteamId] = 0;
+                
               
 
             }
@@ -58,24 +79,37 @@ namespace Passivesandskills2
 			{
 				ev.Player.SendConsoleMessage("[Mutar]: Cada 6 Zombies curados el zombie número 6 tiene un 35 % de mutar en otro SCP a los 3 minutos, No puede mutar en SCP-096 o en SCP-079, La mutación es totalmente aleatoria ", "red");
 				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Manipulador de cuerpos]: Curas de forma instantanea a clasesd/scientists [Mutar]: Cada 6 bajas una tiene posibilidades de mutar (mas info en la consola)  .", false);
-			}
+                ev.Player.PersonalBroadcast(10, "Tu pasiva es [Padre vengativo]: cuando muere 1 zombie todo plaga se cura 75 de hp   .", false);
+            }
 		}
-        //registra los minutos con vida del zombie
-		private IEnumerator<float> Zombielive(Player player)
+     //class d
+		private IEnumerator<float> Zombie0(Player player)
 		{
 			while (player.TeamRole.Role == Role.SCP_049_2)
 			{
-                yield return MEC.Timing.WaitForSeconds(60f);
-                Zombie[player.SteamId] += 1;
-                player.AddHealth(150);
-                if(Zombie[player.SteamId] >= 5) { break; }
-                if(Zombie[player.SteamId] < 0) { break; }
-                
-			}
+                yield return MEC.Timing.WaitForSeconds(5f);              
+                player.SetGhostMode(true);
+                yield return MEC.Timing.WaitForSeconds(5f);
+                player.SetGhostMode(false);
+            }
 			
 		}
+        //Scientis
+        private IEnumerator<float> Zombie1(Player player)
+        {
+            while (player.TeamRole.Role == Role.SCP_049_2)
+            {
+                yield return MEC.Timing.WaitForSeconds(5f);
+                player.SetGodmode(true);
+                yield return MEC.Timing.WaitForSeconds(5f);
+                player.SetGodmode(false);
+            }
+        }
+    
+     
+        //
         // revive a un zombie
-		private IEnumerator<float> Resurrec(Player player, Vector posdead)
+        private IEnumerator<float> Resurrec(Player player, Vector posdead)
 		{
             yield return MEC.Timing.WaitForSeconds(3f);
             player.ChangeRole(Role.SCP_049_2);
@@ -130,12 +164,46 @@ namespace Passivesandskills2
 
 		public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
-			//[Pasiva zombie Cuerpo errante]//
-            //si el zombie tiene 5 minutos de vida instakillea
+            if(ev.Player.TeamRole.Role == Role.SCP_049_2) 
+            { 
+           
+                if((Zombie[ev.Player.SteamId] == 7)|| (Zombie[ev.Player.SteamId] == 3))
+                {
+                    ev.Damage /= 2;
+                }
+                if ((Zombie[ev.Player.SteamId] == 7) || (Zombie[ev.Player.SteamId] == 2))
+                {
+                    ev.Attacker.SetHealth(ev.Attacker.GetHealth() - 1);
+                }
+            }
+		
+            if((ev.Attacker.TeamRole.Role == Role.SPECTATOR)&&(Zombie[ev.Player.SteamId] == -1))
+            {
+                if (ev.DamageType == DamageType.FRAG)
+                {
+                    if (ev.Player.TeamRole.Team == Smod2.API.Team.SCP) { ev.Damage = 0; } else { ev.Damage = 90; }
+
+                }
+            }
 			if (ev.Attacker.TeamRole.Role == Role.SCP_049_2)
 			{
-				ev.Damage += (ev.Damage / 100) * 20 * Zombie[ev.Attacker.SteamId];
-                if(Zombie[ev.Attacker.SteamId] == 5) { ev.Damage += ev.Player.GetHealth(); }
+             
+                if(ev.DamageType == DamageType.FRAG) 
+                { 
+                if(ev.Player.TeamRole.Team == Smod2.API.Team.SCP) { ev.Damage = 0; } else { ev.Damage = 90; }
+                
+                }
+                if (Zombie.ContainsKey(ev.Attacker.SteamId)) 
+                { 
+                if((Zombie[ev.Attacker.SteamId] == 5) ||(Zombie[ev.Attacker.SteamId] == 7))
+                    {
+                        ev.Damage += ev.Player.GetHealth();
+                    }
+                }
+                if((Zombie[ev.Attacker.SteamId] == 6)||(Zombie[ev.Attacker.SteamId] == 7)) 
+                {
+                    ev.Attacker.AddHealth(700);
+                }
 			}
 		}
 
@@ -148,12 +216,111 @@ namespace Passivesandskills2
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
 		{// cancela la pasiva del zombie
-            if (Zombie.ContainsKey(ev.Player.SteamId)) { Zombie[ev.Player.SteamId]= -1; }
-            // revive a clases d y cientificos al instante
-			if (ev.Killer.TeamRole.Role == Smod2.API.Role.SCP_049)
+         if(ev.Player.TeamRole.Role == Role.SCP_049_2) 
+         {
+                if ((Zombie[ev.Player.SteamId] == 4)||(Zombie[ev.Player.SteamId] == 7)) { ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, new Vector(0, 0, 0), true, ev.Player.GetPosition(), true, 0, true); }
+                Zombie[ev.Player.SteamId] = -1;
+                foreach(Player player in Smod2.PluginManager.Manager.Server.GetPlayers())
+                {
+                    if(player.TeamRole.Role == Role.SCP_049) 
+                    {
+                        player.AddHealth(75);
+                    }
+                }
+            
+         }       
+			if ((ev.Killer.TeamRole.Role == Smod2.API.Role.SCP_049)||(ev.Killer.TeamRole.Role == Role.SCP_049_2))
 			{
-
-				posmuertee = ev.Player.GetPosition();
+                if(ev.Player.TeamRole.Role == Role.CLASSD) 
+                {
+                    if (!Zombie.ContainsKey(ev.Player.SteamId)) 
+                    {
+                        Zombie.Add(ev.Player.SteamId, 0);
+                    }
+                    else 
+                    {
+                        Zombie[ev.Player.SteamId] = 0;
+                    }
+                }
+                if (ev.Player.TeamRole.Role == Role.SCIENTIST)
+                {
+                    if (!Zombie.ContainsKey(ev.Player.SteamId))
+                    {
+                        Zombie.Add(ev.Player.SteamId, 1);
+                    }
+                    else
+                    {
+                        Zombie[ev.Player.SteamId] = 1;
+                    }
+                }
+                if (ev.Player.TeamRole.Role == Role.FACILITY_GUARD)
+                {
+                    if (!Zombie.ContainsKey(ev.Player.SteamId))
+                    {
+                        Zombie.Add(ev.Player.SteamId, 2);
+                    }
+                    else
+                    {
+                        Zombie[ev.Player.SteamId] = 2;
+                    }
+                }
+                if (ev.Player.TeamRole.Role == Role.NTF_CADET)
+                {
+                    if (!Zombie.ContainsKey(ev.Player.SteamId))
+                    {
+                        Zombie.Add(ev.Player.SteamId, 3);
+                    }
+                    else
+                    {
+                        Zombie[ev.Player.SteamId] = 3;
+                    }
+                }
+                if (ev.Player.TeamRole.Role == Role.NTF_LIEUTENANT)
+                {
+                    if (!Zombie.ContainsKey(ev.Player.SteamId))
+                    {
+                        Zombie.Add(ev.Player.SteamId, 4);
+                    }
+                    else
+                    {
+                        Zombie[ev.Player.SteamId] = 4;
+                    }
+                }
+                if (ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY)
+                {
+                    if (!Zombie.ContainsKey(ev.Player.SteamId))
+                    {
+                        Zombie.Add(ev.Player.SteamId, 5);
+                    }
+                    else
+                    {
+                        Zombie[ev.Player.SteamId] = 5;
+                    }
+                }
+                if (ev.Player.TeamRole.Role == Role.NTF_SCIENTIST)
+                {
+                    if (!Zombie.ContainsKey(ev.Player.SteamId))
+                    {
+                        Zombie.Add(ev.Player.SteamId, 6);
+                    }
+                    else
+                    {
+                        Zombie[ev.Player.SteamId] = 6;
+                    }
+                }
+                if (ev.Player.TeamRole.Role == Role.NTF_COMMANDER)
+                {
+                    if (!Zombie.ContainsKey(ev.Player.SteamId))
+                    {
+                        Zombie.Add(ev.Player.SteamId, 7);
+                    }
+                    else
+                    {
+                        Zombie[ev.Player.SteamId] = 7;
+                    }
+                }
+                // revive a clases d y cientificos al instante
+                posmuertee = ev.Player.GetPosition();
 				if ((ev.Player.TeamRole.Team == Smod2.API.Team.SCIENTIST) || (ev.Player.TeamRole.Team == Smod2.API.Team.CLASSD))
 				{
                     ev.SpawnRagdoll = false;
@@ -167,9 +334,9 @@ namespace Passivesandskills2
 
 
                 }
-
-			}
-		}
+             
+            }
+        }
 
         public void OnDetonate()
         {

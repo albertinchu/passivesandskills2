@@ -5,7 +5,7 @@ namespace Passivesandskills2
 {
 	[PluginDetails(
 		author = "Albertinchu con la ayuda de InsetJesux y Roger",
-		name = "Passivesandskills2",
+		name = "Passives and skills 2",
 		description = "Que pasará si dejamos que los jugadores tengan poderes...",
 		id = "albertinchu.gamemode.Passivesandskills2",
 		version = "3.5.0",
@@ -18,12 +18,12 @@ public class Passivesandskills : Plugin
 
 	public override void OnDisable()
 	{
-		this.Info("PassivesAndSkills - Desactivado");
+		this.Info("Passives and Skills - Desactivado");
 	}
 
 	public override void OnEnable()
 	{
-		this.Info("PassivesAndSkills - Activado para mas información usa .passivesandskillsinfo.");
+		this.Info("Passives and Skills - Activado para mas información usa .passivesandskillsinfo.");
 	}
 
 	public override void Register()
