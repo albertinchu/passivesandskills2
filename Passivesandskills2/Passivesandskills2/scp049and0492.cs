@@ -164,47 +164,50 @@ namespace Passivesandskills2
 
 		public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
-            if(ev.Player.TeamRole.Role == Role.SCP_049_2) 
-            { 
-           
-                if((Zombie[ev.Player.SteamId] == 7)|| (Zombie[ev.Player.SteamId] == 3))
-                {
-                    ev.Damage /= 2;
-                }
-                if ((Zombie[ev.Player.SteamId] == 7) || (Zombie[ev.Player.SteamId] == 2))
-                {
-                    ev.Attacker.SetHealth(ev.Attacker.GetHealth() - 1);
-                }
-            }
-		
-            if((ev.Attacker.TeamRole.Role == Role.SPECTATOR)&&(Zombie[ev.Player.SteamId] == -1))
+            if (Zombie.ContainsKey(ev.Player.SteamId))
             {
-                if (ev.DamageType == DamageType.FRAG)
+                if (ev.Player.TeamRole.Role == Role.SCP_049_2)
                 {
-                    if (ev.Player.TeamRole.Team == Smod2.API.Team.SCP) { ev.Damage = 0; } else { ev.Damage = 90; }
 
-                }
-            }
-			if (ev.Attacker.TeamRole.Role == Role.SCP_049_2)
-			{
-             
-                if(ev.DamageType == DamageType.FRAG) 
-                { 
-                if(ev.Player.TeamRole.Team == Smod2.API.Team.SCP) { ev.Damage = 0; } else { ev.Damage = 90; }
-                
-                }
-                if (Zombie.ContainsKey(ev.Attacker.SteamId)) 
-                { 
-                if((Zombie[ev.Attacker.SteamId] == 5) ||(Zombie[ev.Attacker.SteamId] == 7))
+                    if ((Zombie[ev.Player.SteamId] == 7) || (Zombie[ev.Player.SteamId] == 3))
                     {
-                        ev.Damage += ev.Player.GetHealth();
+                        ev.Damage /= 2;
+                    }
+                    if ((Zombie[ev.Player.SteamId] == 7) || (Zombie[ev.Player.SteamId] == 2))
+                    {
+                        ev.Attacker.SetHealth(ev.Attacker.GetHealth() - 1);
                     }
                 }
-                if((Zombie[ev.Attacker.SteamId] == 6)||(Zombie[ev.Attacker.SteamId] == 7)) 
+
+                if ((ev.Attacker.TeamRole.Role == Role.SPECTATOR) && (Zombie[ev.Player.SteamId] == -1))
                 {
-                    ev.Attacker.AddHealth(700);
+                    if (ev.DamageType == DamageType.FRAG)
+                    {
+                        if (ev.Player.TeamRole.Team == Smod2.API.Team.SCP) { ev.Damage = 0; } else { ev.Damage = 90; }
+
+                    }
                 }
-			}
+                if (ev.Attacker.TeamRole.Role == Role.SCP_049_2)
+                {
+
+                    if (ev.DamageType == DamageType.FRAG)
+                    {
+                        if (ev.Player.TeamRole.Team == Smod2.API.Team.SCP) { ev.Damage = 0; } else { ev.Damage = 90; }
+
+                    }
+                    if (Zombie.ContainsKey(ev.Attacker.SteamId))
+                    {
+                        if ((Zombie[ev.Attacker.SteamId] == 5) || (Zombie[ev.Attacker.SteamId] == 7))
+                        {
+                            ev.Damage += ev.Player.GetHealth();
+                        }
+                    }
+                    if ((Zombie[ev.Attacker.SteamId] == 6) || (Zombie[ev.Attacker.SteamId] == 7))
+                    {
+                        ev.Attacker.AddHealth(700);
+                    }
+                }
+            }
 		}
 
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
@@ -218,6 +221,7 @@ namespace Passivesandskills2
 		{// cancela la pasiva del zombie
          if(ev.Player.TeamRole.Role == Role.SCP_049_2) 
          {
+                if (!Zombie.ContainsKey(ev.Player.SteamId)) { Zombie.Add(ev.Player.SteamId, 0); }
                 if ((Zombie[ev.Player.SteamId] == 4)||(Zombie[ev.Player.SteamId] == 7)) { ev.Player.ThrowGrenade(GrenadeType.FRAG_GRENADE, true, new Vector(0, 0, 0), true, ev.Player.GetPosition(), true, 0, true); }
                 Zombie[ev.Player.SteamId] = -1;
                 foreach(Player player in Smod2.PluginManager.Manager.Server.GetPlayers())
