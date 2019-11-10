@@ -8,9 +8,10 @@ using MEC;
 
 namespace Passivesandskills2
 {
-	partial class classd : IEventHandlerPlayerHurt, IEventHandlerPlayerDropItem, IEventHandlerWaitingForPlayers, IEventHandlerSetRole, IEventHandlerCallCommand
+	partial class classd : IEventHandlerPlayerHurt, IEventHandlerPlayerDropItem, IEventHandlerWaitingForPlayers, IEventHandlerSetRole, IEventHandlerCallCommand, IEventHandlerCheckEscape
 	{
-
+         
+        private IList<string> escapados;
 		static Dictionary<string, bool> Classdh = new Dictionary<string, bool>();
         static Dictionary<string, int> cooldownn = new Dictionary<string, int>();
         // Los clases d roban munición si su rival tiene munición, ganan salud = al daño que hacen cuando estan a poca vida el cual se duplica si estan a muy poca vida
@@ -22,11 +23,18 @@ namespace Passivesandskills2
 		public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
 			//Class D - [Astucia] //
+            if(ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY) 
+            {
+                if ((Classdh.ContainsKey(ev.Attacker.SteamId)) &&(escapados.Contains(ev.Attacker.SteamId)))
+                {
+                    cooldownn[ev.Attacker.SteamId] += 12;
+                }
+            }
 			if (ev.Attacker.TeamRole.Role == Role.CLASSD)
 			{
                 // detecta si la habilidad del clase d esta en cooldown y suma 3 segundos al diccionario restandole asi tiempo a la habilidad.
-                ev.Player.PersonalClearBroadcasts();
-                if(Classdh[ev.Player.SteamId] == false) { cooldownn[ev.Attacker.SteamId] += 3; }
+              
+                if(Classdh[ev.Attacker.SteamId] == false) { cooldownn[ev.Attacker.SteamId] += 3; }
                 
                 if (ev.Attacker.GetGhostMode() == true) { ev.Attacker.SetGhostMode(false); }
                 
@@ -95,7 +103,30 @@ namespace Passivesandskills2
 				}
                
 			}
-		}
+            if ((ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY) && (Classdh[ev.Player.SteamId] == true) && (ev.Item.ItemType == ItemType.FLASHLIGHT)&& (escapados.Contains(ev.Player.SteamId)) )
+            {
+                ev.ChangeTo = ItemType.NULL;
+                if (ev.Player.GetHealth() < 20)
+                {
+                    ev.Player.Kill(DamageType.FALLDOWN);
+                }
+
+                if (ev.Player.GetHealth() >= 20)
+                {
+                    Classdh[ev.Player.SteamId] = false;
+                    ev.Player.AddHealth(-20);
+                    int p = (int)System.Environment.OSVersion.Platform;
+                    if ((p == 4) || (p == 6) || (p == 128))
+                    {
+                        MEC.Timing.RunCoroutine(Classd(ev.Player), MEC.Segment.FixedUpdate);
+
+                    }
+                    else { MEC.Timing.RunCoroutine(Classd(ev.Player), 1); }
+
+                }
+            }
+
+        }
         // registra en un diccionario los segundos de coldown hasta recuperar la habilidad y la linterna
         public IEnumerator<float> Classd(Player player)
         {
@@ -124,13 +155,19 @@ namespace Passivesandskills2
 
         public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
-           
-           
+
+            escapados.Clear();
             Classdh.Clear();
             cooldownn.Clear();
 		}
-       
 
+        public void OnCheckEscape(PlayerCheckEscapeEvent ev)
+        {
+           if(ev.Player.TeamRole.Role == Role.CLASSD) 
+            {
+                escapados.Add(ev.Player.SteamId);
+            }
+        }
     }
     
 }
