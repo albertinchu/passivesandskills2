@@ -72,8 +72,8 @@ namespace Passivesandskills2
 			{
                 cooldownn.Add(ev.Player.SteamId, 0);
 				Classdh.Add(ev.Player.SteamId, true);
-				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Astucia] robas munición al disparar. [Dboy rules]: cuando estas a poca vida robas vida. Tu Habilidad es [Sigilo de doble filo]tirar tu linterna te hace invisible por 35 de salud (puedes morir si tienes menos de 36 de salud). ", false);
-				ev.Player.PersonalBroadcast(10, " [Sigilo de doble filo]: (puedes morir si tienes menos de 36 de salud), y para hacerte invisible TIRA LA LINTERNA AL SUELO. ", false);
+				ev.Player.PersonalBroadcast(10, "Tu pasiva es [Astucia] robas munición al disparar. [Dboy rules]: cuando estas a poca vida robas vida. Tu Habilidad es [Sigilo de doble filo]tirar tu linterna te hace invisible 10s . ", false);
+				ev.Player.PersonalBroadcast(10, " [Sigilo de doble filo]:resta 35 de salud cada vez que la usas (puedes morir si tienes menos de 36 de salud), y para hacerte invisible TIRA LA LINTERNA AL SUELO. ", false);
 			}
 		}
 
@@ -111,13 +111,13 @@ namespace Passivesandskills2
                     if ((Classdh[ev.Player.SteamId] == true) && (ev.Item.ItemType == ItemType.FLASHLIGHT))
                     {
                         ev.ChangeTo = ItemType.NULL;
-                        if (ev.Player.GetHealth() < 20)
+                        if (ev.Player.GetHealth() <= 20)
                         {
                             ev.Player.Kill(DamageType.FALLDOWN);
                         }
 
 
-                        if (ev.Player.GetHealth() >= 20)
+                        if (ev.Player.GetHealth() > 20)
 
                         {
                             Classdh[ev.Player.SteamId] = false;
@@ -143,6 +143,7 @@ namespace Passivesandskills2
             
             player.SetGhostMode(true, false, false);
             player.PersonalBroadcast(10, "Estas en sigilo", true);
+            player.PersonalBroadcast(3, "Ya no estas en sigilo", true);
             yield return MEC.Timing.WaitForSeconds(10f);
             player.SetGhostMode(false);
             player.PersonalClearBroadcasts();

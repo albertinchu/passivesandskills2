@@ -54,7 +54,7 @@ namespace Passivesandskills2
 							ev.Player.SendConsoleMessage("La pasiva de los cadetes es [Tenacidad Explosiva] Reciben daño reducido entre 2 de granadas,[Flash rápido]: Tras lanzar una granada cegadora obtienes un escudo de 30 de salud, (este se anula si el comandante usa su granada para aplicarte 200 de salud pero se acumula si se aplicó los 200 de salud antes de forma que acabarías con 230 de salud) ", "blue");
 							break;
 						case "chaos":
-							ev.Player.SendConsoleMessage("La pasiva de los chaos es [Carroñero]: Reciben un botiquín por cada NTF que asesinan [Luchador de doble filo]: La vida que le falte la inflinge como daño adicional entre 2 si les falta 50 causan 25 de daño con los SCPS cunado estas a 80 o menos de salud les haces 20 de daño adcional y 3 de daño adicional al 106", "green");
+							ev.Player.SendConsoleMessage("La pasiva de los chaos es [Carroñero]: Reciben un botiquín por cada NTF que asesinan [Luchador de doble filo]: La vida que le falte la inflinge como daño adicional entre 2 si les falta 50 causan 25 de daño con los SCPS cunado estas a 80 o menos de salud les haces 20 de daño adcional y 3 de daño adicional al 106, si el chaos originalmente era clase d conservará la habilidad sigilo de doble filo y le costará solo 20 de hp ", "green");
 							break;
 						case "scp-173":
 							ev.Player.SendConsoleMessage("La pasiva del 173 es [Go big or go Home]: Cuando mueres te vas a lo GRANDE Literalmente, tu habilidad es [Resurgir etereo]: revives al minuto con intervalos de invisibilidad, aunque hagas respawn revivirás como 173", "red");
