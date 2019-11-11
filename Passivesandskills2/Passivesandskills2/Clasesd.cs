@@ -8,10 +8,10 @@ using MEC;
 
 namespace Passivesandskills2
 {
-	partial class classd : IEventHandlerPlayerHurt, IEventHandlerPlayerDropItem, IEventHandlerWaitingForPlayers, IEventHandlerSetRole, IEventHandlerCallCommand, IEventHandlerCheckEscape
+	partial class classd : IEventHandlerPlayerHurt, IEventHandlerPlayerDropItem, IEventHandlerWaitingForPlayers, IEventHandlerSetRole, IEventHandlerCallCommand, IEventHandlerPlayerDie
 	{
          
-        private IList<string> escapados;
+       
 		static Dictionary<string, bool> Classdh = new Dictionary<string, bool>();
         static Dictionary<string, int> cooldownn = new Dictionary<string, int>();
         // Los clases d roban munición si su rival tiene munición, ganan salud = al daño que hacen cuando estan a poca vida el cual se duplica si estan a muy poca vida
@@ -23,9 +23,9 @@ namespace Passivesandskills2
 		public void OnPlayerHurt(PlayerHurtEvent ev)
 		{
 			//Class D - [Astucia] //
-            if(ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY) 
+            if(ev.Attacker.TeamRole.Role == Role.CHAOS_INSURGENCY) 
             {
-                if ((Classdh.ContainsKey(ev.Attacker.SteamId)) &&(escapados.Contains(ev.Attacker.SteamId)))
+                if ((Classdh.ContainsKey(ev.Attacker.SteamId)))
                 {
                     cooldownn[ev.Attacker.SteamId] += 12;
                 }
@@ -103,27 +103,37 @@ namespace Passivesandskills2
 				}
                
 			}
-            if ((ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY) && (Classdh[ev.Player.SteamId] == true) && (ev.Item.ItemType == ItemType.FLASHLIGHT)&& (escapados.Contains(ev.Player.SteamId)) )
+
+            if ((ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY))
             {
-                ev.ChangeTo = ItemType.NULL;
-                if (ev.Player.GetHealth() < 20)
-                {
-                    ev.Player.Kill(DamageType.FALLDOWN);
-                }
-
-                if (ev.Player.GetHealth() >= 20)
-                {
-                    Classdh[ev.Player.SteamId] = false;
-                    ev.Player.AddHealth(-20);
-                    int p = (int)System.Environment.OSVersion.Platform;
-                    if ((p == 4) || (p == 6) || (p == 128))
+               if ((Classdh.ContainsKey(ev.Player.SteamId))) 
+               {
+                    if ((Classdh[ev.Player.SteamId] == true) && (ev.Item.ItemType == ItemType.FLASHLIGHT))
                     {
-                        MEC.Timing.RunCoroutine(Classd(ev.Player), MEC.Segment.FixedUpdate);
+                        ev.ChangeTo = ItemType.NULL;
+                        if (ev.Player.GetHealth() < 20)
+                        {
+                            ev.Player.Kill(DamageType.FALLDOWN);
+                        }
 
+
+                        if (ev.Player.GetHealth() >= 20)
+
+                        {
+                            Classdh[ev.Player.SteamId] = false;
+                            ev.Player.AddHealth(-20);
+                            int p = (int)System.Environment.OSVersion.Platform;
+                            if ((p == 4) || (p == 6) || (p == 128))
+                            {
+                                MEC.Timing.RunCoroutine(Classd(ev.Player), MEC.Segment.FixedUpdate);
+
+                            }
+                            else { MEC.Timing.RunCoroutine(Classd(ev.Player), 1); }
+
+
+                        }
                     }
-                    else { MEC.Timing.RunCoroutine(Classd(ev.Player), 1); }
-
-                }
+               }
             }
 
         }
@@ -142,7 +152,7 @@ namespace Passivesandskills2
                yield return MEC.Timing.WaitForSeconds(1f);
                 cooldownn[player.SteamId] += 1;
             }
-            if ((player.TeamRole.Role == Role.CLASSD) && (cooldownn[player.SteamId] >= 50))
+            if (((player.TeamRole.Role == Role.CLASSD)||(player.TeamRole.Role == Role.CHAOS_INSURGENCY)) && (cooldownn[player.SteamId] >= 50))
             {
                 player.GiveItem(ItemType.FLASHLIGHT);
                 Classdh[player.SteamId] = true;
@@ -156,17 +166,24 @@ namespace Passivesandskills2
         public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
 		{
 
-            escapados.Clear();
+         
             Classdh.Clear();
             cooldownn.Clear();
 		}
 
-        public void OnCheckEscape(PlayerCheckEscapeEvent ev)
+ 
+
+        public void OnPlayerDie(PlayerDeathEvent ev)
         {
-           if(ev.Player.TeamRole.Role == Role.CLASSD) 
+            if (ev.Player.TeamRole.Role == Role.CLASSD)
             {
-                escapados.Add(ev.Player.SteamId);
+                if (Classdh.ContainsKey(ev.Player.SteamId))
+                {
+                    Classdh.Remove(ev.Player.SteamId);
+                }
             }
+        
+   
         }
     }
     
