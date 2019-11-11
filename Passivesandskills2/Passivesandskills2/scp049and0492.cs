@@ -201,11 +201,12 @@ namespace Passivesandskills2
                         {
                             ev.Damage += ev.Player.GetHealth();
                         }
+                        if ((Zombie[ev.Attacker.SteamId] == 6) || (Zombie[ev.Attacker.SteamId] == 7))
+                        {
+                            ev.Attacker.AddHealth(700);
+                        }
                     }
-                    if ((Zombie[ev.Attacker.SteamId] == 6) || (Zombie[ev.Attacker.SteamId] == 7))
-                    {
-                        ev.Attacker.AddHealth(700);
-                    }
+                   
                 }
             }
 		}

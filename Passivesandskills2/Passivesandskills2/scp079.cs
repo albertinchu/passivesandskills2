@@ -199,7 +199,7 @@ namespace Passivesandskills2
             // asigna la pasiva al 079
 			if (!Pasivaa.ContainsKey(ev.Player.SteamId)) { Pasivaa.Add(ev.Player.SteamId, true); }
 			
-            if(ev.Player.TeamRole.Role == Role.SCP_079) { ev.Player.PersonalBroadcast(10, "Tu habilidad es [control absoluto]: puedes usar los comandos .nukeoff .cellsopen .nukenow .nanobots y .elevatorsoff", false); }
+            if(ev.Player.TeamRole.Role == Role.SCP_079) { ev.Player.PersonalBroadcast(10, "Tu habilidad es [control absoluto]: puedes usar los comandos .nukeoff .cellsopen .nukenow  y .elevatorsoff", false); }
 		}
 
 		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
